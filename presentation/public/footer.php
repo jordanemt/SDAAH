@@ -1,9 +1,7 @@
-            <footer class="bg-light" style="border-top-style: solid; border-top-width: 10px; border-top-color: #08a5ff;">
-
-                <div class="footer-copyright text-center">
-                    Copyright © 2020 - Asada Herediana
+            <footer class="page-footer font-small pt-1" style="background-color: #043a59">
+                <div class="footer-copyright text-center py-3" style="color: white">© 2020 Copyright:
+                  <a href="https://unac.or.cr/"> Asada Herediana</a>
                 </div>
-
             </footer>
         </div>
     </body>
