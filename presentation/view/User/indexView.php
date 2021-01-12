@@ -14,7 +14,9 @@ include_once 'presentation/public/header.php';
         </div>
         <div class="card-body">
             
-            <a class="btn btn-primary" href="?controller=user&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+            <div class="d-flex justify-content-md-start justify-content-center">
+                <a class="btn btn-primary" href="?controller=user&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+            </div>
             
             <hr>
             

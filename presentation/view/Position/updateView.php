@@ -20,23 +20,25 @@ include_once 'presentation/public/header.php';
             <hr>
 
             <form id="form">
-                <div class="form-group">
-                    <label for="id">Código</label>
-                    <input type="number" class="form-control" id="id" name="id" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" required>
-                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="id">Código</label>
+                        <input type="number" class="form-control" id="id" name="id" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="40" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="type">Tipo</label>
-                    <select class="form-control" id="type" name="type" required">
-                        <option selected disabled>Seleccione una opción</option>
-                        <option value="Mensual" onclick="switchVisibilityToShow('#salary-container'); switchVisibilityToHide('.time-container');">Mensual</option>
-                        <option value="Diario" onclick="switchVisibilityToShow('.time-container'); switchVisibilityToHide('#salary-container');">Diario</option>
-                    </select>
+                    <div class="form-group col-md-4">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="40" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="type">Tipo</label>
+                        <select class="form-control" id="type" name="type" required">
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="Mensual" onclick="switchVisibilityToShow('#salary-container'); switchVisibilityToHide('#time-container');">Mensual</option>
+                            <option value="Diario" onclick="switchVisibilityToShow('#time-container'); switchVisibilityToHide('#salary-container');">Diario</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div id="salary-container" class="form-group"> <script>switchVisibilityToHide('#salary-container');</script>
@@ -44,24 +46,24 @@ include_once 'presentation/public/header.php';
                     <input type="text" class="form-control" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" required>
                 </div>
 
-                <div class="form-group time-container">
-                    <label for="ordinaryTime">Hora Ordinaria</label>
-                    <input type="text" class="form-control" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" required>
-                </div>
-                
-                <div class="form-group time-container">
-                    <label for="extraTime">Hora Extra</label>
-                    <input type="text" class="form-control" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" required>
-                </div>
-                
-                <div class="form-group time-container">
-                    <label for="doubleTime">Hora Doble</label>
-                    <input type="text" class="form-control" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" required>
-                </div>
-                
-                <script>switchVisibilityToHide('.time-container');</script>
+                <div id="time-container" class="form-row"> <script>switchVisibilityToHide('#time-container');</script>
+                    <div class="form-group col-md-4">
+                        <label for="ordinaryTime">Hora Ordinaria</label>
+                        <input type="text" class="form-control" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" required>
+                    </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="insert();">Insertar</button>
+                    <div class="form-group col-md-4">
+                        <label for="extraTime">Hora Extra</label>
+                        <input type="text" class="form-control" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="doubleTime">Hora Doble</label>
+                        <input type="text" class="form-control" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" required>
+                    </div>
+                </div>
+
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
             </form>
 
             <hr>

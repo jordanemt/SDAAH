@@ -8,17 +8,19 @@ include_once 'presentation/public/header.php';
 
 <div class="container my-4">
     <div class="card">
-        
+
         <div class="card-header text-center">
             <h2>Lista de Empleados</h2>
         </div>
-        
+
         <div class="card-body">
-            
-            <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
-            
+
+            <div class="d-flex justify-content-md-start justify-content-center">
+                <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+            </div>
+
             <hr>
-            
+
             <table id="data-table" class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
@@ -72,9 +74,9 @@ include_once 'presentation/public/header.php';
                     </tr>
                 </tbody>
             </table>
-            
+
         </div>
-        
+
     </div>
 </div>
 

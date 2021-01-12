@@ -4,7 +4,7 @@ $vars["position-view"] = true;
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/employee.js" type="text/javascript"></script>
+<script src="presentation/public/js/position.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -15,7 +15,9 @@ include_once 'presentation/public/header.php';
         
         <div class="card-body">
             
-            <a class="btn btn-primary" href="?controller=position&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+            <div class="d-flex justify-content-md-start justify-content-center">
+                <a class="btn btn-primary" href="?controller=position&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+            </div>
             
             <hr>
             
