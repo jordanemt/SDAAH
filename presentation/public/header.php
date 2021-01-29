@@ -55,21 +55,6 @@
                         <li class="nav-item <?php if(isset($vars["position-view"])) {echo "active";} ?>">
                             <a class="nav-link" href="?controller=position">Puestos</a>
                         </li>
-                        <li class="nav-item dropdown <?php if(isset($vars["vacation-view"])) {echo "active";} ?>">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Vacaciones
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="?controller=vacation">Detalle</a>
-                                <a class="dropdown-item" href="?controller=vacation&action=summary">Resumen</a>
-                            </div>
-                        </li>
-                        <li class="nav-item <?php if(isset($vars["liquidation-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=liquidation">Liquidaciones</a>
-                        </li>
-                        <li class="nav-item <?php if(isset($vars["bonus-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=bonus">Aguinaldos</a>
-                        </li>
                         <li class="nav-item dropdown <?php if(isset($vars["payroll-view"])) {echo "active";} ?>">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Nómina
@@ -80,6 +65,21 @@
                                 <a class="dropdown-item" href="?controller=payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
                                 <a class="dropdown-item" href="?controller=payroll&action=bncrReportView">Reporte del BNCR</a>
                             </div>
+                        </li>
+                        <li class="nav-item dropdown <?php if(isset($vars["vacation-view"])) {echo "active";} ?>">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Vacaciones
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="?controller=vacation">Calcular</a>
+                                <a class="dropdown-item" href="?controller=vacation&action=detail">Detalle</a>
+                            </div>
+                        </li>
+                        <li class="nav-item <?php if(isset($vars["liquidation-view"])) {echo "active";} ?>">
+                            <a class="nav-link" href="?controller=liquidation">Liquidaciones</a>
+                        </li>
+                        <li class="nav-item <?php if(isset($vars["bonus-view"])) {echo "active";} ?>">
+                            <a class="nav-link" href="?controller=bonus">Aguinaldos</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">

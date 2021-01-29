@@ -11,8 +11,8 @@ class VacationController {
         $this->view->show($this->controllerName . 'indexView.php', null);
     }
     
-    public function summary() {
-        $this->view->show($this->controllerName . 'summaryView.php', null);
+    public function detail() {
+        $this->view->show($this->controllerName . 'detailView.php', null);
     }
 
 }

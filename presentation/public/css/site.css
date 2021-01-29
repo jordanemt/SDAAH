@@ -6,3 +6,9 @@ h2, h4 {
 .font-warning {
     color: red;
 }
+
+@media (min-width: 768px) {
+  .label-hide {
+    display: none;
+  }
+}

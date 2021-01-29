@@ -10,7 +10,7 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Resumen de Vacaciones</h2>
+            <h2>Detalle de Vacaciones</h2>
         </div>
 
         <div class="card-body">
