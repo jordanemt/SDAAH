@@ -38,7 +38,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-3">
                         <label for="vacationDays">Días</label>
-                        <input type="number" class="form-control" id="vacationDays" name="vacationDays" placeholder="Puesto" min="1" required>
+                        <input type="number" class="form-control" id="vacationDays" name="vacationDays" placeholder="Días" min="1" required>
                     </div>
 
                     <div class="form-group col-md-3">

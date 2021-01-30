@@ -15,7 +15,7 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
             
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="?controller=user&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <a class="btn btn-primary" href="?controller=User&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
             </div>
             
             <hr>
@@ -41,7 +41,7 @@ include_once 'presentation/public/header.php';
                         <td class="text-center">Dato</td>
                         <td class="text-center">Dato</td>
                         <td class="text-center">
-                            <a href="?controller=user&action=updateView" class=""><i class="fa fa-edit"></i> Editar</a>
+                            <a href="?controller=User&action=updateView" class=""><i class="fa fa-edit"></i> Editar</a>
                             <a href="#" class="font-warning" onclick="confirmDelete();"><i class="fa fa-trash-alt"></i> Eliminar</a>
                         </td>
                     </tr>

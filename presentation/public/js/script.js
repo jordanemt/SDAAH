@@ -48,6 +48,20 @@ function switchVisibilityToHide(element) {
     $(element).hide();
 }
 
+function showSalaryOptions() {
+    switch ($('#type').val()) {
+        case 'Mensual' :
+            switchVisibilityToShow('#salary-container');
+            switchVisibilityToHide('#time-container');
+            break;
+
+        case 'Diario' :
+            switchVisibilityToShow('#time-container');
+            switchVisibilityToHide('#salary-container');
+            break;
+    }
+}
+
 $(document).ready(function () {
     chargeDataTable("table");
     resetForm("form");

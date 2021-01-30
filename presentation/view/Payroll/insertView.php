@@ -15,7 +15,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -25,10 +25,10 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control" id="idEmployee" name="idEmployee" onchange="switchVisibilityToShow('#income-container')" required>
+                        <select class="form-control" id="type" name="idEmployee" onchange="switchVisibilityToShow('#income-container'); showSalaryOptions();" required>
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1" onclick="switchVisibilityToShow('#salary-container'); switchVisibilityToHide('#time-container');">000000000 Mensual</option>
-                            <option value="2" onclick="switchVisibilityToShow('#time-container'); switchVisibilityToHide('#salary-container');">000000000 Ordinario</option>
+                            <option value="Mensual">000000000 Mensual</option>
+                            <option value="Diario">000000000 Ordinario</option>
                         </select>
                     </div>
 
@@ -192,7 +192,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

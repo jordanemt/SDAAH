@@ -10,28 +10,30 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Nómina Quincenal</h2>
+            <h2>Reporte Consolidado</h2>
         </div>
 
         <div class="card-body">
+            
+            <a href="?controller=Payroll&action=detailProvisionReportView">Detalle por Empleado <i class="fa fa-angle-double-right"></i></a>
 
             <div class="d-flex flex-md-row flex-column">
 
-                <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-primary mx-1 mb-1-md" href="?controller=Payroll&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <div class="col-md-6 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
                     <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
+                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
                 </div>
 
-                <div class="col-md-7 px-0">
+                <div class="col-md-6 px-0">
 
                     <form id="search" class="col-md-12 px-0">
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
                             
                             <div class="d-flex flex-row p-1">
-                                <label for="">Quincena:&nbsp</label>
+                                <label for="">Mes:&nbsp</label>
                                 <select class="form-control form-control-sm">
-                                    <option>Q-1</option>
+                                    <option>Enero</option>
                                 </select>
                             </div>
                             
@@ -39,13 +41,6 @@ include_once 'presentation/public/header.php';
                                 <label for="">Año:&nbsp</label>
                                 <select class="form-control form-control-sm">
                                     <option>2020</option>
-                                </select>
-                            </div>
-                            
-                            <div class="d-flex flex-row p-1">
-                                <label for=""">Localidad:&nbsp</label>
-                                <select class="form-control form-control-sm">
-                                    <option>Todas</option>
                                 </select>
                             </div>
                             
@@ -62,19 +57,14 @@ include_once 'presentation/public/header.php';
             <table id="data-table" class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="text-center">Nombre</th>
-                        <th class="text-center">Ordinario</th>
-                        <th class="text-center">Vacación</th>
-                        <th class="text-center">Extra</th>
-                        <th class="text-center">Doble</th>
-                        <th class="text-center">Recargo</th>
-                        <th class="text-center">Tot. Devengado</th>
-                        <th class="text-center">Seguro Social</th>
-                        <th class="text-center">Imp. Renta</th>
-                        <th class="text-center">Anticipos</th>
-                        <th class="text-center">Tot. Deducciones</th>
-                        <th class="text-center">Neto</th>
-                        <th class="text-center">Acción</th>
+                        <th class="text-center">Localidad</th>
+                        <th class="text-center">Salario Devengado</th>
+                        <th class="text-center">CCSS 26,33%</th>
+                        <th class="text-center">Aguinaldo 8,33%</th>
+                        <th class="text-center">Vacaciones 4,16%</th>
+                        <th class="text-center">Cesantía 8,33%</th>
+                        <th class="text-center">Ley PT 4,75%</th>
+                        <th class="text-center">Total 52,24%</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,14 +77,6 @@ include_once 'presentation/public/header.php';
                         <td class="text-center">Dato prueba</td>
                         <td class="text-center">Dato prueba</td>
                         <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">
-                            <a href="?controller=Payroll&action=updateView"><i class="fa fa-edit"></i> Editar</a>
-                            <a class="font-warning" href="#" onclick="confirmDelete()();"><i class="fa fa-trash-alt"></i> Eliminar</a>
-                        </td>
                     </tr>
                 </tbody>
             </table>

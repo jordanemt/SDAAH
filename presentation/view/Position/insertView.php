@@ -15,7 +15,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -33,10 +33,10 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-4">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" required">
+                        <select class="form-control" id="type" name="type" onchange="showSalaryOptions();" required">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="Mensual" onclick="switchVisibilityToShow('#salary-container'); switchVisibilityToHide('#time-container');">Mensual</option>
-                            <option value="Diario" onclick="switchVisibilityToShow('#time-container'); switchVisibilityToHide('#salary-container');">Diario</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Diario">Diario</option>
                         </select>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

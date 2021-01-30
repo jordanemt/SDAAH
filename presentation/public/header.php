@@ -47,23 +47,23 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item <?php if(isset($vars["user-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=user">Usuarios</a>
+                            <a class="nav-link" href="?controller=User">Usuarios</a>
                         </li>
                         <li class="nav-item <?php if(isset($vars["employee-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=employee">Empleados</a>
+                            <a class="nav-link" href="?controller=Employee">Empleados</a>
                         </li>
                         <li class="nav-item <?php if(isset($vars["position-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=position">Puestos</a>
+                            <a class="nav-link" href="?controller=Position">Puestos</a>
                         </li>
                         <li class="nav-item dropdown <?php if(isset($vars["payroll-view"])) {echo "active";} ?>">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Nómina
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="?controller=payroll">Quincenal</a>
-                                <a class="dropdown-item" href="?controller=payroll&action=monthlyView">Mensual</a>
-                                <a class="dropdown-item" href="?controller=payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
-                                <a class="dropdown-item" href="?controller=payroll&action=bncrReportView">Reporte del BNCR</a>
+                                <a class="dropdown-item" href="?controller=Payroll">Quincenal</a>
+                                <a class="dropdown-item" href="?controller=Payroll&action=monthlyView">Mensual</a>
+                                <a class="dropdown-item" href="?controller=Payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
+                                <a class="dropdown-item" href="?controller=Payroll&action=bncrReportView">Reporte del BNCR</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown <?php if(isset($vars["vacation-view"])) {echo "active";} ?>">
@@ -71,15 +71,21 @@
                                 Vacaciones
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="?controller=vacation">Calcular</a>
-                                <a class="dropdown-item" href="?controller=vacation&action=detail">Detalle</a>
+                                <a class="dropdown-item" href="?controller=Vacation">Calcular</a>
+                                <a class="dropdown-item" href="?controller=Vacation&action=detail">Detalle</a>
                             </div>
                         </li>
                         <li class="nav-item <?php if(isset($vars["liquidation-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=liquidation">Liquidaciones</a>
+                            <a class="nav-link" href="?controller=Liquidation">Liquidaciones</a>
                         </li>
-                        <li class="nav-item <?php if(isset($vars["bonus-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=bonus">Aguinaldos</a>
+                        <li class="nav-item dropdown <?php if(isset($vars["bonus-view"])) {echo "active";} ?>">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Aguinaldos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="?controller=Bonus">Calcular</a>
+                                <a class="dropdown-item" href="?controller=Bonus&action=detail">Detalle</a>
+                            </div>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">

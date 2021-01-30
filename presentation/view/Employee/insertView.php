@@ -16,7 +16,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -132,7 +132,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 
