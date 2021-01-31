@@ -2,16 +2,16 @@
 
 function insert() {
     addHtmlLoadingSpinnerOnSubmitButton();
-    successMessage("position");
+    successMessage("Position");
 }
 
 function update() {
     addHtmlLoadingSpinnerOnSubmitButton();
-    successMessage("position");
+    successMessage("Position");
 }
 
 function remove() {
-    successMessage("position");
+    successMessage("Position");
 }
 
 $(document).ready(function () {

@@ -2,16 +2,16 @@
 
 function insert() {
     addHtmlLoadingSpinnerOnSubmitButton();
-    successMessage("payroll");
+    successMessage("Payroll");
 }
 
 function update() {
     addHtmlLoadingSpinnerOnSubmitButton();
-    successMessage("payroll");
+    successMessage("Payroll");
 }
 
 function remove() {
-    successMessage("payroll");
+    successMessage("Payroll");
 }
 
 $(document).ready(function () {

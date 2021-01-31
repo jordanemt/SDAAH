@@ -44,6 +44,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Afiliado</th>
                         <th class="text-center">CSS/INS</th>
                         <th class="text-center">Acción</th>
+                        <th class="text-center">Comprobante</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,6 +71,8 @@ include_once 'presentation/public/header.php';
                         <td class="text-center">
                             <a href="?controller=Employee&action=updateView"><i class="fa fa-edit"></i> Editar</a>
                             <a class="font-warning" href="#" onclick="confirmDelete()();"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                        </td>
+                        <td class="text-center">
                             <a href="#"><i class="fa fa-eye"></i> Ver Comprobante</a>
                         </td>
                     </tr>
