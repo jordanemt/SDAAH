@@ -20,7 +20,7 @@ function logout() {
         type: "POST",
         cache: false,
         success: function () {
-            successMessage('Index');
+            window.location.replace("?controller=" + controllerName);
         },
         error: function (error) {
             errorMessage(error.responseText, 'Index');
