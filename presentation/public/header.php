@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,7 +11,7 @@
         <meta name="description" content="Departamento Administrativo - Asada Herediana" />
         <meta name="viewport" content="width=device-width,initial-scale=1"/>
         <!--<link rel="shortcut icon" type="image/x-icon" href="public/img/icono.ico"/>-->
-        
+
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
@@ -30,9 +34,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.4/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.22/b-1.6.5/r-2.2.6/sc-2.0.3/sl-1.3.1/datatables.min.js"></script>
-        
+
         <!--JS-->
         <script src="presentation/public/js/script.js" type="text/javascript"></script>
+        <script src="presentation/public/js/session.js" type="text/javascript"></script>
         <script src="presentation/public/js/messages.js" type="text/javascript"></script>
     </head>
 
@@ -45,52 +50,97 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item <?php if(isset($vars["user-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=User">Usuarios</a>
-                        </li>
-                        <li class="nav-item <?php if(isset($vars["employee-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=Employee">Empleados</a>
-                        </li>
-                        <li class="nav-item <?php if(isset($vars["position-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=Position">Puestos</a>
-                        </li>
-                        <li class="nav-item dropdown <?php if(isset($vars["payroll-view"])) {echo "active";} ?>">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Nómina
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="?controller=Payroll">Quincenal</a>
-                                <a class="dropdown-item" href="?controller=Payroll&action=monthlyView">Mensual</a>
-                                <a class="dropdown-item" href="?controller=Payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
-                                <a class="dropdown-item" href="?controller=Payroll&action=bncrReportView">Reporte del BNCR</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown <?php if(isset($vars["vacation-view"])) {echo "active";} ?>">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Vacaciones
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="?controller=Vacation">Calcular</a>
-                                <a class="dropdown-item" href="?controller=Vacation&action=detail">Detalle</a>
-                            </div>
-                        </li>
-                        <li class="nav-item <?php if(isset($vars["liquidation-view"])) {echo "active";} ?>">
-                            <a class="nav-link" href="?controller=Liquidation">Liquidaciones</a>
-                        </li>
-                        <li class="nav-item dropdown <?php if(isset($vars["bonus-view"])) {echo "active";} ?>">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Aguinaldos
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="?controller=Bonus">Calcular</a>
-                                <a class="dropdown-item" href="?controller=Bonus&action=detail">Detalle</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Iniciar Sesión</button>-->
-                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Salir</button>
-                    </form>
+                    <?php
+                    if (!isset($_SESSION['role'])) {
+                        ?>
+
+                        <ul class="navbar-nav mr-auto">
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <a class="btn btn-outline-light my-2 my-sm-0" href="?controller=Session" type="submit">Iniciar Sesión</a>
+                        </form>
+
+                        <?php
+                    } else {
+                        ?>
+
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item <?php
+                            if (isset($vars["user-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link" href="?controller=User">Usuarios</a>
+                            </li>
+                            <li class="nav-item <?php
+                            if (isset($vars["employee-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link" href="?controller=Employee">Empleados</a>
+                            </li>
+                            <li class="nav-item <?php
+                            if (isset($vars["position-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link" href="?controller=Position">Puestos</a>
+                            </li>
+                            <li class="nav-item dropdown <?php
+                            if (isset($vars["payroll-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Nómina
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="?controller=Payroll">Quincenal</a>
+                                    <a class="dropdown-item" href="?controller=Payroll&action=monthlyView">Mensual</a>
+                                    <a class="dropdown-item" href="?controller=Payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
+                                    <a class="dropdown-item" href="?controller=Payroll&action=bncrReportView">Reporte del BNCR</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown <?php
+                            if (isset($vars["vacation-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Vacaciones
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="?controller=Vacation">Calcular</a>
+                                    <a class="dropdown-item" href="?controller=Vacation&action=detail">Detalle</a>
+                                </div>
+                            </li>
+                            <li class="nav-item <?php
+                            if (isset($vars["liquidation-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link" href="?controller=Liquidation">Liquidaciones</a>
+                            </li>
+                            <li class="nav-item dropdown <?php
+                            if (isset($vars["bonus-view"])) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Aguinaldos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="?controller=Bonus">Calcular</a>
+                                    <a class="dropdown-item" href="?controller=Bonus&action=detail">Detalle</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <a class="btn btn-outline-light my-2 my-sm-0" href="#" onclick="logout();" type="submit">Salir</a>
+                        </form>
+
+                        <?php
+                    }
+                    ?>
                 </div>
             </nav>

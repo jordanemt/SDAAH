@@ -5,6 +5,7 @@ class FrontController {
     static function main() {
         require 'presentation/View.php';
         require 'common/configuration.php';
+        require 'exceptions/ExceptionsHandler.php';
 
         if (!empty($_GET['controller'])) {
             $controllerName = $_GET['controller'] . 'Controller';
@@ -30,6 +31,8 @@ class FrontController {
             trigger_error($controllerName . '->' . $actionName . ' does not exist', E_USER_NOTICE);
             return FALSE;
         }
+        
+        new ExceptionsHandler();
         $controller = new $controllerName();
         $controller->$actionName();
     }
