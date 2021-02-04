@@ -13,14 +13,13 @@ class SessionController {
 
     public function login() {
         session_start();
-        $_SESSION['role'] = 3;
+        $_SESSION['id'] = 1;
         echo 'Sesión iniciada';
     }
 
     public function logout() {
         session_start();
         session_destroy();
-        echo 'Sesión cerrada';
     }
 
 }

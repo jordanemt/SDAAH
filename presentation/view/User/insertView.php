@@ -2,6 +2,10 @@
 
 $vars["user-view"] = true;
 include_once 'presentation/public/header.php';
+
+if (!isset($_SESSION['id'])) {
+    header('Location: ?controller=Index');
+}
 ?>
 
 <script src="presentation/public/js/user.js" type="text/javascript"></script>
@@ -20,37 +24,41 @@ include_once 'presentation/public/header.php';
             <hr>
 
             <form id="form">
+                <div class="form-group d-none">
+                    <input type="number" class="form-control" id="id" name="id" value="1">
+                </div>
+
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control" id="card" name="card" placeholder="Ingrese lo que se le solicita" maxlength="30" required>
+                    <input type="text" class="form-control" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="password">Contraseña</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese lo que se le solicita" maxlength="11" required>
+                        <label for="pass">Contraseña</label>
+                        <input type="password" class="form-control" id="pass" name="pass" placeholder="Ingrese lo que se le solicita" minlength="6" maxlength="11" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="passwordConfirm">Confirmar Contraseña</label>
-                        <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Ingrese lo que se le solicita" maxlength="11" required>
+                        <label for="passConfirm">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="passConfirm" name="passConfirm" placeholder="Ingrese lo que se le solicita" minlength="6" maxlength="11" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="20" required>
+                        <input type="text" class="form-control" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="20" required>
+                        <input type="text" class="form-control" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
                     </div>
-                    
+
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="40" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" required>
                     </div>
                 </div>
 

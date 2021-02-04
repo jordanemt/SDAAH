@@ -2,6 +2,10 @@
 
 $vars["bonus-view"] = true;
 include_once 'presentation/public/header.php';
+
+if (!isset($_SESSION['id'])) {
+    header('Location: ?controller=Index');
+}
 ?>
 
 <script src="presentation/public/js/vacation.js" type="text/javascript"></script>
@@ -35,14 +39,14 @@ include_once 'presentation/public/header.php';
                         <label for="year">Año</label>
                         <input type="text" class="form-control" id="year" name="year" required>
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="completeName">Nombre Completo</label>
                         <input type="text" class="form-control" id="completeName" name="completeName" placeholder="Nombre del Empleado" required disabled>
                     </div>
 
                 </div>
-                
+
                 <h4>Salarios Devengados por Quincena</h4>
 
                 <h6 class="label-hide">Salario #1</h6>
@@ -218,7 +222,7 @@ include_once 'presentation/public/header.php';
                     </div>
 
                 </div>
-                
+
                 <h6 class="label-hide">Salario #7</h6>
 
                 <div class="form-row">
@@ -392,7 +396,7 @@ include_once 'presentation/public/header.php';
                     </div>
 
                 </div>
-                
+
                 <h6 class="label-hide">Salario #13</h6>
 
                 <div class="form-row">
@@ -566,7 +570,7 @@ include_once 'presentation/public/header.php';
                     </div>
 
                 </div>
-                
+
                 <h6 class="label-hide">Salario #19</h6>
 
                 <div class="form-row">
@@ -740,7 +744,7 @@ include_once 'presentation/public/header.php';
                     </div>
 
                 </div>
-                
+
                 <div class="form-row justify-content-end">
 
                     <div class="form-group col-md-6">
@@ -749,11 +753,11 @@ include_once 'presentation/public/header.php';
                     </div>
 
                 </div>
-                
+
                 <h4>Cálculos para Aguinaldo</h4>
-                
+
                 <div class="form-row">
-                    
+
                     <div class="form-group col-md-4">
                         <label for="totalVacation">Total Salarios / 12 =</label>
                         <input type="text" class="form-control" id="totalVacation" name="totalVacation" required disabled>
@@ -763,14 +767,14 @@ include_once 'presentation/public/header.php';
                         <label for="totalVacation">Menos Pensión Alimenticia</label>
                         <input type="text" class="form-control" id="totalVacation" name="totalVacation" required>
                     </div>
-                    
+
                     <div class="form-group col-md-4">
                         <label for="totalVacation"><strong>A Pagar</strong></label>
                         <input type="text" class="form-control" id="totalVacation" name="totalVacation" required disabled>
                     </div>
 
                 </div>
-                
+
                 <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
             </form>
 

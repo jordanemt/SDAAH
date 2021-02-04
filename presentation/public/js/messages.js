@@ -12,18 +12,16 @@ function successMessage(controllerName) {
     });
 }
 
-function errorMessage(message, htmlButton) {
+function errorMessage(message) {
     Swal.fire({
         icon: 'error',
         title: '¡Ha ocurrido un error!',
         text: message,
         showConfirmButton: true
-    }).then(function () {
-        addHtmlOnSubmitButton(htmlButton);
     });
 }
 
-function confirmDelete() {
+function confirmDelete(id) {
     Swal.fire({
         title: '¿Está seguro?',
         text: "Esta acción no se puede revertir",
@@ -35,7 +33,7 @@ function confirmDelete() {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            remove();
+            remove(id);
         }
     });
 }

@@ -51,7 +51,7 @@ session_start();
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <?php
-                    if (!isset($_SESSION['role'])) {
+                    if (!isset($_SESSION['id'])) {
                         ?>
 
                         <ul class="navbar-nav mr-auto">

@@ -10,7 +10,7 @@ function login() {
             successMessage('Index');
         },
         error: function (error) {
-            errorMessage(error.responseText, 'Index');
+            errorMessage(error.responseText);
         }
     });
 }
@@ -36,7 +36,7 @@ function logout() {
                     window.location.replace("?controller=Index");
                 },
                 error: function (error) {
-                    errorMessage(error.responseText, 'Index');
+                    errorMessage(error.responseText);
                 }
             });
         }

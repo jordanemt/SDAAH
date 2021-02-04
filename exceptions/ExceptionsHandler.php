@@ -11,7 +11,8 @@ class ExceptionsHandler {
             echo $exception->getMessage();
         } else {
             http_response_code(500);
-            echo 'Error Inesperado';
+//            echo 'Error Inesperado';
+            echo $exception->getMessage();
         }
     }
 
