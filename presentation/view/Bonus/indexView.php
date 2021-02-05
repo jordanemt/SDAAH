@@ -1,6 +1,5 @@
 <?php
-
-$vars["bonus-view"] = true;
+$vars["viewName"] = 'bonus';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {

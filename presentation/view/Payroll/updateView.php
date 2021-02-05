@@ -1,6 +1,5 @@
 <?php
-
-$vars["payroll-view"] = true;
+$vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {

@@ -1,6 +1,5 @@
 <?php
-
-$vars["vacation-view"] = true;
+$vars["viewName"] = 'vacation';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {

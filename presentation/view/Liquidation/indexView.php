@@ -1,6 +1,5 @@
 <?php
-
-$vars["liquidation-view"] = true;
+$vars["viewName"] = 'liquidation';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {

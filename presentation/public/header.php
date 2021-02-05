@@ -41,7 +41,7 @@ session_start();
         <script src="presentation/public/js/messages.js" type="text/javascript"></script>
     </head>
 
-    <body>
+    <body class="d-none">
         <div class="body-content">
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #08a5ff">
                 <a class="navbar-brand" href="?controller=index">Administración</a>
@@ -66,28 +66,28 @@ session_start();
 
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item <?php
-                            if (isset($vars["user-view"])) {
+                            if (strcasecmp($vars['viewName'], 'user') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="?controller=User">Usuarios</a>
                             </li>
                             <li class="nav-item <?php
-                            if (isset($vars["employee-view"])) {
+                            if (strcasecmp($vars['viewName'], 'employee') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="?controller=Employee">Empleados</a>
                             </li>
                             <li class="nav-item <?php
-                            if (isset($vars["position-view"])) {
+                            if (strcasecmp($vars['viewName'], 'position') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="?controller=Position">Puestos</a>
                             </li>
                             <li class="nav-item dropdown <?php
-                            if (isset($vars["payroll-view"])) {
+                            if (strcasecmp($vars['viewName'], 'payroll') === 0) {
                                 echo "active";
                             }
                             ?>">
@@ -102,7 +102,7 @@ session_start();
                                 </div>
                             </li>
                             <li class="nav-item dropdown <?php
-                            if (isset($vars["vacation-view"])) {
+                            if (strcasecmp($vars['viewName'], 'vacation') === 0) {
                                 echo "active";
                             }
                             ?>">
@@ -115,14 +115,14 @@ session_start();
                                 </div>
                             </li>
                             <li class="nav-item <?php
-                            if (isset($vars["liquidation-view"])) {
+                            if (strcasecmp($vars['viewName'], 'liquidation') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="?controller=Liquidation">Liquidaciones</a>
                             </li>
                             <li class="nav-item dropdown <?php
-                            if (isset($vars["bonus-view"])) {
+                            if (strcasecmp($vars['viewName'], 'bonus') === 0) {
                                 echo "active";
                             }
                             ?>">

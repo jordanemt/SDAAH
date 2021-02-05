@@ -1,5 +1,5 @@
 <?php
-$vars["user-view"] = true;
+$vars["viewName"] = 'user';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {

@@ -1,6 +1,5 @@
 <?php
-
-$vars["employee-view"] = true;
+$vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {

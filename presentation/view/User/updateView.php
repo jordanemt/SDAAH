@@ -1,6 +1,5 @@
 <?php
-
-$vars["user-view"] = true;
+$vars["viewName"] = 'user';
 include_once 'presentation/public/header.php';
 ?>
 
@@ -27,7 +26,7 @@ include_once 'presentation/public/header.php';
                 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control" id="card" name="card" maxlength="30" value="<?php echo $vars['data']['card']; ?>" readonly required>
+                    <input type="text" class="form-control numberMask" id="card" name="card" maxlength="30" value="<?php echo $vars['data']['card']; ?>" readonly required>
                 </div>
 
                 <div class="form-group">
@@ -43,6 +42,7 @@ include_once 'presentation/public/header.php';
                     <div class="form-group col-md-6">
                         <label for="pass">Nueva Contraseña</label>
                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Ingrese lo que se le solicita" minlength="6" maxlength="11" required>
+                        <small id="passHelp" class="form-text text-muted">Digite entre 6 a 11 carácteres</small>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -54,17 +54,17 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['firstLastName']; ?>" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['firstLastName']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['secondLastName']; ?>" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['secondLastName']; ?>" required>
                     </div>
                     
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" value="<?php echo $vars['data']['name']; ?>" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" value="<?php echo $vars['data']['name']; ?>" required>
                     </div>
                 </div>
 

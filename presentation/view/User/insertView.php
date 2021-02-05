@@ -1,6 +1,5 @@
 <?php
-
-$vars["user-view"] = true;
+$vars["viewName"] = 'user';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {
@@ -30,13 +29,14 @@ if (!isset($_SESSION['id'])) {
 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" required>
+                    <input type="text" class="form-control numberMask" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="pass">Contraseña</label>
                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Ingrese lo que se le solicita" minlength="6" maxlength="11" required>
+                        <small id="passHelp" class="form-text text-muted">Digite entre 6 a 11 carácteres</small>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -48,17 +48,17 @@ if (!isset($_SESSION['id'])) {
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" required>
                     </div>
                 </div>
 
@@ -71,8 +71,8 @@ if (!isset($_SESSION['id'])) {
                     <div class="form-group col-md-6">
                         <label for="role">Rol</label>
                         <select class="form-control" id="role" name="role" required>
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Consultor</option>
+                            <option disabled>Seleccione una opción</option>
+                            <option selected value="1">Consultor</option>
                             <option value="2">Digitador</option>
                             <option value="3">Administrador</option>
                         </select>

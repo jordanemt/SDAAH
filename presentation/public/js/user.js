@@ -1,41 +1,49 @@
 /* global Swal */
 
 function insert() {
-    addHtmlLoadingSpinnerOnSubmitButton();
-    
-    var url = "?controller=User&action=insert";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: $("#form").serialize(),
-        success: function () {
-            successMessage("User");
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
-            addHtmlOnSubmitButton('Insertar');
-        }
-    });
+    if ($("#form").valid()) {
+        addHtmlLoadingSpinnerOnSubmitButton();
+
+        var url = "?controller=User&action=insert";
+        $.ajax({
+            url: url,
+            type: "POST",
+            cache: false,
+            data: $("#form").serialize(),
+            success: function () {
+                successMessage("User");
+            },
+            error: function (error) {
+                errorMessage(error.responseText);
+                addHtmlOnSubmitButton('Insertar');
+            }
+        });
+    } else {
+        errorMessage("Campos vacíos o inválidos");
+    }
 }
 
 function update() {
-    addHtmlLoadingSpinnerOnSubmitButton();
-    
-    var url = "?controller=User&action=update";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: $("#form").serialize(),
-        success: function () {
-            successMessage("User");
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
-            addHtmlOnSubmitButton('Actualizar');
-        }
-    });
+    if ($("#form").valid()) {
+        addHtmlLoadingSpinnerOnSubmitButton();
+
+        var url = "?controller=User&action=update";
+        $.ajax({
+            url: url,
+            type: "POST",
+            cache: false,
+            data: $("#form").serialize(),
+            success: function () {
+                successMessage("User");
+            },
+            error: function (error) {
+                errorMessage(error.responseText);
+                addHtmlOnSubmitButton('Actualizar');
+            }
+        });
+    } else {
+        errorMessage("Campos vacíos o inválidos");
+    }
 }
 
 function remove(id) {
@@ -50,10 +58,7 @@ function remove(id) {
         },
         error: function (error) {
             errorMessage(error.responseText);
-            
+
         }
     });
 }
-
-$(document).ready(function () {
-});

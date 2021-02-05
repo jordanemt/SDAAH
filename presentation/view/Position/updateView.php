@@ -1,6 +1,5 @@
 <?php
-
-$vars["position-view"] = true;
+$vars["viewName"] = 'position';
 include_once 'presentation/public/header.php';
 
 if (!isset($_SESSION['id'])) {
@@ -19,53 +18,62 @@ if (!isset($_SESSION['id'])) {
 
         <div class="card-body">
 
-            <a href="?controllerPosition"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=Position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
             <form id="form">
                 <div class="form-row">
+                    <div class="form-group d-none">
+                        <input type="number" class="form-control" id="id" name="id" value="<?php echo $vars['data']['id']; ?>">
+                    </div>
+
                     <div class="form-group col-md-4">
-                        <label for="id">Código</label>
-                        <input type="number" class="form-control" id="id" name="id" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" required>
+                        <label for="cod">Código</label>
+                        <input type="text" class="form-control numberMask" id="cod" name="cod" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" value="<?php echo $vars['data']['cod']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="40" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['name']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" required">
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="Mensual" onclick="switchVisibilityToShow('#salary-container'); switchVisibilityToHide('#time-container');">Mensual</option>
-                            <option value="Diario" onclick="switchVisibilityToShow('#time-container'); switchVisibilityToHide('#salary-container');">Diario</option>
+                        <select class="form-control" id="type" name="type" onchange="showSalaryOptions();" required">
+                            <option disabled>Seleccione una opción</option>
+                            <option <?php if ($vars['data']['type'] == 1) { echo 'selected'; } ?> value="1">Mensual</option>
+                            <option <?php if ($vars['data']['type'] == 2) { echo 'selected'; } ?> value="2">Diario</option>
                         </select>
                     </div>
                 </div>
 
-                <div id="salary-container" class="form-group"> <script>switchVisibilityToHide('#salary-container');</script>
+                <div class="form-group">
                     <label for="salary">Salario</label>
-                    <input type="text" class="form-control" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" required>
+                    <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" 
+                        <?php if ($vars['data']['type'] == 2) { echo 'disabled'; } ?> value="<?php echo $vars['data']['salary']; ?>" required>
                 </div>
 
-                <div id="time-container" class="form-row"> <script>switchVisibilityToHide('#time-container');</script>
+                <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="ordinaryTime">Hora Ordinaria</label>
-                        <input type="text" class="form-control" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="text" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['ordinaryTime']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="extraTime">Hora Extra</label>
-                        <input type="text" class="form-control" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="text" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['extraTime']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doubleTime">Hora Doble</label>
-                        <input type="text" class="form-control" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="text" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['doubleTime']; ?>" required>
                     </div>
                 </div>
+
 
                 <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
             </form>
@@ -80,5 +88,4 @@ if (!isset($_SESSION['id'])) {
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';
