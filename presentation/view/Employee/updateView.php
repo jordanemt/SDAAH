@@ -1,10 +1,6 @@
 <?php
 $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
-
-if (!isset($_SESSION['id'])) {
-    header('Location: ?controller=Index');
-}
 ?>
 
 <script src="presentation/public/js/employee.js" type="text/javascript"></script>

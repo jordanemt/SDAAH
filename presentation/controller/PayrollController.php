@@ -1,10 +1,15 @@
 <?php
 
+require 'SessionController.php';
+
 class PayrollController {
 
     public function __construct() {
         $this->view = new View();
         $this->controllerName = 'Payroll/';
+        
+        $this->sessionController = new SessionController;
+        $this->sessionController->isNotLoggedThenRedirect();
     }
 
     public function index() {

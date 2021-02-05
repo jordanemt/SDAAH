@@ -1,10 +1,15 @@
 <?php
 
+require 'SessionController.php';
+
 class EmployeeController {
 
     public function __construct() {
         $this->view = new View();
         $this->controllerName = 'Employee/';
+        
+        $this->sessionController = new SessionController;
+        $this->sessionController->isNotLoggedThenRedirect();
     }
 
     public function index() {

@@ -1,15 +1,17 @@
 <?php
 
 require 'business/PositionBusiness.php';
+require 'SessionController.php';
 
 class PositionController {
-    
-    private $business;
 
     public function __construct() {
         $this->view = new View();
         $this->business = new PositionBusiness();
         $this->controllerName = 'Position/';
+        
+        $this->sessionController = new SessionController;
+        $this->sessionController->isNotLoggedThenRedirect();
     }
 
     public function index() {

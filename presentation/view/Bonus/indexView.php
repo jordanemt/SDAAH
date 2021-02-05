@@ -1,10 +1,6 @@
 <?php
 $vars["viewName"] = 'bonus';
 include_once 'presentation/public/header.php';
-
-if (!isset($_SESSION['id'])) {
-    header('Location: ?controller=Index');
-}
 ?>
 
 <script src="presentation/public/js/vacation.js" type="text/javascript"></script>
