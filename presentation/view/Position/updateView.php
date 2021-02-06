@@ -46,27 +46,27 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="salary">Salario</label>
-                    <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" 
-                        <?php if ($vars['data']['type'] == 2) { echo 'disabled'; } ?> value="<?php echo $vars['data']['salary']; ?>" required>
+                    <input type="number" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" 
+                        <?php if ($vars['data']['type'] == 2) { echo 'disabled'; } ?> value="<?php echo $vars['data']['salary']; ?>" step="any" min="0" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="ordinaryTime">Hora Ordinaria</label>
-                        <input type="text" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['ordinaryTime']; ?>" required>
+                        <input type="number" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['ordinaryTime']; ?>" step="any" min="0" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="extraTime">Hora Extra</label>
-                        <input type="text" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['extraTime']; ?>" required>
+                        <input type="number" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['extraTime']; ?>" step="any" min="0" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doubleTime">Hora Doble</label>
-                        <input type="text" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['doubleTime']; ?>" required>
+                        <input type="number" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['doubleTime']; ?>" step="any" min="0" required>
                     </div>
                 </div>
 

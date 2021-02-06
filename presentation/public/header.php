@@ -41,7 +41,7 @@
     <body class="d-none">
         <div class="body-content">
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #08a5ff">
-                <a class="navbar-brand" href="?controller=index">Administración</a>
+                <a class="navbar-brand" href="?controller=Index">Administración</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

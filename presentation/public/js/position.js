@@ -2,7 +2,6 @@
 
 function insert() {
     if ($("#form").valid()) {
-        $("input").unmask();
         addHtmlLoadingSpinnerOnSubmitButton();
 
         var url = "?controller=Position&action=insert";
@@ -17,7 +16,6 @@ function insert() {
             error: function (error) {
                 errorMessage(error.responseText);
                 addHtmlOnSubmitButton('Insertar');
-                setMask();
             }
         });
     } else {
@@ -27,7 +25,6 @@ function insert() {
 
 function update() {
     if ($("#form").valid()) {
-        $("input").unmask();
         addHtmlLoadingSpinnerOnSubmitButton();
 
         var url = "?controller=Position&action=update";
@@ -42,7 +39,6 @@ function update() {
             error: function (error) {
                 errorMessage(error.responseText);
                 addHtmlOnSubmitButton('Actualizar');
-                setMask();
             }
         });
     } else {

@@ -33,13 +33,11 @@ class PositionController {
             'cod' => $_POST['cod'],
             'name' => $_POST['name'],
             'type' => isset($_POST['type']) ? $_POST['type'] : null,
-            'salary' => isset($_POST['salary']) ? substr_replace($_POST['salary'], '.', strlen($_POST['salary']) - 2, 0) : null,
-            'ordinaryTime' => isset($_POST['ordinaryTime']) ? substr_replace($_POST['ordinaryTime'], '.', strlen($_POST['ordinaryTime']) - 2, 0) : null,
-            'extraTime' => isset($_POST['extraTime']) ? substr_replace($_POST['extraTime'], '.', strlen($_POST['extraTime']) - 2, 0) : null,
-            'doubleTime' => isset($_POST['doubleTime']) ? substr_replace($_POST['doubleTime'], '.', strlen($_POST['doubleTime']) - 2, 0) : null
+            'salary' => isset($_POST['salary']) ? $_POST['salary'] : null,
+            'ordinaryTime' => isset($_POST['ordinaryTime']) ? $_POST['ordinaryTime'] : null,
+            'extraTime' => isset($_POST['extraTime']) ? $_POST['extraTime'] : null,
+            'doubleTime' => isset($_POST['doubleTime']) ? $_POST['doubleTime'] : null
         );
-        
-        print_r($entity);
 
         $this->business->insert($entity);
     }
@@ -50,10 +48,10 @@ class PositionController {
             'cod' => $_POST['cod'],
             'name' => $_POST['name'],
             'type' => isset($_POST['type']) ? $_POST['type'] : null,
-            'salary' => isset($_POST['salary']) ? substr_replace($_POST['salary'], '.', strlen($_POST['salary']) - 2, 0) : null,
-            'ordinaryTime' => isset($_POST['ordinaryTime']) ? substr_replace($_POST['ordinaryTime'], '.', strlen($_POST['ordinaryTime']) - 2, 0) : null,
-            'extraTime' => isset($_POST['extraTime']) ? substr_replace($_POST['extraTime'], '.', strlen($_POST['extraTime']) - 2, 0) : null,
-            'doubleTime' => isset($_POST['doubleTime']) ? substr_replace($_POST['doubleTime'], '.', strlen($_POST['doubleTime']) - 2, 0) : null
+            'salary' => isset($_POST['salary']) ? $_POST['salary'] : null,
+            'ordinaryTime' => isset($_POST['ordinaryTime']) ? $_POST['ordinaryTime'] : null,
+            'extraTime' => isset($_POST['extraTime']) ? $_POST['extraTime'] : null,
+            'doubleTime' => isset($_POST['doubleTime']) ? $_POST['doubleTime'] : null
         );
 
         $this->business->update($entity);

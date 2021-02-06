@@ -88,7 +88,6 @@ function setMask() {
             }
         }
     });
-    $(".moneyMask").mask("# ##0,00", {reverse: true});
 }
 
 $(document).ready(function () {

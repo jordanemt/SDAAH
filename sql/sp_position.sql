@@ -14,10 +14,10 @@ CREATE PROCEDURE sp_insert_position(
     cod INT,
     name VARCHAR(25),
     type INT,
-    salary DECIMAL,
-    ordinaryTime DECIMAL,
-    extraTime DECIMAL,
-    doubleTime DECIMAL
+    salary DECIMAL(11,2),
+    ordinaryTime DECIMAL(11,2),
+    extraTime DECIMAL(11,2),
+    doubleTime DECIMAL(11,2)
 )
 BEGIN
 	INSERT INTO position (
@@ -43,10 +43,10 @@ CREATE PROCEDURE sp_update_position(
 	cod INT,
     name VARCHAR(25),
     type INT,
-    salary DECIMAL,
-    ordinaryTime DECIMAL,
-    extraTime DECIMAL,
-    doubleTime DECIMAL
+    salary DECIMAL(11,2),
+    ordinaryTime DECIMAL(11,2),
+    extraTime DECIMAL(11,2),
+    doubleTime DECIMAL(11,2)
 )
 BEGIN
 	UPDATE position

@@ -15,9 +15,9 @@ CREATE TABLE position (
     cod INT NOT NULL,
     name VARCHAR(25) NOT NULL,
     type INT NOT NULL CHECK(type IN (1, 2)),
-    salary DECIMAL NULL,
-    ordinaryTime DECIMAL NULL,
-    extraTime DECIMAL NULL,
-    doubleTime DECIMAL NULL,
+    salary DECIMAL(11,2) NULL,
+    ordinaryTime DECIMAL(11,2) NULL,
+    extraTime DECIMAL(11,2) NULL,
+    doubleTime DECIMAL(11,2) NULL,
     isDeleted BOOL NOT NULL DEFAULT 0
 );

@@ -42,23 +42,23 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="salary">Salario</label>
-                    <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" required>
+                    <input type="number" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" step="any" min="0" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="ordinaryTime">Hora Ordinaria</label>
-                        <input type="text" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" disabled required>
+                        <input type="number" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="extraTime">Hora Extra</label>
-                        <input type="text" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" disabled required>
+                        <input type="number" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doubleTime">Hora Doble</label>
-                        <input type="text" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" disabled required>
+                        <input type="number" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                     </div>
                 </div>
 
