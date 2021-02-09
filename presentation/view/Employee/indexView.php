@@ -39,6 +39,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Hora Extra</th>
                         <th class="text-center">Hora Doble</th>
                         <th class="text-center">Liquidado</th>
+                        <th class="text-center">Observaciones</th>
                         <th class="text-center">Correo</th>
                         <th class="text-center">Afiliado</th>
                         <th class="text-center">CSS/INS</th>
@@ -47,34 +48,100 @@ include_once 'presentation/public/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">
-                            <a href="?controller=Employee&action=updateView"><i class="fa fa-edit"></i> Editar</a>
-                            <a class="font-warning" href="#" onclick="confirmDelete()();"><i class="fa fa-trash-alt"></i> Eliminar</a>
-                        </td>
-                        <td class="text-center">
-                            <a href="#"><i class="fa fa-eye"></i> Ver Comprobante</a>
-                        </td>
-                    </tr>
+
+                    <?php
+                    foreach ($vars['data'] as $value) {
+                        ?>
+
+                        <tr>
+                            <td class="text-center"><?php echo $value['card'] ?></td>
+                            <td class="text-center"><?php echo $value['firstLastName'] ?></td>
+                            <td class="text-center"><?php echo $value['secondLastName'] ?></td>
+                            <td class="text-center"><?php echo $value['name'] ?></td>
+                            <td class="text-center"><?php echo $value['gender'] ?></td>
+                            <td class="text-center"><?php echo $value['position']['name'] ?></td>
+                            <td class="text-center"><?php echo $value['location'] ?></td>
+                            <td class="text-center"><?php echo $value['bankAccount'] ?></td>
+                            <td class="text-center"><?php echo $value['birthdate'] ?></td>
+                            <td class="text-center"><?php echo $value['admissionDate'] ?></td>
+                            <td class="text-center"><?php echo $value['position']['type'] ?></td>
+                            <td class="text-center">
+                                <?php
+                                if (isset($value['position']['salary'])) {
+                                    echo '₡' . number_format($value['position']['salary'], 2, ',', ' ');
+                                } else {
+                                    echo '---';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?php
+                                if (isset($value['position']['ordinaryTime'])) {
+                                    echo '₡' . number_format($value['position']['ordinaryTime'], 2, ',', ' ');
+                                } else {
+                                    echo '---';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?php
+                                if (isset($value['position']['extraTime'])) {
+                                    echo '₡' . number_format($value['position']['extraTime'], 2, ',', ' ');
+                                } else {
+                                    echo '---';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?php
+                                if (isset($value['position']['doubleTime'])) {
+                                    echo '₡' . number_format($value['position']['doubleTime'], 2, ',', ' ');
+                                } else {
+                                    echo '---';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?php
+                                if ($value['isLiquidated']) {
+                                    echo 'Sí';
+                                } else {
+                                    echo 'No';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?php
+                                if ($value['observations'] != '') {
+                                    echo $value['observations'];
+                                } else {
+                                    echo '---';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center"><?php echo $value['email'] ?></td>
+                            <td class="text-center">
+                                <?php
+                                if ($value['isAffiliated']) {
+                                    echo 'Sí';
+                                } else {
+                                    echo 'No';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center"><?php echo $value['cssIns'] ?></td>
+                            <td class="text-center">
+                                <a href="?controller=Employee&action=updateView&id=<?php echo $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
+                                <a class="font-warning" href="#" onclick="confirmDelete(<?php echo $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="#"><i class="fa fa-eye"></i> Ver</a>
+                            </td>
+                        </tr>
+                        
+                        <?php
+                    }
+                    ?>
                 </tbody>
             </table>
 
@@ -84,5 +151,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

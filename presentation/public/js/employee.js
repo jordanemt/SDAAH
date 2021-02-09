@@ -1,18 +1,110 @@
 /* global Swal */
 
 function insert() {
-    addHtmlLoadingSpinnerOnSubmitButton();
-    successMessage("Employee");
+    if ($("#form").valid()) {
+        addHtmlLoadingSpinnerOnSubmitButton();
+
+        var url = "?controller=Employee&action=insert";
+        $.ajax({
+            url: url,
+            type: "POST",
+            cache: false,
+            data: $("#form").serialize(),
+            success: function () {
+                successMessage("Employee");
+            },
+            error: function (error) {
+                errorMessage(error.responseText);
+                addHtmlOnSubmitButton('Insertar');
+            }
+        });
+    } else {
+        errorMessage("Campos vacíos o inválidos");
+    }
 }
 
 function update() {
-    addHtmlLoadingSpinnerOnSubmitButton();
-    successMessage("Employee");
+    if ($("#form").valid()) {
+        addHtmlLoadingSpinnerOnSubmitButton();
+
+        var url = "?controller=Employee&action=update";
+        $.ajax({
+            url: url,
+            type: "POST",
+            cache: false,
+            data: $("#form").serialize(),
+            success: function () {
+                successMessage("Employee");
+            },
+            error: function (error) {
+                errorMessage(error.responseText);
+                addHtmlOnSubmitButton('Actualizar');
+            }
+        });
+    } else {
+        errorMessage("Campos vacíos o inválidos");
+    }
 }
 
-function remove() {
-    successMessage("Employee");
+function remove(id) {
+    var url = "?controller=Employee&action=remove";
+    $.ajax({
+        url: url,
+        type: "POST",
+        cache: false,
+        data: {"id": id},
+        success: function () {
+            successMessage("Employee");
+        },
+        error: function (error) {
+            errorMessage(error.responseText);
+        }
+    });
 }
 
-$(document).ready(function () {
-});
+function updateSelect() {
+    type = $("#type").val();
+
+    var url = "?controller=Position&action=getAllByType";
+    $.ajax({
+        url: url,
+        type: "GET",
+        cache: false,
+        data: {
+            "type": type
+        },
+        success: function (data) {
+            if (JSON.parse(data).length === 0) {
+                $("#idPosition").empty();
+                var option = $('<option></option>').attr("disabled", true)
+                        .attr("selected", true).text("No se encontraron Puestos del Tipo " + type);
+                $("#idPosition").append(option);
+                return 0;
+            }
+
+            $("#idPosition").empty();
+            var option = $('<option></option>').attr("disabled", true).attr("selected", true).text("Seleccione una opción");
+            $("#idPosition").append(option);
+
+            idPosition = $("#idPositionSave").val();
+            jQuery.each(JSON.parse(data), function () {
+                switch (this.id) {
+
+                    case idPosition:
+                        var option = $('<option></option>').attr("value", this.id).attr("selected", true).text(this.codName);
+                        $("#idPosition").append(option);
+                        break;
+
+                    default:
+                        var option = $('<option></option>').attr("value", this.id).text(this.codName);
+                        $("#idPosition").append(option);
+                        break;
+
+                }
+            });
+        },
+        error: function (error) {
+            errorMessage("No se han podido obtener los puestos: " + error.responseText);
+        }
+    });
+}

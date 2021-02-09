@@ -30,7 +30,6 @@ class UserController {
 
     public function insert() {
         $entity = array(
-            'id' => $_POST['id'],
             'card' => $_POST['card'],
             'pass' => $_POST['pass'],
             'passConfirm' => $_POST['passConfirm'],
@@ -47,6 +46,7 @@ class UserController {
     public function update() {
         $entity = array(
             'id' => $_POST['id'],
+            'card' => $_POST['card'],
             'pass' => $_POST['pass'],
             'passConfirm' => $_POST['passConfirm'],
             'firstLastName' => $_POST['firstLastName'],

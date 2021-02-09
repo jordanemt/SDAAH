@@ -19,10 +19,6 @@ include_once 'presentation/public/header.php';
             <hr>
 
             <form id="form">
-                <div class="form-group d-none">
-                    <input type="number" class="form-control" id="id" name="id" value="1">
-                </div>
-
                 <div class="form-group">
                     <label for="card">Cédula</label>
                     <input type="text" class="form-control numberMask" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" required>
@@ -67,8 +63,8 @@ include_once 'presentation/public/header.php';
                     <div class="form-group col-md-6">
                         <label for="role">Rol</label>
                         <select class="form-control" id="role" name="role" required>
-                            <option disabled>Seleccione una opción</option>
-                            <option selected value="1">Consultor</option>
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="1">Consultor</option>
                             <option value="2">Digitador</option>
                             <option value="3">Administrador</option>
                         </select>

@@ -33,32 +33,32 @@ include_once 'presentation/public/header.php';
                     <div class="form-group col-md-4">
                         <label for="type">Tipo</label>
                         <select class="form-control" id="type" name="type" onchange="showSalaryOptions();" required">
-                            <option disabled>Seleccione una opción</option>
-                            <option selected value="1">Mensual</option>
-                            <option value="2">Diario</option>
+                            <option selected disabled>Seleccione una opción</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Diario">Diario</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="salary">Salario</label>
-                    <input type="number" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" step="any" min="0" required>
+                    <input type="number" class="form-control" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="ordinaryTime">Hora Ordinaria</label>
-                        <input type="number" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
+                        <input type="number" class="form-control" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="extraTime">Hora Extra</label>
-                        <input type="number" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
+                        <input type="number" class="form-control" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doubleTime">Hora Doble</label>
-                        <input type="number" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
+                        <input type="number" class="form-control" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" step="any" min="0" disabled required>
                     </div>
                 </div>
 

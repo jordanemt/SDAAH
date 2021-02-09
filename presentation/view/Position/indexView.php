@@ -40,19 +40,7 @@ include_once 'presentation/public/header.php';
                         <tr>
                             <td class="text-center"><?php echo $value['cod'] ?></td>
                             <td class="text-center"><?php echo $value['name'] ?></td>
-                            <td class="text-center">
-                                <?php
-                                switch ($value['type']) {
-                                    case 1:
-                                        echo 'Mensual';
-                                        break;
-
-                                    case 2:
-                                        echo 'Diario';
-                                        break;
-                                }
-                                ?>
-                            </td>
+                            <td class="text-center"><?php echo $value['type']?></td>
                             <td class="text-center">
                                 <?php
                                 if (isset($value['salary'])) {

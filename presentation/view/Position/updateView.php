@@ -38,35 +38,35 @@ include_once 'presentation/public/header.php';
                         <label for="type">Tipo</label>
                         <select class="form-control" id="type" name="type" onchange="showSalaryOptions();" required">
                             <option disabled>Seleccione una opción</option>
-                            <option <?php if ($vars['data']['type'] == 1) { echo 'selected'; } ?> value="1">Mensual</option>
-                            <option <?php if ($vars['data']['type'] == 2) { echo 'selected'; } ?> value="2">Diario</option>
+                            <option <?php if ($vars['data']['type'] == 'Mensual') { echo 'selected'; } ?> value="Mensual">Mensual</option>
+                            <option <?php if ($vars['data']['type'] == 'Diario') { echo 'selected'; } ?> value="Diario">Diario</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="salary">Salario</label>
-                    <input type="number" class="form-control moneyMask" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" 
-                        <?php if ($vars['data']['type'] == 2) { echo 'disabled'; } ?> value="<?php echo $vars['data']['salary']; ?>" step="any" min="0" required>
+                    <input type="number" class="form-control" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" 
+                        <?php if ($vars['data']['type'] == 'Diario') { echo 'disabled'; } ?> value="<?php echo $vars['data']['salary']; ?>" step="any" min="0" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="ordinaryTime">Hora Ordinaria</label>
-                        <input type="number" class="form-control moneyMask" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['ordinaryTime']; ?>" step="any" min="0" required>
+                        <input type="number" class="form-control" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 'Mensual') { echo 'disabled'; } ?> value="<?php echo $vars['data']['ordinaryTime']; ?>" step="any" min="0" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="extraTime">Hora Extra</label>
-                        <input type="number" class="form-control moneyMask" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['extraTime']; ?>" step="any" min="0" required>
+                        <input type="number" class="form-control" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 'Mensual') { echo 'disabled'; } ?> value="<?php echo $vars['data']['extraTime']; ?>" step="any" min="0" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doubleTime">Hora Doble</label>
-                        <input type="number" class="form-control moneyMask" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 1) { echo 'disabled'; } ?> value="<?php echo $vars['data']['doubleTime']; ?>" step="any" min="0" required>
+                        <input type="number" class="form-control" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" 
+                            <?php if ($vars['data']['type'] == 'Mensual') { echo 'disabled'; } ?> value="<?php echo $vars['data']['doubleTime']; ?>" step="any" min="0" required>
                     </div>
                 </div>
 

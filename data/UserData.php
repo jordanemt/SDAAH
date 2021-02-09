@@ -52,26 +52,31 @@ class UserData {
     }
 
     public function update($entity, $pass) {
-        $this->db->beginTransaction();
+        try {
+            $this->db->beginTransaction();
 
-        $query = $this->db->prepare("CALL sp_update_user (?,?,?,?,?,?)");
-        $query->bindParam(1, $entity['id']);
-        $query->bindParam(2, $entity['firstLastName']);
-        $query->bindParam(3, $entity['secondLastName']);
-        $query->bindParam(4, $entity['name']);
-        $query->bindParam(5, $entity['email']);
-        $query->bindParam(6, $entity['role']);
+            $query = $this->db->prepare("CALL sp_update_user (?,?,?,?,?,?,?)");
+            $query->bindParam(1, $entity['id']);
+            $query->bindParam(2, $entity['card']);
+            $query->bindParam(3, $entity['firstLastName']);
+            $query->bindParam(4, $entity['secondLastName']);
+            $query->bindParam(5, $entity['name']);
+            $query->bindParam(6, $entity['email']);
+            $query->bindParam(7, $entity['role']);
 
-        if (!$query->execute()) {
-            $this->db->rollback();
-            throw new DataBaseException();
+            if (!$query->execute()) {
+                throw new DataBaseException();
+            }
+
+            if (isset($pass)) {
+                $this->updatePassword($entity['id'], $pass);
+            }
+
+            $this->db->commit();
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            throw $e;
         }
-
-        if (isset($pass)) {
-            $this->updatePassword($entity['id'], $pass);
-        }
-
-        $this->db->commit();
     }
 
     public function remove($id) {
@@ -89,7 +94,6 @@ class UserData {
         $query->bindParam(2, $pass);
 
         if (!$query->execute()) {
-            $this->db->rollback();
             throw new DataBaseException();
         }
     }

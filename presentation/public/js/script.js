@@ -70,6 +70,14 @@ function switchVisibilityToHide(element) {
     $(element).hide();
 }
 
+function switchDisabled(element) {
+    if ($(element).is(":disabled")) {
+        $(element).attr("disabled", false);
+    } else {
+        $(element).attr("disabled", true);
+    }
+}
+
 function chargeValidInput() {
     $("input").focusout(function () {
         if (this.value !== "") {
@@ -82,8 +90,8 @@ function setMask() {
     $(".numberMask").mask('#');
     $(".textMask").mask("s", {
         translation: {
-            's': {
-                pattern: /[A-Za-zÀ-ÿ]/,
+            "s": {
+                pattern: /[A-Za-zÀ-ÿ ]/,
                 recursive: true
             }
         }

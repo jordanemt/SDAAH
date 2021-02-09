@@ -36,6 +36,19 @@ class PositionData {
         return $data;
     }
 
+    public function getAllByType($type) {
+        $query = $this->db->prepare("CALL sp_get_all_by_type_position (?)");
+        $query->bindParam(1, $type);
+
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+
+        $data = $query->fetchAll();
+        $query->closeCursor();
+        return $data;
+    }
+
     public function insert($entity) {
         $query = $this->db->prepare("CALL sp_insert_position (?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['cod']);
@@ -63,7 +76,7 @@ class PositionData {
         $query->bindParam(6, $entity['ordinaryTime']);
         $query->bindParam(7, $entity['extraTime']);
         $query->bindParam(8, $entity['doubleTime']);
-        
+
         if (!$query->execute()) {
             $this->db->rollback();
             throw new DataBaseException();

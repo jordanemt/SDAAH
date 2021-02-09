@@ -3,7 +3,6 @@
 require 'data/PositionData.php';
 require_once 'exceptions/EmptyAttributeException.php';
 require_once 'exceptions/AttributeConflictException.php';
-require_once 'exceptions/PasswordsMatchException.php';
 require_once 'exceptions/DuplicateCodException.php';
 
 class PositionBusiness {
@@ -22,29 +21,37 @@ class PositionBusiness {
         return $this->data->getAll();
     }
 
+    public function getAllByType($type) {
+        if (!isset($type) && $type != 'Mensual' && $type != 'Diario') {
+            throw new AttributeConflictException();
+        }
+
+        return $this->data->getAllByType($type);
+    }
+
     public function insert($entity) {
         //Valid empties
         if (empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                ((empty($entity['salary']) && 
-                        (empty($entity['ordinaryTime']) ||
-                        empty($entity['extraTime']) ||
-                        empty($entity['doubleTime'])))) ||
-                ((isset($entity['salary']) && 
-                        (isset($entity['ordinaryTime']) ||
-                        isset($entity['extraTime']) ||
-                        isset($entity['doubleTime']))))) {
+                ((empty($entity['salary']) &&
+                (empty($entity['ordinaryTime']) ||
+                empty($entity['extraTime']) ||
+                empty($entity['doubleTime'])))) ||
+                ((isset($entity['salary']) &&
+                (isset($entity['ordinaryTime']) ||
+                isset($entity['extraTime']) ||
+                isset($entity['doubleTime']))))) {
             throw new EmptyAttributeException();
         }
 
         //Valid lentch
         if (strlen($entity['cod']) !== 4 ||
                 strlen($entity['name']) > 25 ||
-                (strlen($entity['type']) > 2 || strlen($entity['type']) < 1)) {
+                ($entity['type'] != 'Mensual' && $entity['type'] != 'Diario')) {
             throw new AttributeConflictException();
         }
-        
+
         $this->validDuplicateCod($entity['cod']);
 
         $this->data->insert($entity);
@@ -56,24 +63,24 @@ class PositionBusiness {
                 empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                ((empty($entity['salary']) && 
-                        (empty($entity['ordinaryTime']) ||
-                        empty($entity['extraTime']) ||
-                        empty($entity['doubleTime'])))) ||
-                ((isset($entity['salary']) && 
-                        (isset($entity['ordinaryTime']) ||
-                        isset($entity['extraTime']) ||
-                        isset($entity['doubleTime']))))) {
+                ((empty($entity['salary']) &&
+                (empty($entity['ordinaryTime']) ||
+                empty($entity['extraTime']) ||
+                empty($entity['doubleTime'])))) ||
+                ((isset($entity['salary']) &&
+                (isset($entity['ordinaryTime']) ||
+                isset($entity['extraTime']) ||
+                isset($entity['doubleTime']))))) {
             throw new EmptyAttributeException();
         }
 
         //Valid lentch
         if (strlen($entity['cod']) !== 4 ||
                 strlen($entity['name']) > 25 ||
-                (strlen($entity['type']) > 2 || strlen($entity['type']) < 1)) {
+                ($entity['type'] != 'Mensual' && $entity['type'] != 'Diario')) {
             throw new AttributeConflictException();
         }
-        
+
         $oldEntity = $this->data->get($entity['id']);
         if ($entity['cod'] != $oldEntity['cod']) {
             $this->validDuplicateCod($entity['cod']);

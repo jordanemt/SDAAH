@@ -28,6 +28,12 @@ class PositionController {
         $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
     
+    public function getAllByType() {
+        $type = isset($_GET['type']) ? $_GET['type'] : null;
+
+        echo json_encode($this->business->getAllByType($type));
+    }
+    
     public function insert() {
         $entity = array(
             'cod' => $_POST['cod'],

@@ -25,23 +25,23 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control" id="card" name="card" placeholder="Ingrese lo que se le solicita" maxlength="30" required>
+                    <input type="text" class="form-control numberMask" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="20" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="20" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="40" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" required>
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="birthdate">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="dd-mm-yyyy" required>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" required>
+                        <select class="form-control" id="type" name="type" onchange="updateSelect();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <option value="Mensual">Mensual</option>
                             <option value="Diario">Diario</option>
@@ -74,8 +74,8 @@ include_once 'presentation/public/header.php';
                     </div>
 
                     <div id="position-container" class="form-group col-md-6">
-                        <label for="id_position">Puesto</label>
-                        <select class="form-control" id="gender" name="gender" required>
+                        <label for="idPosition">Puesto</label>
+                        <select class="form-control" id="idPosition" name="idPosition" required>
                             <option selected disabled>Debe seleccionar un Tipo</option>
                         </select>
                     </div>
@@ -101,7 +101,7 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="bankAccount">Número de Cuenta Bancaria</label>
-                    <input type="text" class="form-control" id="bankAccount" name="bankAccount" placeholder="Ingrese lo que se le solicita" maxlength="50" required>
+                    <input type="text" class="form-control numberMask" id="bankAccount" name="bankAccount" placeholder="Ingrese lo que se le solicita" minlength="15" maxlength="15" required>
                 </div>
 
                 <div class="form-row">
@@ -111,15 +111,15 @@ include_once 'presentation/public/header.php';
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="css/ins">CSS/INS</label>
-                        <input type="number" class="form-control" id="css/ins" name="css/ins" placeholder="Ingrese lo que se le solicita" maxlength="4" required>
+                        <label for="cssIns">CSS/INS</label>
+                        <input type="text" class="form-control numberMask" id="cssIns" name="cssIns" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="affiliate" name="affiliate" value="1">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" id="isAffiliated" name="isAffiliated" value="1">
+                        <label class="form-check-label" for="isAffiliated">
                             Afiliado
                         </label>
                     </div>

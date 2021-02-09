@@ -10,7 +10,7 @@ function insert() {
             type: "POST",
             cache: false,
             data: $("#form").serialize(),
-            success: function () {
+            success: function (data) {
                 successMessage("Position");
             },
             error: function (error) {
@@ -64,14 +64,14 @@ function remove(id) {
 
 function showSalaryOptions() {
     switch ($("#type").val()) {
-        case "1" :
+        case "Mensual" :
             $("#salary").attr("disabled", false);
             $("#ordinaryTime").attr("disabled", true);
             $("#extraTime").attr("disabled", true);
             $("#doubleTime").attr("disabled", true);
             break;
 
-        case "2" :
+        case "Diario" :
             $("#salary").attr("disabled", true);
             $("#ordinaryTime").attr("disabled", false);
             $("#extraTime").attr("disabled", false);
