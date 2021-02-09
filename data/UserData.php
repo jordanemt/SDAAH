@@ -12,7 +12,7 @@ class UserData {
     }
 
     public function get($id) {
-        $query = $this->db->prepare("CALL sp_get_user (?)");
+        $query = $this->db->prepare("CALL `sp_get_user` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -25,7 +25,7 @@ class UserData {
     }
 
     public function getAll() {
-        $query = $this->db->prepare("CALL sp_get_all_user ()");
+        $query = $this->db->prepare("CALL `sp_get_all_user` ()");
 
         if (!$query->execute()) {
             throw new DataBaseException();
@@ -37,7 +37,7 @@ class UserData {
     }
 
     public function insert($entity, $pass) {
-        $query = $this->db->prepare("CALL sp_insert_user (?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_insert_user` (?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['card']);
         $query->bindParam(2, $pass);
         $query->bindParam(3, $entity['firstLastName']);
@@ -55,7 +55,7 @@ class UserData {
         try {
             $this->db->beginTransaction();
 
-            $query = $this->db->prepare("CALL sp_update_user (?,?,?,?,?,?,?)");
+            $query = $this->db->prepare("CALL `sp_update_user` (?,?,?,?,?,?,?)");
             $query->bindParam(1, $entity['id']);
             $query->bindParam(2, $entity['card']);
             $query->bindParam(3, $entity['firstLastName']);
@@ -80,7 +80,7 @@ class UserData {
     }
 
     public function remove($id) {
-        $query = $this->db->prepare("CALL sp_remove_user (?)");
+        $query = $this->db->prepare("CALL `sp_remove_user` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -89,7 +89,7 @@ class UserData {
     }
 
     private function updatePassword($id, $pass) {
-        $query = $this->db->prepare("CALL sp_update_pass_user (?,?)");
+        $query = $this->db->prepare("CALL `sp_update_pass_user` (?,?)");
         $query->bindParam(1, $id);
         $query->bindParam(2, $pass);
 
@@ -99,7 +99,7 @@ class UserData {
     }
 
     public function duplicateCard($card) {
-        $query = $this->db->prepare("CALL sp_duplicate_card_user (?)");
+        $query = $this->db->prepare("CALL `sp_duplicate_card_user` (?)");
         $query->bindParam(1, $card);
         if (!$query->execute()) {
             throw new DataBaseException();

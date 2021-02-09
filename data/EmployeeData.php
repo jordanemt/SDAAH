@@ -12,7 +12,7 @@ class EmployeeData {
     }
 
     public function get($id) {
-        $query = $this->db->prepare("CALL sp_get_employee (?)");
+        $query = $this->db->prepare("CALL `sp_get_employee` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -25,7 +25,7 @@ class EmployeeData {
     }
 
     public function getAll() {
-        $query = $this->db->prepare("CALL sp_get_all_employee ()");
+        $query = $this->db->prepare("CALL `sp_get_all_employee` ()");
 
         if (!$query->execute()) {
             throw new DataBaseException();
@@ -37,7 +37,7 @@ class EmployeeData {
     }
 
     public function insert($entity) {
-        $query = $this->db->prepare("CALL sp_insert_employee (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_insert_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['card']);
         $query->bindParam(2, $entity['firstLastName']);
         $query->bindParam(3, $entity['secondLastName']);
@@ -60,7 +60,7 @@ class EmployeeData {
     public function update($entity) {
         $this->db->beginTransaction();
 
-        $query = $this->db->prepare("CALL sp_update_employee (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_update_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['id']);
         $query->bindParam(2, $entity['card']);
         $query->bindParam(3, $entity['firstLastName']);
@@ -87,7 +87,7 @@ class EmployeeData {
     }
 
     public function remove($id) {
-        $query = $this->db->prepare("CALL sp_remove_employee (?)");
+        $query = $this->db->prepare("CALL `sp_remove_employee` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {

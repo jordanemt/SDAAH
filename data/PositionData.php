@@ -12,7 +12,7 @@ class PositionData {
     }
 
     public function get($id) {
-        $query = $this->db->prepare("CALL sp_get_position (?)");
+        $query = $this->db->prepare("CALL `sp_get_position` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -25,7 +25,7 @@ class PositionData {
     }
 
     public function getAll() {
-        $query = $this->db->prepare("CALL sp_get_all_position ()");
+        $query = $this->db->prepare("CALL `sp_get_all_position` ()");
 
         if (!$query->execute()) {
             throw new DataBaseException();
@@ -37,7 +37,7 @@ class PositionData {
     }
 
     public function getAllByType($type) {
-        $query = $this->db->prepare("CALL sp_get_all_by_type_position (?)");
+        $query = $this->db->prepare("CALL `sp_get_all_by_type_position` (?)");
         $query->bindParam(1, $type);
 
         if (!$query->execute()) {
@@ -50,7 +50,7 @@ class PositionData {
     }
 
     public function insert($entity) {
-        $query = $this->db->prepare("CALL sp_insert_position (?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_insert_position` (?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['cod']);
         $query->bindParam(2, $entity['name']);
         $query->bindParam(3, $entity['type']);
@@ -67,7 +67,7 @@ class PositionData {
     public function update($entity) {
         $this->db->beginTransaction();
 
-        $query = $this->db->prepare("CALL sp_update_position (?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_update_position` (?,?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['id']);
         $query->bindParam(2, $entity['cod']);
         $query->bindParam(3, $entity['name']);
@@ -86,7 +86,7 @@ class PositionData {
     }
 
     public function remove($id) {
-        $query = $this->db->prepare("CALL sp_remove_position (?)");
+        $query = $this->db->prepare("CALL `sp_remove_position` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -95,7 +95,7 @@ class PositionData {
     }
 
     public function duplicateCod($cod) {
-        $query = $this->db->prepare("CALL sp_duplicate_cod_position (?)");
+        $query = $this->db->prepare("CALL `sp_duplicate_cod_position` (?)");
         $query->bindParam(1, $cod);
         if (!$query->execute()) {
             throw new DataBaseException();

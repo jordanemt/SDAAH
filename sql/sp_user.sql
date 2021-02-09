@@ -5,7 +5,7 @@ BEGIN
 	SELECT `id`, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`id` = id AND `user`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE sp_get_all_user()
+CREATE PROCEDURE `sp_get_all_user`()
 BEGIN
 	SELECT `id`, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`isDeleted` = 0;
 END//
@@ -38,7 +38,7 @@ BEGIN
             role);
 END//
 
-CREATE PROCEDURE sp_update_user(
+CREATE PROCEDURE `sp_update_user`(
 	id INT,
     card VARCHAR(9),
     firstLastName VARCHAR(25),
@@ -58,7 +58,7 @@ BEGIN
     WHERE `user`.`id` = id;
 END//
 
-CREATE PROCEDURE sp_remove_user(
+CREATE PROCEDURE `sp_remove_user`(
 	id INT
 )
 BEGIN
@@ -67,7 +67,7 @@ BEGIN
     WHERE `user`.`id` = id;
 END//
 
-CREATE PROCEDURE sp_update_pass_user(
+CREATE PROCEDURE `sp_update_pass_user`(
 	id INT,
     pass VARCHAR(32)
 )
@@ -77,7 +77,7 @@ BEGIN
     WHERE `user`.`id` = id;
 END//
 
-CREATE PROCEDURE sp_duplicate_card_user(
+CREATE PROCEDURE `sp_duplicate_card_user`(
 	card VARCHAR(9)
 )
 BEGIN
