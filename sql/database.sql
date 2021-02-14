@@ -14,13 +14,10 @@ CREATE TABLE `user` (
 
 CREATE TABLE `position` (
     `id` INT AUTO_INCREMENT,
-    `cod` INT NOT NULL,
+    `cod` VARCHAR(4) NOT NULL,
     `name` VARCHAR(25) NOT NULL,
     `type` VARCHAR(7) NOT NULL CHECK(type IN ('Mensual', 'Diario')),
-    `salary` DECIMAL(11,2) NULL,
-    `ordinaryTime` DECIMAL(11,2) NULL,
-    `extraTime` DECIMAL(11,2) NULL,
-    `doubleTime` DECIMAL(11,2) NULL,
+    `salary` DECIMAL(11,2) NOT NULL,
     `isDeleted` BOOL NOT NULL DEFAULT 0,
 
     PRIMARY KEY(`id`)
@@ -37,14 +34,62 @@ CREATE TABLE `employee` (
     `idPosition` INT NOT NULL,
     `location` VARCHAR(14) NOT NULL CHECK(location IN('Administrativo', 'Operativo')),
     `admissionDate` DATE NOT NULL,
-    `bankAccount` BIGINT NOT NULL,
+    `bankAccount` VARCHAR(15) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    `cssIns` INT NOT NULL,
+    `cssIns` VARCHAR(4) NOT NULL,
     `isAffiliated` SMALLINT NULL DEFAULT 0,
     `isLiquidated` SMALLINT NULL DEFAULT 0,
-    `observations` VARCHAR(500) NULL,s
+    `observations` VARCHAR(500) NULL,
     `isDeleted` BOOL NOT NULL DEFAULT 0,
     
     PRIMARY KEY(`id`),
     FOREIGN KEY (`idPosition`) REFERENCES `position`(`id`)
+);
+
+CREATE TABLE `payroll` (
+    `id` INT AUTO_INCREMENT,
+    `idEmployee` INT NOT NULL,
+    `location` VARCHAR(14) NOT NULL CHECK(location IN('Administrativo', 'Operativo')),
+    `fortnight` INT NOT NULL,
+    `year` INT NOT NULL,
+    `type` VARCHAR(7) NOT NULL CHECK(type IN ('Mensual', 'Diario')),
+    `salary` DECIMAL(11,2) NULL DEFAULT 0,
+    `workingDays` INT NULL DEFAULT 0,
+    `ordinaryTimeHours` INT NULL DEFAULT 0,
+    `extraTimeHours` INT NULL DEFAULT 0,
+    `doubleTimeHours` INT NULL DEFAULT 0,
+    `vacationsDays` INT NULL DEFAULT 0,
+    `vacationAmount` DECIMAL(11,2) NULL DEFAULT 0,
+    `ccssDays` INT NULL DEFAULT 0,
+    `ccssAmount` DECIMAL(11,2) NULL DEFAULT 0,
+    `insDays` INT NULL DEFAULT 0,
+    `insAmount` DECIMAL(11,2) NULL DEFAULT 0,
+    `salaryBonus` DECIMAL(11,2) NULL DEFAULT 0,
+    `incentives` DECIMAL(11,2) NULL DEFAULT 0,
+    `surcharges` DECIMAL(11,2) NULL DEFAULT 0,
+    `maternityDays` INT NULL DEFAULT 0,
+    `maternityAmount` DECIMAL(11,2) NULL DEFAULT 0,
+    `observations` VARCHAR(500) NULL,
+    `isDeleted` BOOL NOT NULL DEFAULT 0,
+    
+    PRIMARY KEY(`id`),
+    FOREIGN KEY (`idEmployee`) REFERENCES `employee`(`id`)
+);
+
+CREATE TABLE `deduction` (
+    `id` INT AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `isDeleted` BOOL NOT NULL DEFAULT 0,
+
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `payroll_deduction` (
+    `idPayroll` INT NOT NULL,
+    `idDeduction` INT NOT NULL,
+    `mount` DECIMAL(11,2) NULL DEFAULT 0,
+
+    PRIMARY KEY(`idPayroll`, `idDeduction`),
+    FOREIGN KEY (`idPayroll`) REFERENCES `payroll`(`id`),
+    FOREIGN KEY (`idDeduction`) REFERENCES `deduction`(`id`)
 );

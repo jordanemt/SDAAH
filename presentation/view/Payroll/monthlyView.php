@@ -3,7 +3,7 @@ $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/payroll.js" type="text/javascript"></script>
+<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">

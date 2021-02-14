@@ -3,7 +3,7 @@ $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/payroll.js" type="text/javascript"></script>
+<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -14,7 +14,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=Payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -24,174 +24,185 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control" id="type" name="idEmployee" onchange="switchVisibilityToShow('#income-container'); showSalaryOptions();" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="Mensual">000000000 Mensual</option>
-                            <option value="Diario">000000000 Ordinario</option>
+                            <?php
+                            foreach ($vars['employees'] as $value) {
+                                ?>
+                                <option value="<?php echo $value['id'] ?>"><?php echo $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
+                                <?php
+                            }
+                            ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="fortnight">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnight" required>
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Q-1</option>
+                        <select class="form-control selectpicker" data-size="5" id="fortnight" name="fortnight" required>
+                            <?php echo Util::getSelectFortnightOptions() ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="year">Año</label>
-                        <select class="form-control" id="year" name="year" required>
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="1">2020</option>
+                        <select class="form-control selectpicker" id="year" name="year" data-size="5" name="fortnight" required>
+                            <?php echo Util::getSelectYearOptions() ?>
                         </select>
                     </div>
                 </div>
 
-                <div id="income-container"> <script>switchVisibilityToHide('#income-container');</script>
-                    <h4>Ingresos Corrientes</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="location">Localidad</label>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Localidad" readonly required>
+                    </div>
 
-                    <div id="salary-container" class="form-group"> <script>switchVisibilityToHide('#salary-container');</script>
+                    <div class="form-group col-md-4">
+                        <label for="type">Tipo</label>
+                        <input type="text" class="form-control" id="type" name="type" placeholder="Tipo" readonly required>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="salary">Salario</label>
+                        <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Salario" readonly required>
+                    </div>
+                </div>
+
+                <h4>Ingresos Corrientes</h4>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
                         <label for="workingDays">Días Laborados</label>
-                        <input type="text" class="form-control" id="workingDays" name="workingDays" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="text" class="form-control numberMask" id="workingDays" name="workingDays" disabled required>
                     </div>
 
-                    <div id="time-container" class="form-row"> <script>switchVisibilityToHide('#time-container');</script>
-                        <div class="form-group col-md-4">
-                            <label for="ordinaryTimeHours">Horas Ordinarias</label>
-                            <input type="text" class="form-control" id="ordinaryTimeHours" name="ordinaryTimeHours" placeholder="Ingrese lo que se le solicita" required>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label for="extraTimeHours">Horas Extra</label>
-                            <input type="text" class="form-control" id="extraTimeHours" name="extraTimeHours" placeholder="Ingrese lo que se le solicita" required>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label for="doubleTimeHours">Horas Doble</label>
-                            <input type="text" class="form-control" id="doubleTimeHours" name="doubleTimeHours" placeholder="Ingrese lo que se le solicita" required>
-                        </div>
-                    </div>
-                </div>
-
-                <h4>Vacaciones</h4>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="vacationsDays">Días</label>
-                        <input type="text" class="form-control" id="vacationsDays" name="vacationsDays" placeholder="Ingrese lo que se le solicita" required>
+                    <div class="form-group col-md-3">
+                        <label for="ordinaryTimeHours">Horas Ordinarias</label>
+                        <input type="text" class="form-control numberMask" id="ordinaryTimeHours" name="ordinaryTimeHours" disabled required>
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="vacationAmount">Monto</label>
-                        <input type="text" class="form-control" id="vacationAmount" name="vacationAmount" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-                </div>
-                
-                <h4>Incapacidades</h4>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="CCSSDays">CCSS Días</label>
-                        <input type="text" class="form-control" id="CCSSDays" name="CCSSDays" placeholder="Ingrese lo que se le solicita" required>
+                    <div class="form-group col-md-3">
+                        <label for="extraTimeHours">Horas Extra</label>
+                        <input type="text" class="form-control numberMask" id="extraTimeHours" name="extraTimeHours">
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="CCSSAmount">CCSS Monto</label>
-                        <input type="text" class="form-control" id="CCSSAmount" name="CCSSAmount" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="INSDays">INS Días</label>
-                        <input type="text" class="form-control" id="INSDays" name="INSDays" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="INSAmount">INS Monto</label>
-                        <input type="text" class="form-control" id="INSAmount" name="INSAmount" placeholder="Ingrese lo que se le solicita" required>
+                    <div class="form-group col-md-3">
+                        <label for="doubleTimeHours">Horas Doble</label>
+                        <input type="text" class="form-control numberMask" id="doubleTimeHours" name="doubleTimeHours">
                     </div>
                 </div>
                 
                 <h4>Ingresos Especiales</h4>
 
                 <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="vacationsDays">Días Vacaciones</label>
+                        <input type="text" class="form-control numberMask" id="vacationsDays" name="vacationsDays">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="vacationAmount">Monto Vacaciones</label>
+                        <input type="text" class="form-control moneyMask" id="vacationAmount" name="vacationAmount">
+                    </div>
+                    
+                    <div class="form-group col-md-2">
+                        <label for="maternityDays">Días Maternidad</label>
+                        <input type="text" class="form-control numberMask" id="INSDamaternityDaysys" name="maternityDays">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="maternityAmount">Monto Maternidad</label>
+                        <input type="text" class="form-control moneyMask" id="maternityAmount" name="maternityAmount">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="surcharges">Recargos</label>
+                        <input type="text" class="form-control moneyMask" id="surcharges" name="surcharges">
+                    </div>
+
                     <div class="form-group col-md-4">
                         <label for="salaryBonus">Bono Salarial</label>
-                        <input type="text" class="form-control" id="salaryBonus" name="salaryBonus" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="text" class="form-control moneyMask" id="salaryBonus" name="salaryBonus">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="incentives">Incentivos</label>
-                        <input type="text" class="form-control" id="incentives" name="incentives" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-                    
-                    <div class="form-group col-md-4">
-                        <label for="surcharges">Recargos</label>
-                        <input type="text" class="form-control" id="surcharges" name="surcharges" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="maternityDays">Días Maternidad</label>
-                        <input type="text" class="form-control" id="INSDamaternityDaysys" name="maternityDays" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="maternityAmount">Monto Maternidad</label>
-                        <input type="text" class="form-control" id="maternityAmount" name="maternityAmount" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="text" class="form-control moneyMask" id="incentives" name="incentives">
                     </div>
                 </div>
                 
                 <h4>Detalle de Deducciones</h4>
-                
+
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="vehicleLoan">Préstamo Vehículo</label>
-                        <input type="text" class="form-control" id="vehicleLoan" name="vehicleLoan" placeholder="Ingrese lo que se le solicita" required>
+                    <div id="deductionsSelector" class="form-group col-md-3">
+                        <label for="deductions">Agregar Deducciones</label>
+                        <select class="form-control selectpicker" multiple data-size="5" title="Seleccione ninguna o varias" id="deductions" name="deductions[]" onchange="addDeductions();">
+                            <?php
+                            foreach ($vars['deductions'] as $value) {
+                                ?>
+                                <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+                                <?php
+                            }
+                            if (count($vars['deductions']) == 0) {
+                                ?>
+                                <option disabled>No hay deducciones en el catálogo</option>
+                                <?php
+                            }
+                            ?>
+                        </select>
                     </div>
                     
-                    <div class="form-group col-md-4">
-                        <label for="solidarityLoanAssociation">Préstamo Asoc. Solidarista</label>
-                        <input type="text" class="form-control" id="solidarityLoanAssociation" name="solidarityLoanAssociation" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
-                
-                    <div class="form-group col-md-4">
-                        <label for="advances">Anticipos</label>
-                        <input type="text" class="form-control" id="advances" name="advances" placeholder="Ingrese lo que se le solicita" required>
-                    </div>
+                    <?php
+                    foreach ($vars['deductions'] as $value) {
+                        ?>
+                        <div id="deduction-form-group-<?php echo $value['id'] ?>" class="form-group col-md-3 deductions">
+                            <label for="deduction-<?php echo $value['id'] ?>"><?php echo $value['name'] ?></label>
+                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?php echo $value['id'] ?>" name="deductionsMounts[]" disabled>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+                    <script>$(".deductions").hide();</script>
                 </div>
-                
+
+                <h4>Incapacidades</h4>
+
                 <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="ccssDays">CCSS Días</label>
+                        <input type="text" class="form-control numberMask" id="ccssDays" name="ccssDays">
+                    </div>
+
                     <div class="form-group col-md-4">
-                        <label for="extraSavings">Ahorros Extra</label>
-                        <input type="text" class="form-control" id="extraSavings" name="extraSavings" placeholder="Ingrese lo que se le solicita" required>
+                        <label for="ccssAmount">CCSS Monto</label>
+                        <input type="text" class="form-control moneyMask" id="ccssAmount" name="ccssAmount">
                     </div>
                     
-                    <div class="form-group col-md-4">
-                        <label for="liens">Embargos</label>
-                        <input type="text" class="form-control" id="liens" name="liens" placeholder="Ingrese lo que se le solicita" required>
+                    <div class="form-group col-md-2">
+                        <label for="insDays">INS Días</label>
+                        <input type="text" class="form-control numberMask" id="insDays" name="insDays">
                     </div>
-                
+
                     <div class="form-group col-md-4">
-                        <label for="alimony">Pensión Alimenticia</label>
-                        <input type="text" class="form-control" id="alimony" name="alimony" placeholder="Ingrese lo que se le solicita" required>
+                        <label for="insAmount">INS Monto</label>
+                        <input type="text" class="form-control moneyMask" id="insAmount" name="insAmount">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="observations">Observaciones</label>
-                    <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500" required></textarea>
+                    <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"></textarea>
                 </div>
-                
+
                 <button id="submit-button" type="button" class="btn btn-primary" onclick="insert();">Insertar</button>
             </form>
 
             <hr>
 
-            <a href="?controller=Payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 
@@ -199,5 +210,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

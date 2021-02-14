@@ -3,7 +3,7 @@ $vars["viewName"] = 'bonus';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/payroll.js" type="text/javascript"></script>
+<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -21,20 +21,20 @@ include_once 'presentation/public/header.php';
                     <form id="search" class="col-md-12 px-0">
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
-                            
+
                             <div class="d-flex flex-row p-1">
                                 <label for="">Año:&nbsp</label>
                                 <select class="form-control form-control-sm">
                                     <option>2020</option>
                                 </select>
                             </div>
-                            
+
                         </div>
 
                     </form>
 
                 </div>
-                
+
             </div>
 
             <hr>

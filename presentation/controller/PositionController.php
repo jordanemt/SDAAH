@@ -1,7 +1,7 @@
 <?php
 
-require 'business/PositionBusiness.php';
 require 'SessionController.php';
+require_once 'business/PositionBusiness.php';
 
 class PositionController {
 
@@ -9,7 +9,7 @@ class PositionController {
         $this->view = new View();
         $this->business = new PositionBusiness();
         $this->controllerName = 'Position/';
-        
+
         $this->sessionController = new SessionController;
         $this->sessionController->isNotLoggedThenRedirect();
     }
@@ -22,49 +22,43 @@ class PositionController {
     public function insertView() {
         $this->view->show($this->controllerName . 'insertView.php', null);
     }
-    
+
     public function updateView() {
-        $vars['data'] = $this->business->get($_GET['id']);
+        $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
         $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
-    
-    public function getAllByType() {
-        $type = isset($_GET['type']) ? $_GET['type'] : null;
 
-        echo json_encode($this->business->getAllByType($type));
+    public function getAllByType() {
+        echo json_encode($this->business->getAllByType(filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING)));
     }
-    
+
     public function insert() {
-        $entity = array(
-            'cod' => $_POST['cod'],
-            'name' => $_POST['name'],
-            'type' => isset($_POST['type']) ? $_POST['type'] : null,
-            'salary' => isset($_POST['salary']) ? $_POST['salary'] : null,
-            'ordinaryTime' => isset($_POST['ordinaryTime']) ? $_POST['ordinaryTime'] : null,
-            'extraTime' => isset($_POST['extraTime']) ? $_POST['extraTime'] : null,
-            'doubleTime' => isset($_POST['doubleTime']) ? $_POST['doubleTime'] : null
+        $filter = array(
+            'cod' => Filters::getString(),
+            'name' => Filters::getString(),
+            'type' => Filters::getString(),
+            'salary' => Filters::getFloat()
         );
+        $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->insert($entity);
     }
 
     public function update() {
-        $entity = array(
-            'id' => $_POST['id'],
-            'cod' => $_POST['cod'],
-            'name' => $_POST['name'],
-            'type' => isset($_POST['type']) ? $_POST['type'] : null,
-            'salary' => isset($_POST['salary']) ? $_POST['salary'] : null,
-            'ordinaryTime' => isset($_POST['ordinaryTime']) ? $_POST['ordinaryTime'] : null,
-            'extraTime' => isset($_POST['extraTime']) ? $_POST['extraTime'] : null,
-            'doubleTime' => isset($_POST['doubleTime']) ? $_POST['doubleTime'] : null
+        $filter = array(
+            'id' => Filters::getInt(),
+            'cod' => Filters::getString(),
+            'name' => Filters::getString(),
+            'type' => Filters::getString(),
+            'salary' => Filters::getFloat()
         );
+        $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->update($entity);
     }
 
     public function remove() {
-        $this->business->remove($_POST['id']);
+        $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
     }
 
 }

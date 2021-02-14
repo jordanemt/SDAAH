@@ -4,13 +4,13 @@ function insert() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "?controller=Position&action=insert";
+        var url = "/position/insert";
         $.ajax({
             url: url,
             type: "POST",
             cache: false,
             data: $("#form").serialize(),
-            success: function (data) {
+            success: function () {
                 successMessage("Position");
             },
             error: function (error) {
@@ -27,7 +27,7 @@ function update() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "?controller=Position&action=update";
+        var url = "/position/update";
         $.ajax({
             url: url,
             type: "POST",
@@ -47,7 +47,7 @@ function update() {
 }
 
 function remove(id) {
-    var url = "?controller=Position&action=remove";
+    var url = "/position/remove";
     $.ajax({
         url: url,
         type: "POST",
@@ -60,22 +60,4 @@ function remove(id) {
             errorMessage(error.responseText);
         }
     });
-}
-
-function showSalaryOptions() {
-    switch ($("#type").val()) {
-        case "Mensual" :
-            $("#salary").attr("disabled", false);
-            $("#ordinaryTime").attr("disabled", true);
-            $("#extraTime").attr("disabled", true);
-            $("#doubleTime").attr("disabled", true);
-            break;
-
-        case "Diario" :
-            $("#salary").attr("disabled", true);
-            $("#ordinaryTime").attr("disabled", false);
-            $("#extraTime").attr("disabled", false);
-            $("#doubleTime").attr("disabled", false);
-            break;
-    }
 }

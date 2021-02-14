@@ -7,6 +7,10 @@ class SessionController {
         $this->controllerName = 'Session/';
         
         session_start();
+        
+        $_SESSION['location'] = 'Administrativo|Operativo';
+        $_SESSION['fortnight'] = Util::getFortnight();
+        $_SESSION['year'] = date('Y');
     }
 
     public function index() {
@@ -24,7 +28,7 @@ class SessionController {
 
     public function isNotLoggedThenRedirect() {
         if (!isset($_SESSION['id'])) {
-            header('Location: ?controller=Index');
+            header('Location: /Index');
             die();
         }
     }

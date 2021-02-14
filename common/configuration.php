@@ -1,4 +1,5 @@
 <?php
+
 require 'Config.php';
 
 //frontcontroller_pattern

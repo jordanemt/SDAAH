@@ -4,7 +4,7 @@ $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/employee.js" type="text/javascript"></script>
+<script src="/presentation/public/js/employee.js" type="text/javascript"></script>
 
 <div class="container my-4">
 
@@ -16,7 +16,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=Employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -34,23 +34,23 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control numberMask" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" value="<?php echo $vars['data']['card'] ?>" required>
+                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?php echo $vars['data']['card'] ?>" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['firstLastName'] ?>" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" maxlength="25" value="<?php echo $vars['data']['firstLastName'] ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['secondLastName'] ?>" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" maxlength="25" value="<?php echo $vars['data']['secondLastName'] ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" value="<?php echo $vars['data']['name'] ?>" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="50" value="<?php echo $vars['data']['name'] ?>" required>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="birthdate">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Ingrese lo que se le solicita" value="<?php echo $vars['data']['birthdate'] ?>" required>
+                        <input type="date" class="form-control" id="birthdate" name="birthdate" value="<?php echo $vars['data']['birthdate'] ?>" required>
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="admissionDate">Fecha de Ingreso</label>
-                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Ingrese lo que se le solicita" value="<?php echo $vars['data']['admissionDate'] ?>" required>
+                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" value="<?php echo $vars['data']['admissionDate'] ?>" required>
                     </div>
                 </div>
 
@@ -110,18 +110,18 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="bankAccount">Número de Cuenta Bancaria</label>
-                    <input type="text" class="form-control numberMask" id="bankAccount" name="bankAccount" placeholder="Ingrese lo que se le solicita" minlength="15" maxlength="15" value="<?php echo $vars['data']['bankAccount'] ?>" required>
+                    <input type="text" class="form-control accountMask" id="bankAccount" name="bankAccount" minlength="15" maxlength="15" value="<?php echo $vars['data']['bankAccount'] ?>" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese lo que se le solicita" maxlength="100" value="<?php echo $vars['data']['email'] ?>" required>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="100" value="<?php echo $vars['data']['email'] ?>" required>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="cssIns">CSS/INS</label>
-                        <input type="text" class="form-control numberMask" id="cssIns" name="cssIns" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" value="<?php echo $vars['data']['cssIns'] ?>" required>
+                        <input type="text" class="form-control fourDigitsMask" id="cssIns" name="cssIns" minlength="4" maxlength="4" placeholder="Ingrese lo que se le solicita" value="<?php echo $vars['data']['cssIns'] ?>" required>
                     </div>
                 </div>
 
@@ -146,7 +146,7 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="observations">Observaciones</label>
-                    <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500" <?php if (!$vars['data']['isLiquidated']) { echo 'disabled'; } ?> required><?php echo $vars['data']['observations'] ?></textarea>
+                    <textarea class="form-control" id="observations" name="observations" maxlength="500" <?php if (!$vars['data']['isLiquidated']) { echo 'disabled'; } ?> required><?php echo $vars['data']['observations'] ?></textarea>
                 </div>
 
                 <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
@@ -159,7 +159,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=Employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

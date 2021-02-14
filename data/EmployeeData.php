@@ -35,6 +35,19 @@ class EmployeeData {
         $query->closeCursor();
         return $data;
     }
+    
+    public function getPositionEmployee($id) {
+        $query = $this->db->prepare("CALL `sp_get_position_employee` (?)");
+        $query->bindParam(1, $id);
+
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+        
+        $data = $query->fetch();
+        $query->closeCursor();
+        return $data;
+    }
 
     public function insert($entity) {
         $query = $this->db->prepare("CALL `sp_insert_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?)");

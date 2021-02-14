@@ -4,7 +4,7 @@ function insert() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "?controller=Employee&action=insert";
+        var url = "/employee/insert";
         $.ajax({
             url: url,
             type: "POST",
@@ -27,7 +27,7 @@ function update() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "?controller=Employee&action=update";
+        var url = "/employee/update";
         $.ajax({
             url: url,
             type: "POST",
@@ -47,7 +47,7 @@ function update() {
 }
 
 function remove(id) {
-    var url = "?controller=Employee&action=remove";
+    var url = "/employee/remove";
     $.ajax({
         url: url,
         type: "POST",
@@ -65,7 +65,7 @@ function remove(id) {
 function updateSelect() {
     type = $("#type").val();
 
-    var url = "?controller=Position&action=getAllByType";
+    var url = "/position/getAllByType";
     $.ajax({
         url: url,
         type: "GET",
@@ -76,27 +76,27 @@ function updateSelect() {
         success: function (data) {
             if (JSON.parse(data).length === 0) {
                 $("#idPosition").empty();
-                var option = $('<option></option>').attr("disabled", true)
+                var option = $("<option></option>").attr("disabled", true)
                         .attr("selected", true).text("No se encontraron Puestos del Tipo " + type);
                 $("#idPosition").append(option);
                 return 0;
             }
 
             $("#idPosition").empty();
-            var option = $('<option></option>').attr("disabled", true).attr("selected", true).text("Seleccione una opción");
+            var option = $("<option></option>").attr("disabled", true).attr("selected", true).text("Seleccione una opción");
             $("#idPosition").append(option);
 
-            idPosition = $("#idPositionSave").val();
+            var idPosition = $("#idPositionSave").val();
             jQuery.each(JSON.parse(data), function () {
                 switch (this.id) {
 
                     case idPosition:
-                        var option = $('<option></option>').attr("value", this.id).attr("selected", true).text(this.codName);
+                        var option = $("<option></option>").attr("value", this.id).attr("selected", true).text(this.codName);
                         $("#idPosition").append(option);
                         break;
 
                     default:
-                        var option = $('<option></option>').attr("value", this.id).text(this.codName);
+                        var option = $("<option></option>").attr("value", this.id).text(this.codName);
                         $("#idPosition").append(option);
                         break;
 

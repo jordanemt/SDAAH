@@ -7,7 +7,7 @@ class ExceptionsHandler {
     }
 
     public function handle($exception) {
-        if (is_a($exception, 'AuthenticationFailedException')) {
+        if (is_a($exception, 'IControlledException')) {
             echo $exception->getMessage();
         } else {
             http_response_code(500);

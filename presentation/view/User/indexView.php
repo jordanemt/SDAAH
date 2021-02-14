@@ -3,7 +3,7 @@ $vars["viewName"] = 'user';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/user.js" type="text/javascript"></script>
+<script src="/presentation/public/js/user.js" type="text/javascript"></script>
 
 <div class="container my-4">
 
@@ -14,7 +14,7 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
 
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="?controller=User&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <a class="btn btn-primary" href="/user/insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
             </div>
 
             <hr>
@@ -59,7 +59,7 @@ include_once 'presentation/public/header.php';
                                 ?>
                             </td>
                             <td class="text-center">
-                                <a href="?controller=User&action=updateView&id=<?php echo $value['id'] ?>" class=""><i class="fa fa-edit"></i> Editar</a>
+                                <a href="/user/updateView?id=<?php echo $value['id'] ?>" class=""><i class="fa fa-edit"></i> Editar</a>
                                 <a href="#" class="font-warning" onclick="confirmDelete(<?php echo $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                         </tr>

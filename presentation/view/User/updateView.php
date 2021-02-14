@@ -3,7 +3,7 @@ $vars["viewName"] = 'user';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/user.js" type="text/javascript"></script>
+<script src="/presentation/public/js/user.js" type="text/javascript"></script>
 
 <div class="container my-4">
 
@@ -15,7 +15,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=User"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -26,7 +26,7 @@ include_once 'presentation/public/header.php';
                 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control numberMask" id="card" name="card" minlength="9" maxlength="9" value="<?php echo $vars['data']['card']; ?>" required>
+                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?php echo $vars['data']['card']; ?>" required>
                 </div>
 
                 <div class="form-group">
@@ -41,37 +41,37 @@ include_once 'presentation/public/header.php';
                 <div id="changePassword-container" class="form-row"> <script>switchVisibilityToHide('#changePassword-container')</script>
                     <div class="form-group col-md-6">
                         <label for="pass">Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="pass" name="pass" placeholder="Ingrese lo que se le solicita" minlength="6" maxlength="11" required>
+                        <input type="password" class="form-control" id="pass" name="pass" minlength="6" maxlength="11" placeholder="Ingrese lo que se le solicita" required>
                         <small id="passHelp" class="form-text text-muted">Digite entre 6 a 11 carácteres</small>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="passConfirm">Confirmar Contraseña</label>
-                        <input type="password" class="form-control" id="passConfirm" name="passConfirm" placeholder="Ingrese lo que se le solicita" minlength="6" maxlength="11" required>
+                        <input type="password" class="form-control" id="passConfirm" name="passConfirm" minlength="6" maxlength="11" placeholder="Ingrese lo que se le solicita" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['firstLastName']; ?>" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" maxlength="25" value="<?php echo $vars['data']['firstLastName']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['secondLastName']; ?>" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" maxlength="25" value="<?php echo $vars['data']['secondLastName']; ?>" required>
                     </div>
                     
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" value="<?php echo $vars['data']['name']; ?>" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="50" value="<?php echo $vars['data']['name']; ?>" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Correo</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese lo que se le solicita" maxlength="100" value="<?php echo $vars['data']['email']; ?>" required>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="Ingrese lo que se le solicita" value="<?php echo $vars['data']['email']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -90,7 +90,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=User"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

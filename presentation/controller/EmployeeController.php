@@ -1,8 +1,10 @@
 <?php
 
-require 'business/EmployeeBusiness.php';
 require 'SessionController.php';
+require_once 'business/EmployeeBusiness.php';
 require_once 'business/PositionBusiness.php';
+require_once 'SessionController.php';
+require_once 'common/Filters.php';
 
 class EmployeeController {
 
@@ -34,59 +36,70 @@ class EmployeeController {
     }
 
     public function updateView() {
-        $vars['data'] = $this->business->get($_GET['id']);
+        $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
         
         $positionBusiness = new PositionBusiness();
         $vars['data']['position'] = $positionBusiness->get($vars['data']['idPosition']);
         
         $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
+    
+    public function getPositionEmployee() {
+        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+        echo json_encode($this->business->getPositionEmployee($id));
+    }
 
     public function insert() {
-        $entity = array(
-            'card' => $_POST['card'],
-            'firstLastName' => $_POST['firstLastName'],
-            'secondLastName' => $_POST['secondLastName'],
-            'name' => $_POST['name'],
-            'gender' => isset($_POST['gender'])? $_POST['gender'] : 0,
-            'birthdate' => $_POST['birthdate'],
-            'idPosition' => isset($_POST['idPosition'])? $_POST['idPosition'] : 0,
-            'location' => isset($_POST['location'])? $_POST['location'] : 0,
-            'admissionDate' => $_POST['admissionDate'],
-            'bankAccount' => $_POST['bankAccount'],
-            'email' => $_POST['email'],
-            'cssIns' => $_POST['cssIns'],
-            'isAffiliated' => isset($_POST['isAffiliated'])? $_POST['isAffiliated'] : 0
+        $filter = array(
+            'card' => Filters::getString(),
+            'firstLastName' => Filters::getString(),
+            'secondLastName' => Filters::getString(),
+            'name' => Filters::getString(),
+            'gender' => Filters::getString(),
+            'birthdate' => Filters::getString(),
+            'idPosition' => Filters::getInt(),
+            'location' => Filters::getString(),
+            'admissionDate' => Filters::getString(),
+            'bankAccount' => Filters::getInt(),
+            'email' => Filters::getEmail(),
+            'cssIns' => Filters::getInt(),
+            'isAffiliated' => Filters::getInt()
         );
+        $entity = filter_input_array(INPUT_POST, $filter);
         
         $this->business->insert($entity);
+        exit();
     }
     
     public function update() {
-        $entity = array(
-            'id' => $_POST['id'],
-            'card' => $_POST['card'],
-            'firstLastName' => $_POST['firstLastName'],
-            'secondLastName' => $_POST['secondLastName'],
-            'name' => $_POST['name'],
-            'gender' => isset($_POST['gender'])? $_POST['gender'] : 0,
-            'birthdate' => $_POST['birthdate'],
-            'idPosition' => isset($_POST['idPosition'])? $_POST['idPosition'] : 0,
-            'location' => isset($_POST['location'])? $_POST['location'] : 0,
-            'admissionDate' => $_POST['admissionDate'],
-            'bankAccount' => $_POST['bankAccount'],
-            'email' => $_POST['email'],
-            'cssIns' => $_POST['cssIns'],
-            'isAffiliated' => isset($_POST['isAffiliated'])? $_POST['isAffiliated'] : 0,
-            'isLiquidated' => isset($_POST['isLiquidated'])? $_POST['isLiquidated'] : 0,
-            'observations' => isset($_POST['observations'])? $_POST['observations'] : ''
+        $filter = array(
+            'id' => Filters::getInt(),
+            'card' => Filters::getString(),
+            'firstLastName' => Filters::getString(),
+            'secondLastName' => Filters::getString(),
+            'name' => Filters::getString(),
+            'gender' => Filters::getString(),
+            'birthdate' => Filters::getString(),
+            'idPosition' => Filters::getInt(),
+            'location' => Filters::getString(),
+            'admissionDate' => Filters::getString(),
+            'bankAccount' => Filters::getInt(),
+            'email' => Filters::getEmail(),
+            'cssIns' => Filters::getInt(),
+            'isAffiliated' => Filters::getInt(),
+            'isLiquidated' => Filters::getInt(),
+            'observations' => Filters::getString()
         );
+        $entity = filter_input_array(INPUT_POST, $filter);
         
         $this->business->update($entity);
+        exit();
     }
     
     public function remove() {
-        $this->business->remove($_POST['id']);
+        $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
+        exit();
     }
 
 }

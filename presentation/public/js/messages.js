@@ -8,7 +8,7 @@ function successMessage(controllerName) {
         showConfirmButton: false,
         timer: 1500
     }).then(function () {
-        window.location.replace("?controller=" + controllerName);
+        window.location.replace("/" + controllerName);
     });
 }
 

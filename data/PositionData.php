@@ -50,14 +50,11 @@ class PositionData {
     }
 
     public function insert($entity) {
-        $query = $this->db->prepare("CALL `sp_insert_position` (?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_insert_position` (?,?,?,?)");
         $query->bindParam(1, $entity['cod']);
         $query->bindParam(2, $entity['name']);
         $query->bindParam(3, $entity['type']);
         $query->bindParam(4, $entity['salary']);
-        $query->bindParam(5, $entity['ordinaryTime']);
-        $query->bindParam(6, $entity['extraTime']);
-        $query->bindParam(7, $entity['doubleTime']);
 
         if (!$query->execute()) {
             throw new DataBaseException();
@@ -67,16 +64,13 @@ class PositionData {
     public function update($entity) {
         $this->db->beginTransaction();
 
-        $query = $this->db->prepare("CALL `sp_update_position` (?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_update_position` (?,?,?,?,?)");
         $query->bindParam(1, $entity['id']);
         $query->bindParam(2, $entity['cod']);
         $query->bindParam(3, $entity['name']);
         $query->bindParam(4, $entity['type']);
         $query->bindParam(5, $entity['salary']);
-        $query->bindParam(6, $entity['ordinaryTime']);
-        $query->bindParam(7, $entity['extraTime']);
-        $query->bindParam(8, $entity['doubleTime']);
-
+        
         if (!$query->execute()) {
             $this->db->rollback();
             throw new DataBaseException();

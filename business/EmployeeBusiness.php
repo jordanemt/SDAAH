@@ -1,8 +1,8 @@
 <?php
 
-require 'data/EmployeeData.php';
-require_once 'exceptions/EmptyAttributeException.php';
+require_once 'data/EmployeeData.php';
 require_once 'exceptions/AttributeConflictException.php';
+require_once 'exceptions/EmptyAttributeException.php';
 require_once 'exceptions/DuplicateCardException.php';
 
 class EmployeeBusiness {
@@ -14,11 +14,23 @@ class EmployeeBusiness {
     }
 
     public function get($id) {
+        if (empty($id)) {
+            throw new AttributeConflictException();
+        }
+        
         return $this->data->get($id);
     }
 
     public function getAll() {
         return $this->data->getAll();
+    }
+    
+    public function getPositionEmployee($id) {
+        if (empty($id)) {
+            throw new AttributeConflictException();
+        }
+        
+        return $this->data->getPositionEmployee($id);
     }
 
     public function insert($entity) {
@@ -106,6 +118,10 @@ class EmployeeBusiness {
     }
 
     public function remove($id) {
+        if (empty($id)) {
+            throw new AttributeConflictException();
+        }
+        
         $this->data->remove($id);
     }
 

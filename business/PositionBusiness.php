@@ -1,8 +1,8 @@
 <?php
 
-require 'data/PositionData.php';
-require_once 'exceptions/EmptyAttributeException.php';
+require_once 'data/PositionData.php';
 require_once 'exceptions/AttributeConflictException.php';
+require_once 'exceptions/EmptyAttributeException.php';
 require_once 'exceptions/DuplicateCodException.php';
 
 class PositionBusiness {
@@ -14,6 +14,10 @@ class PositionBusiness {
     }
 
     public function get($id) {
+        if (empty($id)) {
+            throw new AttributeConflictException();
+        }
+        
         return $this->data->get($id);
     }
 
@@ -34,14 +38,7 @@ class PositionBusiness {
         if (empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                ((empty($entity['salary']) &&
-                (empty($entity['ordinaryTime']) ||
-                empty($entity['extraTime']) ||
-                empty($entity['doubleTime'])))) ||
-                ((isset($entity['salary']) &&
-                (isset($entity['ordinaryTime']) ||
-                isset($entity['extraTime']) ||
-                isset($entity['doubleTime']))))) {
+                empty($entity['salary'])) {
             throw new EmptyAttributeException();
         }
 
@@ -63,14 +60,7 @@ class PositionBusiness {
                 empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                ((empty($entity['salary']) &&
-                (empty($entity['ordinaryTime']) ||
-                empty($entity['extraTime']) ||
-                empty($entity['doubleTime'])))) ||
-                ((isset($entity['salary']) &&
-                (isset($entity['ordinaryTime']) ||
-                isset($entity['extraTime']) ||
-                isset($entity['doubleTime']))))) {
+                empty($entity['salary'])) {
             throw new EmptyAttributeException();
         }
 
@@ -90,6 +80,10 @@ class PositionBusiness {
     }
 
     public function remove($id) {
+        if (empty($id)) {
+            throw new AttributeConflictException();
+        }
+        
         $this->data->remove($id);
     }
 

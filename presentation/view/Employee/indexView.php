@@ -1,9 +1,10 @@
 <?php
 $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
+require_once 'common/Util.php';
 ?>
 
-<script src="presentation/public/js/employee.js" type="text/javascript"></script>
+<script src="/presentation/public/js/employee.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -15,7 +16,7 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
 
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="?controller=Employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <a class="btn btn-primary" href="/employee/insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
             </div>
 
             <hr>
@@ -48,7 +49,6 @@ include_once 'presentation/public/header.php';
                     </tr>
                 </thead>
                 <tbody>
-
                     <?php
                     foreach ($vars['data'] as $value) {
                         ?>
@@ -62,12 +62,22 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?php echo $value['position']['name'] ?></td>
                             <td class="text-center"><?php echo $value['location'] ?></td>
                             <td class="text-center"><?php echo $value['bankAccount'] ?></td>
-                            <td class="text-center"><?php echo $value['birthdate'] ?></td>
-                            <td class="text-center"><?php echo $value['admissionDate'] ?></td>
+                            <td class="text-center">
+                                <?php
+                                $dateBirthdate = date_create($value['birthdate']);
+                                echo date_format($dateBirthdate, 'd/m/Y'); 
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?php 
+                                $dateAdmissionDate = date_create($value['admissionDate']);
+                                echo date_format($dateAdmissionDate, 'd/m/Y'); 
+                                ?>
+                            </td>
                             <td class="text-center"><?php echo $value['position']['type'] ?></td>
                             <td class="text-center">
                                 <?php
-                                if (isset($value['position']['salary'])) {
+                                if ($value['position']['type'] == 'Mensual') {
                                     echo '₡' . number_format($value['position']['salary'], 2, ',', ' ');
                                 } else {
                                     echo '---';
@@ -76,8 +86,8 @@ include_once 'presentation/public/header.php';
                             </td>
                             <td class="text-center">
                                 <?php
-                                if (isset($value['position']['ordinaryTime'])) {
-                                    echo '₡' . number_format($value['position']['ordinaryTime'], 2, ',', ' ');
+                                if ($value['position']['type'] == 'Diario') {
+                                    echo '₡' . number_format($value['position']['salary'], 2, ',', ' ');
                                 } else {
                                     echo '---';
                                 }
@@ -85,20 +95,12 @@ include_once 'presentation/public/header.php';
                             </td>
                             <td class="text-center">
                                 <?php
-                                if (isset($value['position']['extraTime'])) {
-                                    echo '₡' . number_format($value['position']['extraTime'], 2, ',', ' ');
-                                } else {
-                                    echo '---';
-                                }
+                                echo '₡' . number_format(Util::getExtraTime($value['position']['salary'], $value['position']['type']), 2, ',', ' ');
                                 ?>
                             </td>
                             <td class="text-center">
                                 <?php
-                                if (isset($value['position']['doubleTime'])) {
-                                    echo '₡' . number_format($value['position']['doubleTime'], 2, ',', ' ');
-                                } else {
-                                    echo '---';
-                                }
+                                echo '₡' . number_format(Util::getDoubleTime($value['position']['salary'], $value['position']['type']), 2, ',', ' ');
                                 ?>
                             </td>
                             <td class="text-center">
@@ -131,7 +133,7 @@ include_once 'presentation/public/header.php';
                             </td>
                             <td class="text-center"><?php echo $value['cssIns'] ?></td>
                             <td class="text-center">
-                                <a href="?controller=Employee&action=updateView&id=<?php echo $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
+                                <a href="/employee/updateView?&id=<?php echo $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
                                 <a class="font-warning" href="#" onclick="confirmDelete(<?php echo $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                             <td class="text-center">

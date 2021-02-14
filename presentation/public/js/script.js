@@ -15,8 +15,8 @@ function overwriteJQueryMessages() {
         minlength: jQuery.validator.format("Por favor ingrese al menos {0} carácteres"),
         rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long"),
         range: jQuery.validator.format("Please enter a value between {0} and {1}"),
-        max: jQuery.validator.format("Please enter a value less than or equal to {0}"),
-        min: jQuery.validator.format("Please enter a value greater than or equal to {0}")
+        max: jQuery.validator.format("Ingrese un valor menor o igual a {0}"),
+        min: jQuery.validator.format("Ingrese un valor mayor o igual a {0}")
     });
 }
 
@@ -87,14 +87,30 @@ function chargeValidInput() {
 }
 
 function setMask() {
-    $(".numberMask").mask('#');
+    $(".numberMask").mask('#', {
+        placeholder: '0'
+    });
+    $(".cardMask").mask('000000000', {
+        placeholder: '000000000'
+    });
+    $(".accountMask").mask('000000000000000', {
+        placeholder: '000000000000000'
+    });
+    $(".fourDigitsMask").mask('0000', {
+        placeholder: '0000'
+    });
     $(".textMask").mask("s", {
+        placeholder: 'Ingrese lo que se le solicita',
         translation: {
             "s": {
                 pattern: /[A-Za-zÀ-ÿ ]/,
                 recursive: true
             }
         }
+    });
+    $(".moneyMask").mask("# ##0.00", {
+        reverse: true,
+        placeholder: '0.00'
     });
 }
 

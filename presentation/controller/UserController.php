@@ -1,9 +1,11 @@
 <?php
 
-require 'business/UserBusiness.php';
 require 'SessionController.php';
+require_once 'business/UserBusiness.php';
 
 class UserController {
+    
+    private $business;
 
     public function __construct() {
         $this->view = new View();
@@ -24,44 +26,49 @@ class UserController {
     }
 
     public function updateView() {
-        $vars['data'] = $this->business->get($_GET['id']);
+        $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
         $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
 
     public function insert() {
-        $entity = array(
-            'card' => $_POST['card'],
-            'pass' => $_POST['pass'],
-            'passConfirm' => $_POST['passConfirm'],
-            'firstLastName' => $_POST['firstLastName'],
-            'secondLastName' => $_POST['secondLastName'],
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'role' => isset($_POST['role']) ? $_POST['role'] : 0
+        $filter = array(
+            'card' => Filters::getInt(),
+            'pass' => Filters::getString(),
+            'passConfirm' => Filters::getString(),
+            'firstLastName' => Filters::getString(),
+            'secondLastName' => Filters::getString(),
+            'name' => Filters::getString(),
+            'email' => Filters::getEmail(),
+            'role' => Filters::getInt()
         );
+        $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->insert($entity);
+        exit();
     }
 
-    public function update() {
-        $entity = array(
-            'id' => $_POST['id'],
-            'card' => $_POST['card'],
-            'pass' => $_POST['pass'],
-            'passConfirm' => $_POST['passConfirm'],
-            'firstLastName' => $_POST['firstLastName'],
-            'secondLastName' => $_POST['secondLastName'],
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'role' => $_POST['role'],
-            'is_changed_password' => isset($_POST['is_changed_password']) ? true : false
+    public function update() {        
+        $filter = array(
+            'id' => Filters::getInt(),
+            'card' => Filters::getInt(),
+            'pass' => Filters::getString(),
+            'passConfirm' => Filters::getString(),
+            'firstLastName' => Filters::getString(),
+            'secondLastName' => Filters::getString(),
+            'name' => Filters::getString(),
+            'email' => Filters::getEmail(),
+            'role' => Filters::getInt(),
+            'is_changed_password' => Filters::getInt()
         );
+        $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->update($entity);
+        exit();
     }
 
     public function remove() {
-        $this->business->remove($_POST['id']);
+        $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
+        exit();
     }
 
 }

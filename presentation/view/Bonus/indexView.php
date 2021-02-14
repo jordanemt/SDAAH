@@ -3,7 +3,7 @@ $vars["viewName"] = 'bonus';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/vacation.js" type="text/javascript"></script>
+<script src="/presentation/public/js/vacation.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -770,7 +770,7 @@ include_once 'presentation/public/header.php';
 
                 </div>
 
-                <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
+                <a class="btn btn-info" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
             </form>
 
         </div>

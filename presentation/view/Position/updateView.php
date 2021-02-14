@@ -3,7 +3,7 @@ $vars["viewName"] = 'position';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/position.js" type="text/javascript"></script>
+<script src="/presentation/public/js/position.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -14,7 +14,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=Position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -24,49 +24,31 @@ include_once 'presentation/public/header.php';
                         <input type="number" class="form-control" id="id" name="id" value="<?php echo $vars['data']['id']; ?>">
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="cod">Código</label>
-                        <input type="text" class="form-control numberMask" id="cod" name="cod" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" value="<?php echo $vars['data']['cod']; ?>" required>
+                        <input type="text" class="form-control fourDigitsMask" id="cod" name="cod" minlength="4" maxlength="4" value="<?php echo $vars['data']['cod']; ?>" required>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="25" value="<?php echo $vars['data']['name']; ?>" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="25" value="<?php echo $vars['data']['name']; ?>" required>
                     </div>
 
-                    <div class="form-group col-md-4">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" onchange="showSalaryOptions();" required">
+                        <select class="form-control" id="type" name="type" required">
                             <option disabled>Seleccione una opción</option>
                             <option <?php if ($vars['data']['type'] == 'Mensual') { echo 'selected'; } ?> value="Mensual">Mensual</option>
                             <option <?php if ($vars['data']['type'] == 'Diario') { echo 'selected'; } ?> value="Diario">Diario</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="salary">Salario</label>
-                    <input type="number" class="form-control" id="salary" name="salary" placeholder="Ingrese lo que se le solicita" 
-                        <?php if ($vars['data']['type'] == 'Diario') { echo 'disabled'; } ?> value="<?php echo $vars['data']['salary']; ?>" step="any" min="0" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="ordinaryTime">Hora Ordinaria</label>
-                        <input type="number" class="form-control" id="ordinaryTime" name="ordinaryTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 'Mensual') { echo 'disabled'; } ?> value="<?php echo $vars['data']['ordinaryTime']; ?>" step="any" min="0" required>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="extraTime">Hora Extra</label>
-                        <input type="number" class="form-control" id="extraTime" name="extraTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 'Mensual') { echo 'disabled'; } ?> value="<?php echo $vars['data']['extraTime']; ?>" step="any" min="0" required>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="doubleTime">Hora Doble</label>
-                        <input type="number" class="form-control" id="doubleTime" name="doubleTime" placeholder="Ingrese lo que se le solicita" 
-                            <?php if ($vars['data']['type'] == 'Mensual') { echo 'disabled'; } ?> value="<?php echo $vars['data']['doubleTime']; ?>" step="any" min="0" required>
+                    
+                    <div class="form-group col-md-6">
+                        <label for="salary">Salario</label>
+                        <input type="text" class="form-control moneyMask" id="salary" name="salary" value="<?php echo $vars['data']['salary']; ?>" required>
                     </div>
                 </div>
 
@@ -76,7 +58,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=Position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/position"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

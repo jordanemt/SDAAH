@@ -2,10 +2,6 @@
 
 class View {
 
-    public function __construct() {
-        ;
-    }
-
     public function show($viewName, $vars = array()) {
         $config = Config::singleton();
         $path = $config->get('viewFolder') . $viewName;

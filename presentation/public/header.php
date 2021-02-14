@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,12 +12,11 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
-        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css"/>-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/b-1.6.5/r-2.2.6/sc-2.0.3/sl-1.3.1/datatables.min.css"/>
 
-        <!--CSS-->
-        <link href="presentation/public/css/site.css" rel="stylesheet" type="text/css"/>
+        <link href="/presentation/public/css/site.css" rel="stylesheet" type="text/css"/>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -27,21 +25,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.4/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.22/b-1.6.5/r-2.2.6/sc-2.0.3/sl-1.3.1/datatables.min.js"></script>
 
-        <!--JS-->
-        <script src="presentation/public/js/script.js" type="text/javascript"></script>
-        <script src="presentation/public/js/session.js" type="text/javascript"></script>
-        <script src="presentation/public/js/messages.js" type="text/javascript"></script>
+        <script src="/presentation/public/js/script.js" type="text/javascript"></script>
+        <script src="/presentation/public/js/session.js" type="text/javascript"></script>
+        <script src="/presentation/public/js/messages.js" type="text/javascript"></script>
     </head>
 
     <body class="d-none">
         <div class="body-content">
-            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #08a5ff">
-                <a class="navbar-brand" href="?controller=Index">Administración</a>
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #03A9F4">
+                <a class="navbar-brand" href="/index">
+<!--                    <img alt="Administración" src="/presentation/public/img/logo.png"/>-->
+                    Administración
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -54,7 +54,7 @@
                         <ul class="navbar-nav mr-auto">
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
-                            <a class="btn btn-outline-light my-2 my-sm-0" href="?controller=Session" type="submit">Iniciar Sesión</a>
+                            <a class="btn btn-outline-light my-2 my-sm-0" href="/session" type="submit">Iniciar Sesión</a>
                         </form>
 
                         <?php
@@ -63,28 +63,35 @@
 
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'user') === 0) {
+                            if (strcasecmp($vars['viewName'], '/user') === 0) {
                                 echo "active";
                             }
                             ?>">
-                                <a class="nav-link" href="?controller=User">Usuarios</a>
+                                <a class="nav-link" href="/user">Usuarios</a>
                             </li>
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'employee') === 0) {
+                            if (strcasecmp($vars['viewName'], '/employee') === 0) {
                                 echo "active";
                             }
                             ?>">
-                                <a class="nav-link" href="?controller=Employee">Empleados</a>
+                                <a class="nav-link" href="/employee">Empleados</a>
                             </li>
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'position') === 0) {
+                            if (strcasecmp($vars['viewName'], '/position') === 0) {
                                 echo "active";
                             }
                             ?>">
-                                <a class="nav-link" href="?controller=Position">Puestos</a>
+                                <a class="nav-link" href="/position">Puestos</a>
+                            </li>
+                            <li class="nav-item <?php
+                            if (strcasecmp($vars['viewName'], '/deductions') === 0) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link" href="/deduction">Deducciones</a>
                             </li>
                             <li class="nav-item dropdown <?php
-                            if (strcasecmp($vars['viewName'], 'payroll') === 0) {
+                            if (strcasecmp($vars['viewName'], '/payroll') === 0) {
                                 echo "active";
                             }
                             ?>">
@@ -92,10 +99,10 @@
                                     Nómina
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="?controller=Payroll">Quincenal</a>
-                                    <a class="dropdown-item" href="?controller=Payroll&action=monthlyView">Mensual</a>
-                                    <a class="dropdown-item" href="?controller=Payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
-                                    <a class="dropdown-item" href="?controller=Payroll&action=bncrReportView">Reporte del BNCR</a>
+                                    <a class="dropdown-item" href="/payroll">Quincenal</a>
+                                    <a class="dropdown-item" href="/payroll/monthlyView">Mensual</a>
+                                    <a class="dropdown-item" href="/payroll/provisionReportView">Reporte de Proviciones de Ley</a>
+                                    <a class="dropdown-item" href="/payroll/bncrReportView">Reporte del BNCR</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown <?php
@@ -107,8 +114,8 @@
                                     Vacaciones
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="?controller=Vacation">Calcular</a>
-                                    <a class="dropdown-item" href="?controller=Vacation&action=detail">Detalle</a>
+                                    <a class="dropdown-item" href="/vacation">Calcular</a>
+                                    <a class="dropdown-item" href="/vacation/detail">Detalle</a>
                                 </div>
                             </li>
                             <li class="nav-item <?php
@@ -116,7 +123,7 @@
                                 echo "active";
                             }
                             ?>">
-                                <a class="nav-link" href="?controller=Liquidation">Liquidaciones</a>
+                                <a class="nav-link" href="/liquidation">Liquidaciones</a>
                             </li>
                             <li class="nav-item dropdown <?php
                             if (strcasecmp($vars['viewName'], 'bonus') === 0) {
@@ -127,8 +134,8 @@
                                     Aguinaldos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="?controller=Bonus">Calcular</a>
-                                    <a class="dropdown-item" href="?controller=Bonus&action=detail">Detalle</a>
+                                    <a class="dropdown-item" href="/bonus">Calcular</a>
+                                    <a class="dropdown-item" href="/bonus/detail">Detalle</a>
                                 </div>
                             </li>
                         </ul>

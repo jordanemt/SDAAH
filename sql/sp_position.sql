@@ -9,7 +9,7 @@ CREATE PROCEDURE `sp_get_all_by_type_position`(
 	type VARCHAR(7)
 )
 BEGIN
-    SELECT `id`, CONCAT(`cod`, " ", "name") AS codName FROM `position` WHERE `position`.`type` = type AND `position`.`isDeleted` = 0;
+    SELECT `id`, CONCAT(`cod`, " ", `name`) AS codName FROM `position` WHERE `position`.`type` = type AND `position`.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_get_all_position`()
@@ -18,52 +18,37 @@ BEGIN
 END//
 
 CREATE PROCEDURE `sp_insert_position`(
-    cod INT,
+    cod VARCHAR(4),
     name VARCHAR(25),
     type VARCHAR(7),
-    salary DECIMAL(11,2),
-    ordinaryTime DECIMAL(11,2),
-    extraTime DECIMAL(11,2),
-    doubleTime DECIMAL(11,2)
+    salary DECIMAL(11,2)
 )
 BEGIN
 	INSERT INTO `position` (
         `cod`,
         `name`,
         `type`,
-        `salary`,
-        `ordinaryTime`,
-        `extraTime`,
-        `doubleTime`
+        `salary`
         ) VALUES (
             cod,
             name,
             type,
-            salary,
-            ordinaryTime,
-            extraTime,
-            doubleTime);
+            salary);
 END//
 
 CREATE PROCEDURE `sp_update_position`(
     id INT,
-	cod INT,
+	cod VARCHAR(4),
     name VARCHAR(25),
     type VARCHAR(7),
-    salary DECIMAL(11,2),
-    ordinaryTime DECIMAL(11,2),
-    extraTime DECIMAL(11,2),
-    doubleTime DECIMAL(11,2)
+    salary DECIMAL(11,2)
 )
 BEGIN
 	UPDATE position
     SET `cod` = cod,
         `name` = name,
         `type` = type,
-        `salary` = salary,
-        `ordinaryTime` = ordinaryTime,
-        `extraTime` = extraTime,
-        `doubleTime` = doubleTime
+        `salary` = salary
     WHERE `position`.`id` = id;
 END//
 

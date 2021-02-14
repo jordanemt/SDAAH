@@ -20,9 +20,9 @@ CREATE PROCEDURE `sp_insert_employee`(
     idPosition INT,
     location VARCHAR(14),
     admissionDate DATE,
-    bankAccount BIGINT,
+    bankAccount VARCHAR(15),
     email VARCHAR(100),
-    cssIns INT,
+    cssIns VARCHAR(4),
     isAffiliated SMALLINT
 )
 BEGIN
@@ -67,9 +67,9 @@ CREATE PROCEDURE `sp_update_employee`(
     idPosition INT,
     location VARCHAR(14),
     admissionDate DATE,
-    bankAccount BIGINT,
+    bankAccount VARCHAR(15),
     email VARCHAR(100),
-    cssIns INT,
+    cssIns VARCHAR(4),
     isAffiliated SMALLINT,
     isLiquidated SMALLINT,
     observations VARCHAR(500)
@@ -108,4 +108,13 @@ CREATE PROCEDURE `sp_duplicate_card_employee`(
 )
 BEGIN
     SELECT* FROM `employee` WHERE `employee`.`card` = card AND `employee`.`isDeleted` = 0;
+END//
+
+CREATE PROCEDURE `sp_get_position_employee`(
+	id INT
+)
+BEGIN
+    SELECT e.location, p.type, p.salary FROM `employee` e
+    JOIN `position` p ON e.`idPosition` = p.`id`
+    WHERE e.`id` = id AND e.`isDeleted` = 0;
 END//

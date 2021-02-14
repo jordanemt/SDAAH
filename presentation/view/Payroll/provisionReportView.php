@@ -3,7 +3,7 @@ $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/payroll.js" type="text/javascript"></script>
+<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -14,7 +14,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
             
-            <a href="?controller=Payroll&action=detailProvisionReportView">Detalle por Empleado <i class="fa fa-angle-double-right"></i></a>
+            <a href="/payroll/detailProvisionReportView">Detalle por Empleado <i class="fa fa-angle-double-right"></i></a>
 
             <div class="d-flex flex-md-row flex-column">
 

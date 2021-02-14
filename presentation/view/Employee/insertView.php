@@ -3,7 +3,7 @@ $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="presentation/public/js/employee.js" type="text/javascript"></script>
+<script src="/presentation/public/js/employee.js" type="text/javascript"></script>
 
 <div class="container my-4">
 
@@ -15,7 +15,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="?controller=Employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -25,23 +25,23 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control numberMask" id="card" name="card" placeholder="Ingrese lo que se le solicita" minlength="9" maxlength="9" required>
+                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" placeholder="Ingrese lo que se le solicita" maxlength="25" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" maxlength="25" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control textMask" id="name" name="name" placeholder="Ingrese lo que se le solicita" maxlength="50" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="50" required>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="admissionDate">Fecha de Ingreso</label>
-                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Ingrese lo que se le solicita" required>
+                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" value="<?php echo date('Y-m-d') ?>" required>
                     </div>
                 </div>
 
@@ -101,18 +101,18 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="bankAccount">Número de Cuenta Bancaria</label>
-                    <input type="text" class="form-control numberMask" id="bankAccount" name="bankAccount" placeholder="Ingrese lo que se le solicita" minlength="15" maxlength="15" required>
+                    <input type="text" class="form-control accountMask" id="bankAccount" name="bankAccount" minlength="15" maxlength="15" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese lo que se le solicita" maxlength="100" required>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="Ingrese lo que se le solicita" required>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="cssIns">CSS/INS</label>
-                        <input type="text" class="form-control numberMask" id="cssIns" name="cssIns" placeholder="Ingrese lo que se le solicita" minlength="4" maxlength="4" required>
+                        <input type="text" class="form-control fourDigitsMask" id="cssIns" name="cssIns" minlength="4" maxlength="4" required>
                     </div>
                 </div>
 
@@ -131,7 +131,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <a href="?controller=Employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

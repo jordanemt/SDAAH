@@ -4,7 +4,7 @@ function insert() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "?controller=User&action=insert";
+        var url = "/user/insert";
         $.ajax({
             url: url,
             type: "POST",
@@ -27,7 +27,7 @@ function update() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "?controller=User&action=update";
+        var url = "/user/update";
         $.ajax({
             url: url,
             type: "POST",
@@ -47,7 +47,7 @@ function update() {
 }
 
 function remove(id) {
-    var url = "?controller=User&action=remove";
+    var url = "/user/remove";
     $.ajax({
         url: url,
         type: "POST",
@@ -57,7 +57,7 @@ function remove(id) {
             successMessage("User");
         },
         error: function (error) {
-            errorMessage(error.responseText);
+            errorMessage(error.response);
 
         }
     });
