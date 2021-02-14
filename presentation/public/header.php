@@ -63,35 +63,35 @@
 
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], '/user') === 0) {
+                            if (strcasecmp($vars['viewName'], 'user') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="/user">Usuarios</a>
                             </li>
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], '/employee') === 0) {
+                            if (strcasecmp($vars['viewName'], 'employee') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="/employee">Empleados</a>
                             </li>
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], '/position') === 0) {
+                            if (strcasecmp($vars['viewName'], 'position') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="/position">Puestos</a>
                             </li>
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], '/deductions') === 0) {
+                            if (strcasecmp($vars['viewName'], 'deductions') === 0) {
                                 echo "active";
                             }
                             ?>">
                                 <a class="nav-link" href="/deduction">Deducciones</a>
                             </li>
                             <li class="nav-item dropdown <?php
-                            if (strcasecmp($vars['viewName'], '/payroll') === 0) {
+                            if (strcasecmp($vars['viewName'], 'payroll') === 0) {
                                 echo "active";
                             }
                             ?>">
