@@ -21,12 +21,12 @@ include_once 'presentation/public/header.php';
 
             <form id="form" enctype="multipart/form-data">
                 <div class="form-group d-none">
-                    <input type="number" class="form-control" id="id" name="id" value="<?php echo $vars['data']['id']; ?>">
+                    <input type="number" class="form-control" id="id" name="id" value="<?= $vars['data']['id']; ?>">
                 </div>
                 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?php echo $vars['data']['card']; ?>" required>
+                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?= $vars['data']['card']; ?>" required>
                 </div>
 
                 <div class="form-group">
@@ -54,24 +54,24 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="firstLastName">Primer apellido</label>
-                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" maxlength="25" value="<?php echo $vars['data']['firstLastName']; ?>" required>
+                        <input type="text" class="form-control textMask" id="firstLastName" name="firstLastName" maxlength="25" value="<?= $vars['data']['firstLastName']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="secondLastName">Segundo apellido</label>
-                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" maxlength="25" value="<?php echo $vars['data']['secondLastName']; ?>" required>
+                        <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" maxlength="25" value="<?= $vars['data']['secondLastName']; ?>" required>
                     </div>
                     
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="50" value="<?php echo $vars['data']['name']; ?>" required>
+                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="50" value="<?= $vars['data']['name']; ?>" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Correo</label>
-                        <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="Ingrese lo que se le solicita" value="<?php echo $vars['data']['email']; ?>" required>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="Ingrese lo que se le solicita" value="<?= $vars['data']['email']; ?>" required>
                     </div>
 
                     <div class="form-group col-md-6">

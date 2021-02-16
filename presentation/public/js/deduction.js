@@ -14,7 +14,7 @@ function insert() {
             "name": name
         },
         success: function () {
-            successMessage("Deduction");
+            successMessage("deduction");
         },
         error: function (error) {
             errorMessage(error.responseText);
@@ -31,7 +31,7 @@ function remove(id) {
         cache: false,
         data: {"id": id},
         success: function () {
-            successMessage("Deduction");
+            successMessage("deduction");
         },
         error: function (error) {
             errorMessage(error.responseText);

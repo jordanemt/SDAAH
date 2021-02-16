@@ -2,7 +2,7 @@ CREATE PROCEDURE `sp_get_employee`(
 	id INT
 )
 BEGIN
-	SELECT* FROM `employee` WHERE `employee`.`id` = id AND `employee`.`isDeleted` = 0;
+	SELECT* FROM `employee` WHERE `employee`.`id` = id;
 END//
 
 CREATE PROCEDURE `sp_get_all_employee`()
@@ -116,5 +116,5 @@ CREATE PROCEDURE `sp_get_position_employee`(
 BEGIN
     SELECT e.location, p.type, p.salary FROM `employee` e
     JOIN `position` p ON e.`idPosition` = p.`id`
-    WHERE e.`id` = id AND e.`isDeleted` = 0;
+    WHERE e.`id` = id;
 END//

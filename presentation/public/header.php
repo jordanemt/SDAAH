@@ -84,7 +84,7 @@
                                 <a class="nav-link" href="/position">Puestos</a>
                             </li>
                             <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'deductions') === 0) {
+                            if (strcasecmp($vars['viewName'], 'deduction') === 0) {
                                 echo "active";
                             }
                             ?>">

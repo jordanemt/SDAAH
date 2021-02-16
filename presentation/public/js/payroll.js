@@ -1,12 +1,6 @@
 /* global Swal */
 
-function getAllByFilter() {
-//    var fortnight = $('#fortnight').val();
-//    var year = $('#year').val();
-//    var location = $('#location').val();
-//    window.location.replace("/payroll&fortnight=" + fortnight +
-//            "&year=" + year +
-//            "&location=" + location);
+function submitSearch() {
     $('#search').submit();
 }
 
@@ -21,7 +15,7 @@ function insert() {
             cache: false,
             data: $("#form").serialize(),
             success: function () {
-                successMessage("Payroll");
+                successMessage("payroll");
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -46,7 +40,7 @@ function remove(id) {
         cache: false,
         data: {"id": id},
         success: function () {
-            successMessage("Payroll");
+            successMessage("payroll");
         },
         error: function (error) {
             errorMessage(error.responseText);

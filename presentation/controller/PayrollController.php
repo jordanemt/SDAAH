@@ -23,6 +23,14 @@ class PayrollController {
             'year' => Filters::getInt()
         );
         $inputFilter = filter_input_array(INPUT_GET, $filter);
+        
+        $inputFilter['location'] = !empty($inputFilter['location']) ? $inputFilter['location'] : 'Administrativo|Operativo';
+        $inputFilter['fortnight'] = !empty($inputFilter['fortnight']) ? $inputFilter['fortnight'] : Util::getFortnight();
+        $inputFilter['year'] = !empty($inputFilter['year']) ? $inputFilter['year'] : date('Y');
+        
+        $_SESSION['location'] = $inputFilter['location'];
+        $_SESSION['fortnight'] = $inputFilter['fortnight'];
+        $_SESSION['year'] = $inputFilter['year'];
 
         $vars['data'] = $this->business->calcBiweeklyPayroll($this->business->getAllByFilter($inputFilter));
         $this->view->show($this->controllerName . 'indexView.php', $vars);
@@ -54,8 +62,24 @@ class PayrollController {
 //    }
 
     public function monthlyView() {
+        $filter = array(
+            'location' => Filters::getString(),
+            'fortnight' => Filters::getString(),
+            'year' => Filters::getInt()
+        );
+        $inputFilter = filter_input_array(INPUT_GET, $filter);
         
-        $this->view->show($this->controllerName . 'monthlyView.php', null);
+        $inputFilter['location'] = !empty($inputFilter['location']) ? $inputFilter['location'] : 'Administrativo|Operativo';
+        $inputFilter['fortnight'] = !empty($inputFilter['fortnight']) ? $inputFilter['fortnight'] : Util::getFilterOfMonth();
+        $inputFilter['year'] = !empty($inputFilter['year']) ? $inputFilter['year'] : date('Y');
+        
+        $_SESSION['location'] = $inputFilter['location'];
+        $_SESSION['fortnight'] = $inputFilter['fortnight'];
+        $_SESSION['year'] = $inputFilter['year'];
+
+        $vars['data'] = $this->business->calcMonthlyPayroll($this->business->getAllByFilter($inputFilter));
+        print_r($vars['data']);
+        $this->view->show($this->controllerName . 'monthlyView.php', $vars);
     }
 
     public function provisionReportView() {

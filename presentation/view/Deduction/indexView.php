@@ -33,10 +33,10 @@ include_once 'presentation/public/header.php';
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
-                            <td class="text-center"><?php echo $value['id'] ?></td>
-                            <td class="text-center"><?php echo $value['name'] ?></td>
+                            <td class="text-center"><?= $value['id'] ?></td>
+                            <td class="text-center"><?= $value['name'] ?></td>
                             <td class="text-center">
-                                <a class="font-warning" href="#" onclick="confirmDelete(<?php echo $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                <a class="font-warning" href="#" onclick="confirmDelete(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                         </tr>
                         <?php

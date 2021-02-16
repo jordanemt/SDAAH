@@ -11,7 +11,7 @@ function insert() {
             cache: false,
             data: $("#form").serialize(),
             success: function () {
-                successMessage("Position");
+                successMessage("position");
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -34,7 +34,7 @@ function update() {
             cache: false,
             data: $("#form").serialize(),
             success: function () {
-                successMessage("Position");
+                successMessage("position");
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -54,7 +54,7 @@ function remove(id) {
         cache: false,
         data: {"id": id},
         success: function () {
-            successMessage("Position");
+            successMessage("position");
         },
         error: function (error) {
             errorMessage(error.responseText);

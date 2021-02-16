@@ -14,12 +14,12 @@ class EmployeeData {
     public function get($id) {
         $query = $this->db->prepare("CALL `sp_get_employee` (?)");
         $query->bindParam(1, $id);
-
+        
         if (!$query->execute()) {
             throw new DataBaseException();
         }
 
-        $data = $query->fetch();
+        $data = $query->fetch(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }
@@ -31,7 +31,7 @@ class EmployeeData {
             throw new DataBaseException();
         }
 
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }

@@ -66,7 +66,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" onchange="updateSelect();" required>
+                        <select class="form-control selectpicker" id="type" name="type" onchange="updateSelect();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <option value="Mensual">Mensual</option>
                             <option value="Diario">Diario</option>
@@ -75,7 +75,7 @@ include_once 'presentation/public/header.php';
 
                     <div id="position-container" class="form-group col-md-6">
                         <label for="idPosition">Puesto</label>
-                        <select class="form-control" id="idPosition" name="idPosition" required>
+                        <select class="form-control" id="idPosition" name="idPosition" title="Seleccione una opción" required>
                             <option selected disabled>Debe seleccionar un Tipo</option>
                         </select>
                     </div>
@@ -93,7 +93,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="admissionDate">Fecha de Ingreso</label>
-                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" value="<?php echo date('Y-m-d') ?>" required>
+                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" value="<?= date('Y-m-d') ?>" required>
                     </div>
                 </div>
 

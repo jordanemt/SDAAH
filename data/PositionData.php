@@ -16,7 +16,7 @@ class PositionData {
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
-            throw new DataBaseException();
+            throw new DataBaseException(PDO::FETCH_ASSOC);
         }
 
         $data = $query->fetch();
@@ -31,7 +31,7 @@ class PositionData {
             throw new DataBaseException();
         }
 
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }
@@ -44,7 +44,7 @@ class PositionData {
             throw new DataBaseException();
         }
 
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }

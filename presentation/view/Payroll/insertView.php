@@ -29,7 +29,7 @@ include_once 'presentation/public/header.php';
                             <?php
                             foreach ($vars['employees'] as $value) {
                                 ?>
-                                <option value="<?php echo $value['id'] ?>"><?php echo $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
+                                <option value="<?= $value['id'] ?>"><?= $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
                                 <?php
                             }
                             ?>
@@ -39,14 +39,14 @@ include_once 'presentation/public/header.php';
                     <div class="form-group col-md-4">
                         <label for="fortnight">Quincena</label>
                         <select class="form-control selectpicker" data-size="5" id="fortnight" name="fortnight" required>
-                            <?php echo Util::getSelectFortnightOptions() ?>
+                            <?= Util::getSelectFortnightOptions() ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="year">Año</label>
                         <select class="form-control selectpicker" id="year" name="year" data-size="5" name="fortnight" required>
-                            <?php echo Util::getSelectYearOptions() ?>
+                            <?= Util::getSelectYearOptions() ?>
                         </select>
                     </div>
                 </div>
@@ -142,7 +142,7 @@ include_once 'presentation/public/header.php';
                             <?php
                             foreach ($vars['deductions'] as $value) {
                                 ?>
-                                <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
                                 <?php
                             }
                             if (count($vars['deductions']) == 0) {
@@ -157,9 +157,9 @@ include_once 'presentation/public/header.php';
                     <?php
                     foreach ($vars['deductions'] as $value) {
                         ?>
-                        <div id="deduction-form-group-<?php echo $value['id'] ?>" class="form-group col-md-3 deductions">
-                            <label for="deduction-<?php echo $value['id'] ?>"><?php echo $value['name'] ?></label>
-                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?php echo $value['id'] ?>" name="deductionsMounts[]" disabled>
+                        <div id="deduction-form-group-<?= $value['id'] ?>" class="form-group col-md-3 deductions">
+                            <label for="deduction-<?= $value['id'] ?>"><?= $value['name'] ?></label>
+                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" disabled>
                         </div>
                         <?php
                     }

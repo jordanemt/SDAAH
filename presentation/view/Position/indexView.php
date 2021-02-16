@@ -35,21 +35,13 @@ include_once 'presentation/public/header.php';
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
-                            <td class="text-center"><?php echo $value['cod'] ?></td>
-                            <td class="text-center"><?php echo $value['name'] ?></td>
-                            <td class="text-center"><?php echo $value['type']?></td>
+                            <td class="text-center"><?= $value['cod'] ?></td>
+                            <td class="text-center"><?= $value['name'] ?></td>
+                            <td class="text-center"><?= $value['type']?></td>
+                            <td class="text-center"><?= '₡' . number_format($value['salary'], 2, '.', ' ') ?></td>
                             <td class="text-center">
-                                <?php
-                                if (isset($value['salary'])) {
-                                    echo '₡' . number_format($value['salary'], 2, '.', ' ');
-                                } else {
-                                    echo '---';
-                                }
-                                ?>
-                            </td>
-                            <td class="text-center">
-                                <a href="/position/updateView?id=<?php echo $value['id']?>"><i class="fa fa-edit"></i> Editar</a>
-                                <a class="font-warning" href="#" onclick="confirmDelete(<?php echo $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                <a href="/position/updateView?id=<?= $value['id']?>"><i class="fa fa-edit"></i> Editar</a>
+                                <a class="font-warning" href="#" onclick="confirmDelete(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                         </tr>
                         <?php

@@ -11,7 +11,7 @@ function insert() {
             cache: false,
             data: $("#form").serialize(),
             success: function () {
-                successMessage("Employee");
+                successMessage("employee");
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -34,7 +34,7 @@ function update() {
             cache: false,
             data: $("#form").serialize(),
             success: function () {
-                successMessage("Employee");
+                successMessage("employee");
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -54,7 +54,7 @@ function remove(id) {
         cache: false,
         data: {"id": id},
         success: function () {
-            successMessage("Employee");
+            successMessage("employee");
         },
         error: function (error) {
             errorMessage(error.responseText);
@@ -77,26 +77,24 @@ function updateSelect() {
             if (JSON.parse(data).length === 0) {
                 $("#idPosition").empty();
                 var option = $("<option></option>").attr("disabled", true)
-                        .attr("selected", true).text("No se encontraron Puestos del Tipo " + type);
+                        .attr("selected", true).text("No se encontraron Puestos del tipo " + type);
                 $("#idPosition").append(option);
                 return 0;
             }
 
             $("#idPosition").empty();
-            var option = $("<option></option>").attr("disabled", true).attr("selected", true).text("Seleccione una opción");
-            $("#idPosition").append(option);
 
             var idPosition = $("#idPositionSave").val();
             jQuery.each(JSON.parse(data), function () {
                 switch (this.id) {
 
                     case idPosition:
-                        var option = $("<option></option>").attr("value", this.id).attr("selected", true).text(this.codName);
+                        var option = $("<option></option>").attr("value", this.id).attr("selected", true).text(this.cod + " " + this.name);
                         $("#idPosition").append(option);
                         break;
 
                     default:
-                        var option = $("<option></option>").attr("value", this.id).text(this.codName);
+                        var option = $("<option></option>").attr("value", this.id).text(this.cod + " " + this.name);
                         $("#idPosition").append(option);
                         break;
 

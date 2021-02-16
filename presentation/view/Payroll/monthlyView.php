@@ -18,21 +18,21 @@ include_once 'presentation/public/header.php';
 
                 <div class="col-md-12 px-0">
 
-                    <form id="search" class="col-md-12 px-0">
+                    <form id="search" class="col-md-12 px-0" action="/payroll/monthlyView" method="get">
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
                             
                             <div class="d-flex flex-row p-1">
-                                <label for="">Mes:&nbsp</label>
-                                <select class="form-control form-control-sm">
-                                    <option>Enero</option>
+                                <label for="month">Mes:&nbsp</label>
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="month" name="fortnight" onchange="submitSearch();">
+                                    <?= Util::getSelectMonthOptions(); ?>
                                 </select>
                             </div>
                             
                             <div class="d-flex flex-row p-1">
-                                <label for="">Año:&nbsp</label>
-                                <select class="form-control form-control-sm">
-                                    <option>2020</option>
+                                <label for="year">Año:&nbsp</label>
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="year" name="year" onchange="submitSearch();">
+                                    <?= Util::getSelectYearOptions(); ?>
                                 </select>
                             </div>
                             
@@ -50,22 +50,18 @@ include_once 'presentation/public/header.php';
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
+                        <th class="text-center">Nombre Completo</th>
                         <th class="text-center">N/Asegurado</th>
-                        <th class="text-center">P/Apellido</th>
-                        <th class="text-center">S/Apellido</th>
-                        <th class="text-center">Nombre</th>
                         <th class="text-center">Jornada</th>
                         <th class="text-center">Días</th>
                         <th class="text-center">Horas</th>
                         <th class="text-center">Salario</th>
-                        <th class="text-center">Observaciones</th>
                         <th class="text-center">Ocupación</th>
+                        <th class="text-center">Observaciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
                         <td class="text-center">Dato prueba</td>
                         <td class="text-center">Dato prueba</td>
                         <td class="text-center">Dato prueba</td>

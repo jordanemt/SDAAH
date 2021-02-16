@@ -18,20 +18,20 @@ class DeductionData {
             throw new DataBaseException();
         }
 
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }
     
     public function getAllByIdPayroll($id) {
-        $query = $this->db->prepare("CALL `sp_get_all_by_idPayroll_deduction` (?)");
+        $query = $this->db->prepare("CALL `sp_get_all_by_idPayroll_payroll_deduction` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
             throw new DataBaseException();
         }
 
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }

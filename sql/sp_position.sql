@@ -2,19 +2,19 @@ CREATE PROCEDURE `sp_get_position`(
 	id INT
 )
 BEGIN
-	SELECT* FROM `position` WHERE `position`.`id` = id AND `position`.`isDeleted` = 0;
+	SELECT* FROM `position` WHERE `position`.`id` = id;
 END//
 
 CREATE PROCEDURE `sp_get_all_by_type_position`(
 	type VARCHAR(7)
 )
 BEGIN
-    SELECT `id`, CONCAT(`cod`, " ", `name`) AS codName FROM `position` WHERE `position`.`type` = type AND `position`.`isDeleted` = 0;
+    SELECT* FROM `position` WHERE `position`.`type` = type AND `position`.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_get_all_position`()
 BEGIN
-	SELECT* FROM `position` WHERE `position`.`isDeleted` = 0;
+	SELECT* FROM `position` WHERE `position`.`isDeleted` = 0;;
 END//
 
 CREATE PROCEDURE `sp_insert_position`(

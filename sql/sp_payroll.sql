@@ -2,25 +2,26 @@ CREATE PROCEDURE `sp_get_payroll`(
 	id INT
 )
 BEGIN
-	SELECT* FROM `payroll` WHERE `payroll`.`id` = id AND `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payroll` WHERE `payroll`.`id` = id;
 END//
 
 CREATE PROCEDURE `sp_get_all_by_filter_payroll`(
-    fortnight INT,
+    fortnight VARCHAR(5),
 	year INT,
-    location VARCHAR(50)
+    location VARCHAR(28)
 )
 BEGIN
 	SELECT* FROM `payroll` WHERE 
         `payroll`.`isDeleted` = 0 AND 
         `payroll`.`location` REGEXP location AND
-        `payroll`.`fortnight` = fortnight AND
-        `payroll`.`year` = year;
+        `payroll`.`fortnight` REGEXP fortnight AND
+        `payroll`.`year` = year AND 
+        `payroll`.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_get_all_payroll`()
 BEGIN
-	SELECT* FROM `payroll` WHERE `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payroll` WHERE `payroll`.`isDeleted` = 0;;
 END//
 
 CREATE PROCEDURE `sp_insert_payroll`(
@@ -156,4 +157,11 @@ BEGIN
 	UPDATE `payroll`
     SET `isDeleted` = 1
     WHERE `payroll`.`id` = id;
+END//
+
+CREATE PROCEDURE `sp_payroll_is_inserted_by_idEmployee`(
+	idEmployee INT
+)
+BEGIN
+	SELECT `id` FROM `payroll` WHERE `payroll`.`idEmployee` = idEmployee AND `payroll`.`isDeleted` = 0;
 END//

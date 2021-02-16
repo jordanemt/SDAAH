@@ -2,7 +2,7 @@ CREATE PROCEDURE `sp_get_user`(
 	id INT
 )
 BEGIN
-	SELECT `id`, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`id` = id AND `user`.`isDeleted` = 0;
+	SELECT `id` AS id, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`id` = id;
 END//
 
 CREATE PROCEDURE `sp_get_all_user`()
@@ -81,5 +81,5 @@ CREATE PROCEDURE `sp_duplicate_card_user`(
 	card VARCHAR(9)
 )
 BEGIN
-    SELECT* FROM `user` WHERE `user`.`card` = card AND `user`.`isDeleted` = 0;
+    SELECT* FROM `user` WHERE `user`.`card` = card  AND `user`.`isDeleted` = 0;
 END//

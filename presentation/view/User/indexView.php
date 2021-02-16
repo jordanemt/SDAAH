@@ -36,11 +36,11 @@ include_once 'presentation/public/header.php';
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
-                            <td class="text-center"><?php echo $value['card'] ?></td>
-                            <td class="text-center"><?php echo $value['name'] ?></td>
-                            <td class="text-center"><?php echo $value['firstLastName'] ?></td>
-                            <td class="text-center"><?php echo $value['secondLastName'] ?></td>
-                            <td class="text-center"><?php echo $value['email'] ?></td>
+                            <td class="text-center"><?= $value['card'] ?></td>
+                            <td class="text-center"><?= $value['name'] ?></td>
+                            <td class="text-center"><?= $value['firstLastName'] ?></td>
+                            <td class="text-center"><?= $value['secondLastName'] ?></td>
+                            <td class="text-center"><?= $value['email'] ?></td>
                             <td class="text-center">
                                 <?php
                                 switch ($value['role']) {
@@ -59,8 +59,8 @@ include_once 'presentation/public/header.php';
                                 ?>
                             </td>
                             <td class="text-center">
-                                <a href="/user/updateView?id=<?php echo $value['id'] ?>" class=""><i class="fa fa-edit"></i> Editar</a>
-                                <a href="#" class="font-warning" onclick="confirmDelete(<?php echo $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                <a href="/user/updateView?id=<?= $value['id'] ?>" class=""><i class="fa fa-edit"></i> Editar</a>
+                                <a href="#" class="font-warning" onclick="confirmDelete(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                         </tr>
                         <?php

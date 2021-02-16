@@ -1,6 +1,7 @@
 <?php
 
 require_once 'data/EmployeeData.php';
+require_once 'business/PositionBusiness.php';
 require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
 require_once 'exceptions/DuplicateCardException.php';
@@ -18,7 +19,11 @@ class EmployeeBusiness {
             throw new AttributeConflictException();
         }
         
-        return $this->data->get($id);
+        $data = $this->data->get($id);
+        $positionBusiness = new PositionBusiness();
+        $data['position'] =$positionBusiness->get($data['idPosition']);
+        
+        return $data;
     }
 
     public function getAll() {
