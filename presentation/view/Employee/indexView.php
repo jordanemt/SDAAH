@@ -25,9 +25,9 @@ require_once 'common/Util.php';
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
-                        <th class="text-center">Nombre</th>
                         <th class="text-center">P/Apellido</th>
                         <th class="text-center">S/Apellido</th>
+                        <th class="text-center">Nombre</th>
                         <th class="text-center">Sexo</th>
                         <th class="text-center">Puesto</th>
                         <th class="text-center">Localidad</th>
@@ -54,9 +54,9 @@ require_once 'common/Util.php';
                         ?>
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
-                            <td class="text-center"><?= $value['name'] ?></td>
                             <td class="text-center"><?= $value['firstLastName'] ?></td>
                             <td class="text-center"><?= $value['secondLastName'] ?></td>
+                            <td class="text-center"><?= $value['name'] ?></td>
                             <td class="text-center"><?= $value['gender'] ?></td>
                             <td class="text-center"><?= $value['position']['name'] ?></td>
                             <td class="text-center"><?= $value['location'] ?></td>

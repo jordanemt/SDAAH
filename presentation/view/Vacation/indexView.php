@@ -16,17 +16,22 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <form id="form">
+            <form id="form" onchange="calcVacationAccrued();">
                 <h4>Datos Personales</h4>
 
                 <div class="form-row">
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="idEmployee">Identificación</label>
-                        <select class="form-control" id="idEmployee" name="idEmployee" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">000000000</option>
-                            <option value="2">000000000</option>
+                            <?php
+                            foreach ($vars['employees'] as $value) {
+                                ?>
+                                <option value="<?= $value['id'] ?>"><?= $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
+                                <?php
+                            }
+                            ?>
                         </select>
                     </div>
 
@@ -37,15 +42,13 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-3">
                         <label for="vacationDays">Días</label>
-                        <input type="number" class="form-control" id="vacationDays" name="vacationDays" placeholder="Días" min="1" required>
+                        <input type="tex" class="form-control numberMask" id="vacationDays" name="vacationDays" placeholder="Días" min="1" required>
                     </div>
-
-                    <div class="form-group col-md-3">
+                    
+                    <div class="form-group col-md-2">
                         <label for="vacationFortnight">Quincena</label>
-                        <select class="form-control" id="vacationFortnight" name="vacationFortnight" required>
-                            <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <select class="form-control selectpicker" data-size="5" id="vacationFortnight" name="vacationFortnight" required>
+                            <?= Util::getSelectFortnightOptions() ?>
                         </select>
                     </div>
 
@@ -60,7 +63,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-4">
                         <label for="admissionDate">Fecha Ingreso</label>
-                        <input type="text" class="form-control" id="admissionDate" name="admissionDate" placeholder="Fecha de Ingreso" required disabled>
+                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Fecha de Ingreso" required disabled>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -77,26 +80,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight">Quincena</label>
-                        <select class="form-control" id="fortnight1" name="fortnight[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label>Quincena</label>
+                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(6, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year">Año</label>
-                        <input type="number" class="form-control" id="year1" name="year[]" value="2021" required>
+                        <label>Año</label>
+                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                            <?= Util::getSelectYearOptions($year) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days">Días</label>
-                        <input type="number" class="form-control" id="days1" name="days[]" min="1" value="15" required>
+                        <label>Días</label>
+                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing">Devengado</label>
-                        <input type="text" class="form-control" id="accruing1" name="accruing[]" required disabled>
+                        <label for="accruing0">Devengado</label>
+                        <input type="text" class="form-control moneyMask" id="accruing0" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -106,26 +110,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label class="label-hide">Quincena</label>
+                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(5, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
+                        <label class="label-hide">Año</label>
+                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                            <?= Util::getSelectYearOptions($year) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
+                        <label class="label-hide">Días</label>
+                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
+                        <label for="accruing1" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control moneyMask" id="accruing1" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -135,26 +140,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight3" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label class="label-hide">Quincena</label>
+                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(4, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year3" name="years[]" value="2021" required>
+                        <label class="label-hide">Año</label>
+                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                            <?= Util::getSelectYearOptions($year) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days3" name="days[]" min="1" value="15" required>
+                        <label class="label-hide">Días</label>
+                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing3" name="accruing[]" required disabled>
+                        <label for="accruing2" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control moneyMask" id="accruing2" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -164,26 +170,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label class="label-hide">Quincena</label>
+                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(3, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
+                        <label class="label-hide">Año</label>
+                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                            <?= Util::getSelectYearOptions($year) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
+                        <label class="label-hide">Días</label>
+                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
+                        <label for="accruing3" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control moneyMask" id="accruing3" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -193,26 +200,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight5" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label class="label-hide">Quincena</label>
+                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(2, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
+                        <label class="label-hide">Año</label>
+                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                            <?= Util::getSelectYearOptions($year) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
+                        <label class="label-hide">Días</label>
+                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
+                        <label for="accruing4" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control moneyMask" id="accruing4" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -222,26 +230,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnigh6" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label class="label-hide">Quincena</label>
+                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(1, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year6" name="years[]" value="2021" required>
+                        <label class="label-hide">Año</label>
+                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                            <?= Util::getSelectYearOptions($year) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days6" name="days[]" min="1" value="15" required>
+                        <label class="label-hide">Días</label>
+                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing6" name="accruing[]" required disabled>
+                        <label for="accruing5" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control moneyMask" id="accruing5" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -249,18 +258,18 @@ include_once 'presentation/public/header.php';
                 <div class="form-row justify-content-end">
                     
                     <div class="form-group col-md-4">
-                        <label for="averageDailyWage"><strong>Sala. Prom. Diario</strong></label>
-                        <input type="text" class="form-control" id="averageDailyWage" name="averageDailyWage" required disabled>
+                        <label for="avgSalary"><strong>Sala. Prom. Diario</strong></label>
+                        <input type="text" class="form-control" id="avgSalary" name="avgSalary" required readonly>
                     </div>
                     
                     <div class="form-group col-md-2">
-                        <label for="totalVacation"><strong>Total Días</strong></label>
-                        <input type="text" class="form-control" id="totalVacation" name="totalVacation" required disabled>
+                        <label for="daysTotal"><strong>Total Días</strong></label>
+                        <input type="text" class="form-control" id="daysTotal" name="daysTotal" required readonly>
                     </div>
                     
                     <div class="form-group col-md-6">
-                        <label for="totalSalaries"><strong>Total Salarios</strong></label>
-                        <input type="text" class="form-control" id="totalSalaries" name="totalSalaries" required disabled>
+                        <label for="salaryTotal"><strong>Total Salarios</strong></label>
+                        <input type="text" class="form-control" id="salaryTotal" name="salaryTotal" required readonly>
                     </div>
 
                 </div>
@@ -268,8 +277,8 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
-                        <label for="accruingVacation"><strong>Devengado Vacac.</strong></label>
-                        <input type="text" class="form-control" id="accruingVacation" name="accruingVacation" required disabled>
+                        <label for="accruedVacation"><strong>Devengado Vacac.</strong></label>
+                        <input type="text" class="form-control" id="accruedVacation" name="accruedVacation" required readonly>
                     </div>
 
                 </div>
@@ -278,9 +287,27 @@ include_once 'presentation/public/header.php';
                 
                 <div class="form-row">
                     
+                    <div id="deductionsSelector" class="form-group col-md-4">
+                        <label for="deductions">Agregar Deducciones</label>
+                        <select class="form-control selectpicker" multiple data-size="5" title="Seleccione ninguna o varias" id="deductions" name="deductions[]" onchange="addDeductions();">
+                            <?php
+                            foreach ($vars['deductions'] as $value) {
+                                ?>
+                                <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                <?php
+                            }
+                            if (count($vars['deductions']) == 0) {
+                                ?>
+                                <option disabled>No hay deducciones en el catálogo</option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    
                     <div class="form-group col-md-4">
-                        <label for="CCSSFee">Cuota CCSS</label>
-                        <input type="text" class="form-control" id="CCSSFee" name="CCSSFee" required disabled>
+                        <label for="workerCCSS">Cuota CCSS</label>
+                        <input type="text" class="form-control" id="workerCCSS" name="workerCCSS" required disabled>
                     </div>
                     
                     <div class="form-group col-md-4">
@@ -288,56 +315,26 @@ include_once 'presentation/public/header.php';
                         <input type="text" class="form-control" id="incomeTax" name="incomeTax" required disabled>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="advancementOfUnemployment">Adelanto de Cesantía</label>
-                        <input type="text" class="form-control" id="advancementOfUnemployment" name="advancementOfUnemployment">
-                    </div>
+                    <?php
+                    foreach ($vars['deductions'] as $value) {
+                        ?>
+                        <div id="deduction-form-group-<?= $value['id'] ?>" class="form-group col-md-4 deductions">
+                            <label for="deduction-<?= $value['id'] ?>"><?= $value['name'] ?></label>
+                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" disabled>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+                    <script>$(".deductions").hide();</script>
 
                 </div>
                 
                 <div class="form-row">
                     
                     <div class="form-group col-md-4">
-                        <label for="solidarityAssociationLoan">Préstamo. Asoc. Solidarista</label>
-                        <input type="text" class="form-control" id="solidarityAssociationLoan" name="solidarityAssociationLoan">
-                    </div>
-                    
-                    <div class="form-group col-md-4">
-                        <label for="solidarityAssociationSavings">Ahorro Asoc. Solidar.</label>
-                        <input type="text" class="form-control" id="solidarityAssociationSavings" name="solidarityAssociationSavings">
-                    </div>
-                    
-                    <div class="form-group col-md-4">
-                        <label for="salaryAdvance">Anticipo Salarial</label>
-                        <input type="text" class="form-control" id="salaryAdvance" name="salaryAdvance">
-                    </div>
-
-                </div>
-                
-                <div class="form-row">
-                    
-                    <div class="form-group col-md-4">
-                        <label for="extraordinarySavings">Ahorro Extraordinario</label>
-                        <input type="text" class="form-control" id="extraordinarySavings" name="extraordinarySavings">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="wageGarnishment">Embargo Salarial</label>
-                        <input type="text" class="form-control" id="wageGarnishment" name="wageGarnishment">
-                    </div>
-                    
-                    <div class="form-group col-md-4">
-                        <label for="alimony">Pensión Alimenticia</label>
-                        <input type="text" class="form-control" id="alimony" name="alimony">
-                    </div>
-
-                </div>
-                
-                <div class="form-row">
-                    
-                    <div class="form-group col-md-4">
-                        <label for="totalDeductions"><strong>Total Deducciones</strong></label>
-                        <input type="text" class="form-control" id="totalDeductions" name="totalDeductions" required disabled>
+                        <label for="deductionsTotal"><strong>Total Deducciones</strong></label>
+                        <input type="text" class="form-control" id="deductionsTotal" name="deductionsTotal" required readonly>
                     </div>
                     
                 </div>
@@ -345,8 +342,8 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     
                     <div class="form-group col-md-4">
-                        <label for="totalNetVacationPayable"><strong>Total Vacac. Neto a Pagar</strong></label>
-                        <input type="text" class="form-control" id="totalNetVacationPayable" name="totalNetVacationPayable" required disabled>
+                        <label for="net"><strong>Total Vacac. Neto a Pagar</strong></label>
+                        <input type="text" class="form-control" id="net" name="net" required readonly>
                     </div>
                     
                 </div>

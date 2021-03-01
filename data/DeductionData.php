@@ -53,5 +53,22 @@ class DeductionData {
             throw new DataBaseException();
         }
     }
+    
+    public function isAssociatedWithPayroll($id) {
+        $query = $this->db->prepare("CALL `sp_is_associated_with_payroll_deduction` (?)");
+        $query->bindParam(1, $id);
+
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+        
+        if (count($query->fetchAll()) > 0) {
+            $query->closeCursor();
+            return true;
+        }
+
+        $query->closeCursor();
+        return false;
+    }
 
 }

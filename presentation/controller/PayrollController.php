@@ -14,26 +14,67 @@ class PayrollController {
 
         $this->sessionController = new SessionController;
         $this->sessionController->isNotLoggedThenRedirect();
+        
+        $_SESSION['location'] = 'Administrativo|Operativo';
+        $_SESSION['fortnight'] = Util::getFortnight();
+        $_SESSION['year'] = date('Y');
+        $_SESSION['month'] = date('m');
     }
 
     public function index() {
-        $filter = array(
+        $inputFilter = array(
             'location' => Filters::getString(),
-            'fortnight' => Filters::getString(),
+            'fortnight' => Filters::getInt(),
             'year' => Filters::getInt()
         );
-        $inputFilter = filter_input_array(INPUT_GET, $filter);
+        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
         
-        $inputFilter['location'] = !empty($inputFilter['location']) ? $inputFilter['location'] : 'Administrativo|Operativo';
-        $inputFilter['fortnight'] = !empty($inputFilter['fortnight']) ? $inputFilter['fortnight'] : Util::getFortnight();
-        $inputFilter['year'] = !empty($inputFilter['year']) ? $inputFilter['year'] : date('Y');
-        
-        $_SESSION['location'] = $inputFilter['location'];
-        $_SESSION['fortnight'] = $inputFilter['fortnight'];
-        $_SESSION['year'] = $inputFilter['year'];
-
-        $vars['data'] = $this->business->calcBiweeklyPayroll($this->business->getAllByFilter($inputFilter));
+        $vars['data'] = $this->business->getBiweeklyPayroll($this->business->getAllByBiweeklyFilter($filter));
         $this->view->show($this->controllerName . 'indexView.php', $vars);
+    }
+
+    public function monthlyView() {
+        $inputFilter = array(
+            'month' => Filters::getInt(),
+            'year' => Filters::getInt()
+        );
+        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+        
+        $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
+        $this->view->show($this->controllerName . 'monthlyView.php', $vars);
+    }
+
+    public function provisionReportView() {
+        $inputFilter = array(
+            'month' => Filters::getInt(),
+            'year' => Filters::getInt()
+        );
+        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+
+        $vars['data'] = $this->business->getProvisionReport($this->business->getAllByMonthlyFilter($filter));
+        $this->view->show($this->controllerName . 'provisionReportView.php', $vars);
+    }
+
+    public function detailProvisionReportView() {
+        $inputFilter = array(
+            'month' => Filters::getInt(),
+            'year' => Filters::getInt()
+        );
+        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+
+        $vars['data'] = $this->business->getDetailProvisionReport($this->business->getAllByMonthlyFilter($filter));
+        $this->view->show($this->controllerName . 'detailProvisionReportView.php', $vars);
+    }
+
+    public function bncrReportView() {
+        $inputFilter = array(
+            'month' => Filters::getInt(),
+            'year' => Filters::getInt()
+        );
+        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+
+        $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
+        $this->view->show($this->controllerName . 'bncrReportView.php', $vars);
     }
 
     public function insertView() {
@@ -46,62 +87,28 @@ class PayrollController {
         $this->view->show($this->controllerName . 'insertView.php', $vars);
     }
 
-//    public function updateView() {
-//        $employeeBusiness = new EmployeeBusiness();
-//        $vars['employees'] = $employeeBusiness->getAll();
-//
-//        $deductionBusiness = new DeductionBusiness();
-//        $vars['deductions'] = $deductionBusiness->getAll();
-//        
-//        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-//        
-//        $vars['data'] = $this->business->get($id);
-//        $vars['deductionsOnPayroll'] = $deductionBusiness->getAllByIdPayroll($id);
-//        
-//        $this->view->show($this->controllerName . 'updateView.php', $vars);
-//    }
+    public function updateView() {
+        $employeeBusiness = new EmployeeBusiness();
+        $vars['employees'] = $employeeBusiness->getAll();
 
-    public function monthlyView() {
-        $filter = array(
-            'location' => Filters::getString(),
-            'fortnight' => Filters::getString(),
-            'year' => Filters::getInt()
-        );
-        $inputFilter = filter_input_array(INPUT_GET, $filter);
+        $deductionBusiness = new DeductionBusiness();
+        $vars['deductions'] = $deductionBusiness->getAll();
         
-        $inputFilter['location'] = !empty($inputFilter['location']) ? $inputFilter['location'] : 'Administrativo|Operativo';
-        $inputFilter['fortnight'] = !empty($inputFilter['fortnight']) ? $inputFilter['fortnight'] : Util::getFilterOfMonth();
-        $inputFilter['year'] = !empty($inputFilter['year']) ? $inputFilter['year'] : date('Y');
+        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         
-        $_SESSION['location'] = $inputFilter['location'];
-        $_SESSION['fortnight'] = $inputFilter['fortnight'];
-        $_SESSION['year'] = $inputFilter['year'];
-
-        $vars['data'] = $this->business->calcMonthlyPayroll($this->business->getAllByFilter($inputFilter));
-        print_r($vars['data']);
-        $this->view->show($this->controllerName . 'monthlyView.php', $vars);
-    }
-
-    public function provisionReportView() {
-        $this->view->show($this->controllerName . 'provisionReportView.php', null);
-    }
-
-    public function detailProvisionReportView() {
-        $this->view->show($this->controllerName . 'detailProvisionReportView.php', null);
-    }
-
-    public function bncrReportView() {
-        $this->view->show($this->controllerName . 'bncrReportView.php', null);
+        $vars['data'] = $this->business->get($id);
+        $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
 
     public function insert() {
         $filter = array(
             'idEmployee' => Filters::getInt(),
+            'position' => Filters::getString(),
+            'type' => Filters::getString(),
+            'salary' => Filters::getFloat(),
             'location' => Filters::getString(),
             'fortnight' => Filters::getInt(),
             'year' => Filters::getInt(),
-            'type' => Filters::getString(),
-            'salary' => Filters::getFloat(),
             'workingDays' => Filters::getInt(),
             'ordinaryTimeHours' => Filters::getInt(),
             'extraTimeHours' => Filters::getInt(),
@@ -121,12 +128,45 @@ class PayrollController {
             'deductionsMounts' => Filters::getFloat(),
             'observations' => Filters::getString()
         );
-
         $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->insert($entity);
     }
     
+    public function update() {
+        $filter = array(
+            'id' => Filters::getInt(),
+            'idEmployee' => Filters::getInt(),
+            'position' => Filters::getString(),
+            'type' => Filters::getString(),
+            'salary' => Filters::getFloat(),
+            'location' => Filters::getString(),
+            'fortnight' => Filters::getInt(),
+            'year' => Filters::getInt(),
+            'workingDays' => Filters::getInt(),
+            'ordinaryTimeHours' => Filters::getInt(),
+            'extraTimeHours' => Filters::getInt(),
+            'doubleTimeHours' => Filters::getInt(),
+            'vacationsDays' => Filters::getInt(),
+            'vacationAmount' => Filters::getFloat(),
+            'ccssDays' => Filters::getInt(),
+            'ccssAmount' => Filters::getFloat(),
+            'insDays' => Filters::getInt(),
+            'insAmount' => Filters::getFloat(),
+            'salaryBonus' => Filters::getFloat(),
+            'incentives' => Filters::getFloat(),
+            'surcharges' => Filters::getFloat(),
+            'maternityDays' => Filters::getInt(),
+            'maternityAmount' => Filters::getFloat(),
+            'deductions' => Filters::getInt(),
+            'deductionsMounts' => Filters::getFloat(),
+            'observations' => Filters::getString()
+        );
+        $entity = filter_input_array(INPUT_POST, $filter);
+
+        $this->business->update($entity);
+    }
+
     public function remove() {
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
     }

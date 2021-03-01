@@ -19,6 +19,13 @@ BEGIN
     WHERE `deduction`.`id` = id;
 END//
 
+CREATE PROCEDURE `sp_is_associated_with_payroll_deduction`(
+	id INT
+)
+BEGIN
+    SELECT `idDeduction` FROM `payroll_deduction` WHERE `payroll_deduction`.`idDeduction` = id;
+END//
+
 CREATE PROCEDURE `sp_get_all_by_idPayroll_payroll_deduction`(
 	idPayroll INT
 )

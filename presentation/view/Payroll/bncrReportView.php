@@ -15,37 +15,37 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
 
             <div class="d-flex flex-md-row flex-column">
-                
-                <div class="col-md-3 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-info" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
+
+                <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
+                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
                 </div>
 
-                <div class="col-md-9 px-0">
+                <div class="col-md-7 px-0">
 
-                    <form id="search" class="col-md-12 px-0">
+                    <form id="search" class="col-md-12 px-0" action="/payroll/bncrReportView" method="get">
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
-                            
+
                             <div class="d-flex flex-row p-1">
-                                <label for="">Mes:&nbsp</label>
-                                <select class="form-control form-control-sm">
-                                    <option>Enero</option>
+                                <label for="month">Mes:&nbsp</label>
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="month" name="month" onchange="submitSearch();">
+                                    <?= Util::getSelectMonthOptions(); ?>
                                 </select>
                             </div>
-                            
+
                             <div class="d-flex flex-row p-1">
-                                <label for="">Año:&nbsp</label>
-                                <select class="form-control form-control-sm">
-                                    <option>2020</option>
+                                <label for="year">Año:&nbsp</label>
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="year" name="year" onchange="submitSearch();">
+                                    <?= Util::getSelectYearOptions(); ?>
                                 </select>
                             </div>
-                            
+
                         </div>
 
                     </form>
 
                 </div>
-                
+
             </div>
 
             <hr>
@@ -60,11 +60,19 @@ include_once 'presentation/public/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
+                    <?php
+                    foreach ($vars['data'] as $value) {
+                        ?>
+                        <tr>
+                            <td class="text-center"><?= $value['card'] ?></td>
+                            <td class="text-center"><?= $value['completeName'] ?></td>
+                            <td class="text-center"><?= $value['bankAccount'] ?></td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
+                            </td>
+                            <?php
+                        }
+                        ?>
                 </tbody>
             </table>
 
@@ -74,5 +82,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

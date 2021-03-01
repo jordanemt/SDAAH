@@ -46,14 +46,25 @@ CREATE TABLE `employee` (
     FOREIGN KEY (`idPosition`) REFERENCES `position`(`id`)
 );
 
+CREATE TABLE `alimonyOnBonus` (
+    `id` INT AUTO_INCREMENT,
+    `idEmployee` INT NOT NULL,
+    `year` INT NOT NULL,
+    `mount` DECIMAL(11,2) NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idEmployee`) REFERENCES `employee`(`id`)
+);
+
 CREATE TABLE `payroll` (
     `id` INT AUTO_INCREMENT,
     `idEmployee` INT NOT NULL,
+    `position` VARCHAR(29) NOT NULL,
+    `type` VARCHAR(7) NOT NULL CHECK(type IN ('Mensual', 'Diario')),
+    `salary` DECIMAL(11,2) NULL DEFAULT 0,
     `location` VARCHAR(14) NOT NULL CHECK(location IN('Administrativo', 'Operativo')),
     `fortnight` INT NOT NULL,
     `year` INT NOT NULL,
-    `type` VARCHAR(7) NOT NULL CHECK(type IN ('Mensual', 'Diario')),
-    `salary` DECIMAL(11,2) NULL DEFAULT 0,
     `workingDays` INT NULL DEFAULT 0,
     `ordinaryTimeHours` INT NULL DEFAULT 0,
     `extraTimeHours` INT NULL DEFAULT 0,
@@ -73,7 +84,7 @@ CREATE TABLE `payroll` (
     `isDeleted` BOOL NOT NULL DEFAULT 0,
     
     PRIMARY KEY(`id`),
-    FOREIGN KEY (`idEmployee`) REFERENCES `employee`(`id`)
+    FOREIGN KEY(`idEmployee`) REFERENCES `employee`(`id`)
 );
 
 CREATE TABLE `deduction` (

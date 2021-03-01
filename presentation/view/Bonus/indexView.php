@@ -22,22 +22,29 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
-                        <label for="idEmployee">Identificación</label>
-                        <select class="form-control" id="idEmployee" name="idEmployee" required>
+                        <label for="idEmployee">Identificación del Empleado</label>
+                        <select class="form-control form-control-sm selectpicker" data-size="5" id="idEmployee" name="idEmployee" required>
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">000000000</option>
-                            <option value="2">000000000</option>
+                            <?php
+                            foreach ($vars['employees'] as $value) {
+                                ?>
+                                <option value="<?= $value['id'] ?>"><?= $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
+                                <?php
+                            }
+                            ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label for="year">Año</label>
-                        <input type="text" class="form-control" id="year" name="year" required>
+                        <select class="form-control form-control-sm selectpicker" id="year" name="year" data-size="5" name="fortnight" required>
+                            <?= Util::getSelectYearOptions() ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="completeName">Nombre Completo</label>
-                        <input type="text" class="form-control" id="completeName" name="completeName" placeholder="Nombre del Empleado" required disabled>
+                        <input type="text" class="form-control form-control-sm" id="completeName" name="completeName" placeholder="Nombre del Empleado" required disabled>
                     </div>
 
                 </div>
@@ -49,26 +56,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight">Quincena</label>
-                        <select class="form-control" id="fortnight1" name="fortnight[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label for="fortnight1">Quincena</label>
+                        <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight1" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(23) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year">Año</label>
-                        <input type="number" class="form-control" id="year1" name="year[]" value="2021" required>
+                        <label for="year1">Año</label>
+                        <select class="form-control form-control-sm selectpicker" id="year1" name="year[]" data-size="5" required>
+                            <?= Util::getSelectYearOptions(intval(date('Y')) - 1) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days">Días</label>
-                        <input type="number" class="form-control" id="days1" name="days[]" min="1" value="15" required>
+                        <label for="days1">Días</label>
+                        <input type="number" class="form-control form-control-sm" id="days1" name="days[]" min="1" required readonly>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing">Devengado</label>
-                        <input type="text" class="form-control" id="accruing1" name="accruing[]" required disabled>
+                        <label for="accruing1">Devengado</label>
+                        <input type="text" class="form-control form-control-sm" id="accruing1" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -78,26 +86,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label for="fortnight2" class="label-hide">Quincena</label>
+                        <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight2" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(24) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
+                        <label for="year2" class="label-hide">Año</label>
+                        <select class="form-control form-control-sm selectpicker" id="year2" name="year[]" data-size="5" required>
+                            <?= Util::getSelectYearOptions(intval(date('Y')) - 1) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
+                        <label for="days2" class="label-hide">Días</label>
+                        <input type="number" class="form-control form-control-sm" id="days2" name="days[]" min="1" required readonly>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
+                        <label for="accruing2" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control form-control-sm" id="accruing2" name="accruing[]" required readonly>
                     </div>
 
                 </div>
@@ -107,26 +116,27 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
 
                     <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight3" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
+                        <label for="fortnight2" class="label-hide">Quincena</label>
+                        <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight2" name="fortnight[]" required>
+                            <?= Util::getSelectFortnightOptions(1) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year3" name="years[]" value="2021" required>
+                        <label for="year2" class="label-hide">Año</label>
+                        <select class="form-control form-control-sm selectpicker" id="year2" name="year[]" data-size="5" required>
+                            <?= Util::getSelectYearOptions(intval(date('Y'))) ?>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days3" name="days[]" min="1" value="15" required>
+                        <label for="days2" class="label-hide">Días</label>
+                        <input type="number" class="form-control form-control-sm" id="days2" name="days[]" min="1" required readonly>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing3" name="accruing[]" required disabled>
+                        <label for="accruing2" class="label-hide">Devengado</label>
+                        <input type="text" class="form-control form-control-sm" id="accruing2" name="accruing[]" required readonly>
                     </div>
 
                 </div>

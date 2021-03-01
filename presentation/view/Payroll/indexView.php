@@ -17,7 +17,7 @@ include_once 'presentation/public/header.php';
             <div class="d-flex flex-md-row flex-column">
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-primary mx-1 mb-1-md" href="/payroll/insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                    <a class="btn btn-primary mx-1 mb-1-md" href="/payroll/insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
                     <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
                 </div>
 
@@ -114,12 +114,12 @@ include_once 'presentation/public/header.php';
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
-                                <!--<a href="/payroll/updateView&id=<?= $value['id']; ?>"><i class="fa fa-edit"></i> Editar</a>-->
+                                <a href="/payroll/updateView?id=<?= $value['id']; ?>"><i class="fa fa-edit"></i> Editar</a>
                                 <a class="font-warning" href="#" onclick="confirmDelete(<?= $value['id']; ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
-                        </td>
-                        <?php 
-                    }
-                    ?>
+                            </td>
+                            <?php
+                        }
+                        ?>
                     </tr>
                 </tbody>
             </table>

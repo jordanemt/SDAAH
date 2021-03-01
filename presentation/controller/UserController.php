@@ -50,7 +50,6 @@ class UserController {
     public function update() {        
         $filter = array(
             'id' => Filters::getInt(),
-            'card' => Filters::getInt(),
             'pass' => Filters::getString(),
             'passConfirm' => Filters::getString(),
             'firstLastName' => Filters::getString(),

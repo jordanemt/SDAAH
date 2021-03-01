@@ -16,10 +16,10 @@ class PositionData {
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
-            throw new DataBaseException(PDO::FETCH_ASSOC);
+            throw new DataBaseException();
         }
 
-        $data = $query->fetch();
+        $data = $query->fetch(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }
@@ -96,9 +96,27 @@ class PositionData {
         }
 
         if (count($query->fetchAll()) > 0) {
+            $query->closeCursor();
             return true;
         }
 
+        $query->closeCursor();
+        return false;
+    }
+    
+    public function isAssociatedWithEmployee($id) {
+        $query = $this->db->prepare("CALL `sp_is_associated_with_employee_position` (?)");
+        $query->bindParam(1, $id);
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+
+        if (count($query->fetchAll()) > 0) {
+            $query->closeCursor();
+            return true;
+        }
+
+        $query->closeCursor();
         return false;
     }
 

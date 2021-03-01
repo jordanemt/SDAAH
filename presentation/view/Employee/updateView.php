@@ -34,7 +34,7 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?= $vars['data']['card'] ?>" required>
+                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?= $vars['data']['card'] ?>" readonly required>
                 </div>
 
                 <div class="form-row">
@@ -75,7 +75,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control selectpicker" id="type" name="type" onchange="updateSelect();" required>
+                        <select class="form-control" id="type" name="type" onchange="updateSelect();" required>
                             <option disabled>Seleccione una opción</option>
                             <option <?php if ($vars['data']['position']['type'] == 'Mensual') { echo 'selected'; } ?> value="Mensual">Mensual</option>
                             <option <?php if ($vars['data']['position']['type'] == 'Diario') { echo 'selected'; } ?> value="Diario">Diario</option>

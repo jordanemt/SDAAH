@@ -2,7 +2,6 @@
 $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 require_once 'common/Util.php';
-$fortnight = Util::getFortnight();
 ?>
 
 <script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
@@ -22,73 +21,59 @@ $fortnight = Util::getFortnight();
 
             <form id="form">
                 <h4>Datos Generales</h4>
+                
+                <input type="text" class="d-none" name="id" value="<?= $vars['data']['id'] ?>" readonly>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <?php
                             foreach ($vars['employees'] as $value) {
                                 ?>
-                                <option value="<?php echo $value['id'] ?>"><?php echo $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
+                                <option <?= ($vars['data']['employee']['id'] == $value['id']) ? 'selected' : '' ?> value="<?= $value['id'] ?>">
+                                        <?= $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
                                 <?php
                             }
                             ?>
                         </select>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="fortnight">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnight" required>
-                            <option disabled>Seleccione una opción</option>
-                            <option <?php echo ($fortnight == 1) ? 'selected' : '' ?> value="1">Q-1</option>
-                            <option <?php echo ($fortnight == 2) ? 'selected' : '' ?> value="2">Q-2</option>
-                            <option <?php echo ($fortnight == 3) ? 'selected' : '' ?> value="3">Q-3</option>
-                            <option <?php echo ($fortnight == 4) ? 'selected' : '' ?> value="4">Q-4</option>
-                            <option <?php echo ($fortnight == 5) ? 'selected' : '' ?> value="5">Q-5</option>
-                            <option <?php echo ($fortnight == 6) ? 'selected' : '' ?> value="6">Q-6</option>
-                            <option <?php echo ($fortnight == 7) ? 'selected' : '' ?> value="7">Q-7</option>
-                            <option <?php echo ($fortnight == 8) ? 'selected' : '' ?> value="8">Q-8</option>
-                            <option <?php echo ($fortnight == 9) ? 'selected' : '' ?> value="9">Q-9</option>
-                            <option <?php echo ($fortnight == 10) ? 'selected' : '' ?> value="10">Q-10</option>
-                            <option <?php echo ($fortnight == 11) ? 'selected' : '' ?> value="11">Q-11</option>
-                            <option <?php echo ($fortnight == 12) ? 'selected' : '' ?> value="12">Q-12</option>
-                            <option <?php echo ($fortnight == 13) ? 'selected' : '' ?> value="13">Q-13</option>
-                            <option <?php echo ($fortnight == 14) ? 'selected' : '' ?> value="14">Q-14</option>
-                            <option <?php echo ($fortnight == 15) ? 'selected' : '' ?> value="15">Q-15</option>
-                            <option <?php echo ($fortnight == 16) ? 'selected' : '' ?> value="16">Q-16</option>
-                            <option <?php echo ($fortnight == 17) ? 'selected' : '' ?> value="17">Q-17</option>
-                            <option <?php echo ($fortnight == 18) ? 'selected' : '' ?> value="18">Q-18</option>
-                            <option <?php echo ($fortnight == 19) ? 'selected' : '' ?> value="19">Q-19</option>
-                            <option <?php echo ($fortnight == 20) ? 'selected' : '' ?> value="20">Q-20</option>
-                            <option <?php echo ($fortnight == 21) ? 'selected' : '' ?> value="21">Q-21</option>
-                            <option <?php echo ($fortnight == 22) ? 'selected' : '' ?> value="22">Q-22</option>
-                            <option <?php echo ($fortnight == 23) ? 'selected' : '' ?> value="23">Q-23</option>
-                            <option <?php echo ($fortnight == 24) ? 'selected' : '' ?> value="24">Q-24</option>
+                        <select class="form-control selectpicker" data-size="5" id="fortnight" name="fortnight" required>
+                            <?= Util::getSelectFortnightOptions($vars['data']['fortnight']) ?>
                         </select>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="year">Año</label>
-                        <input type="text" class="form-control numberMask" id="year" name="year" min="1950" max="<?php echo date("Y") + 5; ?>" minlength="4" maxlength="4" value="<?php echo date("Y"); ?>" required>
+                        <select class="form-control selectpicker" id="year" name="year" data-size="5" name="fortnight" required>
+                            <?= Util::getSelectYearOptions($vars['data']['year']) ?>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="location">Localidad</label>
-                        <input type="text" class="form-control" id="location" name="location" placeholder="Localidad" value="<?php echo $vars['data']['location'] ?>" readonly required>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Localidad" value="<?= $vars['data']['employee']['location'] ?>" readonly required>
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                        <label for="position">Puesto</label>
+                        <input type="text" class="form-control" id="position" name="position" placeholder="Puesto" value="<?= $vars['data']['employee']['position']['name'] ?>" readonly required>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="type">Tipo</label>
-                        <input type="text" class="form-control" id="type" name="type" placeholder="Tipo" value="<?php echo $vars['data']['type'] ?>" readonly required>
+                        <input type="text" class="form-control" id="type" name="type" placeholder="Tipo" value="<?= $vars['data']['employee']['position']['type'] ?>" readonly required>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="salary">Salario</label>
-                        <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Salario" value="<?php echo $vars['data']['salary'] ?>" readonly required>
+                        <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Salario" value="<?= $vars['data']['employee']['position']['salary'] ?>" readonly required>
                     </div>
                 </div>
 
@@ -97,66 +82,68 @@ $fortnight = Util::getFortnight();
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="workingDays">Días Laborados</label>
-                        <input type="text" class="form-control numberMask" id="workingDays" name="workingDays" disabled required>
+                        <input type="text" class="form-control numberMask" id="workingDays" name="workingDays" value="<?= $vars['data']['workingDays'] ?>"
+                                    <?= ($vars['data']['employee']['position']['type'] == 'Mensual') ? '' : 'disabled' ?> required>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="ordinaryTimeHours">Horas Ordinarias</label>
-                        <input type="text" class="form-control numberMask" id="ordinaryTimeHours" name="ordinaryTimeHours" disabled required>
+                        <input type="text" class="form-control numberMask" id="ordinaryTimeHours" name="ordinaryTimeHours" value="<?= $vars['data']['ordinaryTimeHours'] ?>"
+                                    <?= ($vars['data']['employee']['position']['type'] == 'Diario') ? '' : 'disabled' ?> required>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="extraTimeHours">Horas Extra</label>
-                        <input type="text" class="form-control numberMask" id="extraTimeHours" name="extraTimeHours">
+                        <input type="text" class="form-control numberMask" id="extraTimeHours" name="extraTimeHours" value="<?= $vars['data']['extraTimeHours'] ?>">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="doubleTimeHours">Horas Doble</label>
-                        <input type="text" class="form-control numberMask" id="doubleTimeHours" name="doubleTimeHours">
+                        <input type="text" class="form-control numberMask" id="doubleTimeHours" name="doubleTimeHours" value="<?= $vars['data']['doubleTimeHours'] ?>">
                     </div>
                 </div>
-
+                
                 <h4>Ingresos Especiales</h4>
 
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="vacationsDays">Días Vacaciones</label>
-                        <input type="text" class="form-control numberMask" id="vacationsDays" name="vacationsDays">
+                        <input type="text" class="form-control numberMask" id="vacationsDays" name="vacationsDays" value="<?= $vars['data']['vacationsDays'] ?>">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="vacationAmount">Monto Vacaciones</label>
-                        <input type="text" class="form-control moneyMask" id="vacationAmount" name="vacationAmount">
+                        <input type="text" class="form-control moneyMask" id="vacationAmount" name="vacationAmount" value="<?= $vars['data']['vacationAmount'] ?>">
                     </div>
-
+                    
                     <div class="form-group col-md-2">
                         <label for="maternityDays">Días Maternidad</label>
-                        <input type="text" class="form-control numberMask" id="INSDamaternityDaysys" name="maternityDays">
+                        <input type="text" class="form-control numberMask" id="INSDamaternityDaysys" name="maternityDays" value="<?= $vars['data']['maternityDays'] ?>">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="maternityAmount">Monto Maternidad</label>
-                        <input type="text" class="form-control moneyMask" id="maternityAmount" name="maternityAmount">
+                        <input type="text" class="form-control moneyMask" id="maternityAmount" name="maternityAmount" value="<?= $vars['data']['maternityAmount'] ?>">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="surcharges">Recargos</label>
-                        <input type="text" class="form-control moneyMask" id="surcharges" name="surcharges">
+                        <input type="text" class="form-control moneyMask" id="surcharges" name="surcharges" value="<?= $vars['data']['surcharges'] ?>">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="salaryBonus">Bono Salarial</label>
-                        <input type="text" class="form-control moneyMask" id="salaryBonus" name="salaryBonus">
+                        <input type="text" class="form-control moneyMask" id="salaryBonus" name="salaryBonus" value="<?= $vars['data']['salaryBonus'] ?>">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="incentives">Incentivos</label>
-                        <input type="text" class="form-control moneyMask" id="incentives" name="incentives">
+                        <input type="text" class="form-control moneyMask" id="incentives" name="incentives" value="<?= $vars['data']['incentives'] ?>">
                     </div>
                 </div>
-
+                
                 <h4>Detalle de Deducciones</h4>
 
                 <div class="form-row">
@@ -166,7 +153,8 @@ $fortnight = Util::getFortnight();
                             <?php
                             foreach ($vars['deductions'] as $value) {
                                 ?>
-                                <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+                                <option <?= Util::existOnSomeKey($vars['data']['deductions'], $value, 'id') != -1 ? 'selected' : '' ?> 
+                                    value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
                                 <?php
                             }
                             if (count($vars['deductions']) == 0) {
@@ -177,13 +165,22 @@ $fortnight = Util::getFortnight();
                             ?>
                         </select>
                     </div>
-
+                    
                     <?php
                     foreach ($vars['deductions'] as $value) {
                         ?>
-                        <div id="deduction-form-group-<?php echo $value['id'] ?>" class="form-group col-md-3 deductions">
-                            <label for="deduction-<?php echo $value['id'] ?>"><?php echo $value['name'] ?></label>
-                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?php echo $value['id'] ?>" name="deductionsMounts[]" disabled required>
+                        <div id="deduction-form-group-<?= $value['id'] ?>" class="form-group col-md-3 deductions">
+                            <label for="deduction-<?= $value['id'] ?>"><?= $value['name'] ?></label>
+                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" 
+                                   value="
+                                       <?php
+                                       $key = Util::existOnSomeKey($vars['data']['deductions'], $value, 'id');
+                                       if ($key != -1) {
+                                           echo $vars['data']['deductions'][$key]['mount'];
+                                       } else {
+                                           echo '';
+                                       }
+                                       ?>" disabled>
                         </div>
                         <?php
                     }
@@ -197,32 +194,36 @@ $fortnight = Util::getFortnight();
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="ccssDays">CCSS Días</label>
-                        <input type="text" class="form-control numberMask" id="ccssDays" name="ccssDays">
+                        <input type="text" class="form-control numberMask" id="ccssDays" name="ccssDays" value="<?= $vars['data']['ccssDays'] ?>">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="ccssAmount">CCSS Monto</label>
-                        <input type="text" class="form-control moneyMask" id="ccssAmount" name="ccssAmount">
+                        <input type="text" class="form-control moneyMask" id="ccssAmount" name="ccssAmount" value="<?= $vars['data']['ccssAmount'] ?>">
                     </div>
-
+                    
                     <div class="form-group col-md-2">
                         <label for="insDays">INS Días</label>
-                        <input type="text" class="form-control numberMask" id="insDays" name="insDays">
+                        <input type="text" class="form-control numberMask" id="insDays" name="insDays" value="<?= $vars['data']['insDays'] ?>">
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="insAmount">INS Monto</label>
-                        <input type="text" class="form-control moneyMask" id="insAmount" name="insAmount">
+                        <input type="text" class="form-control moneyMask" id="insAmount" name="insAmount" value="<?= $vars['data']['insAmount'] ?>">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="observations">Observaciones</label>
-                    <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"></textarea>
+                    <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"><?= $vars['data']['observations'] ?></textarea>
                 </div>
 
                 <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
             </form>
+            
+            <script>
+                addDeductions();
+            </script>
 
             <hr>
 

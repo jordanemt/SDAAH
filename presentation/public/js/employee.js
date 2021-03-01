@@ -83,6 +83,8 @@ function updateSelect() {
             }
 
             $("#idPosition").empty();
+            var option = $("<option></option>").attr("value", this.id).attr("selected", true).attr("disabled", true).text("Seleccione una opción");
+            $("#idPosition").append(option);
 
             var idPosition = $("#idPositionSave").val();
             jQuery.each(JSON.parse(data), function () {

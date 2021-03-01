@@ -24,7 +24,7 @@ include_once 'presentation/public/header.php';
                             
                             <div class="d-flex flex-row p-1">
                                 <label for="month">Mes:&nbsp</label>
-                                <select class="form-control form-control-sm selectpicker" data-size="5" id="month" name="fortnight" onchange="submitSearch();">
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="month" name="month" onchange="submitSearch();">
                                     <?= Util::getSelectMonthOptions(); ?>
                                 </select>
                             </div>
@@ -51,27 +51,30 @@ include_once 'presentation/public/header.php';
                     <tr>
                         <th class="text-center">Cédula</th>
                         <th class="text-center">Nombre Completo</th>
-                        <th class="text-center">N/Asegurado</th>
                         <th class="text-center">Jornada</th>
                         <th class="text-center">Días</th>
                         <th class="text-center">Horas</th>
                         <th class="text-center">Salario</th>
-                        <th class="text-center">Ocupación</th>
                         <th class="text-center">Observaciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                    </tr>
+                    <?php
+                    foreach ($vars['data'] as $value) {
+                        ?>
+                        <tr>
+                            <td class="text-center"><?= $value['card'] ?></td>
+                            <td class="text-center"><?= $value['completeName'] ?></td>
+                            <td class="text-center"><?= $value['type'] == 'Mensual' ? 'Jornada Completa' : 'Tiempo Parcial' ?></td>
+                            <td class="text-center"><?= $value['workingDays'] ? $value['workingDays'] : '---' ?></td>
+                            <td class="text-center"><?= $value['ordinaryTimeHours'] ? $value['ordinaryTimeHours'] : '---' ?></td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center"><?= $value['observations'] ? $value['observations'] : '---' ?></td>
+                            <?php
+                        }
+                        ?>
                 </tbody>
             </table>
 

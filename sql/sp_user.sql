@@ -2,7 +2,7 @@ CREATE PROCEDURE `sp_get_user`(
 	id INT
 )
 BEGIN
-	SELECT `id` AS id, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`id` = id;
+	SELECT `id` AS id, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`id` = id AND `user`.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_get_all_user`()
@@ -40,7 +40,6 @@ END//
 
 CREATE PROCEDURE `sp_update_user`(
 	id INT,
-    card VARCHAR(9),
     firstLastName VARCHAR(25),
     secondLastName VARCHAR(25),
     name VARCHAR(50),
@@ -49,8 +48,7 @@ CREATE PROCEDURE `sp_update_user`(
 )
 BEGIN
 	UPDATE `user`
-    SET `card` = card,
-        `firstLastName` = firstLastName,
+    SET `firstLastName` = firstLastName,
     	`secondLastName` = secondLastName,
         `name` = name,
         `email` = email,

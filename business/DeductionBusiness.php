@@ -3,6 +3,7 @@
 require_once 'data/DeductionData.php';
 require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
+require_once 'exceptions/AssociatedException.php';
 
 class DeductionBusiness {
 
@@ -35,11 +36,19 @@ class DeductionBusiness {
     }
 
     public function remove($id) {
-        if (empty(id)) {
+        if (empty($id)) {
             throw new AttributeConflictException();
         }
         
+        $this->validAssociatedWithPayroll($id);
+        
         $this->data->remove($id);
+    }
+    
+    private function validAssociatedWithPayroll($id) {
+        if ($this->data->isAssociatedWithPayroll($id)) {
+            throw new AssociatedException();
+        }
     }
 
 }

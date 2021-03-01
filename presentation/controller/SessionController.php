@@ -5,12 +5,8 @@ class SessionController {
     public function __construct() {
         $this->view = new View();
         $this->controllerName = 'Session/';
-        
+
         session_start();
-        
-        $_SESSION['location'] = 'Administrativo|Operativo';
-        $_SESSION['fortnight'] = Util::getFortnight();
-        $_SESSION['year'] = date('Y');
     }
 
     public function index() {

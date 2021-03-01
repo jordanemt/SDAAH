@@ -2,12 +2,36 @@ CREATE PROCEDURE `sp_get_employee`(
 	id INT
 )
 BEGIN
+	SELECT* FROM `employee` WHERE `employee`.`id` = id AND `employee`.`isDeleted` = 0;
+END//
+
+CREATE PROCEDURE `sp_get_employee_with_deleted`(
+	id INT
+)
+BEGIN
 	SELECT* FROM `employee` WHERE `employee`.`id` = id;
 END//
 
 CREATE PROCEDURE `sp_get_all_employee`()
 BEGIN
 	SELECT* FROM `employee` WHERE `employee`.`isDeleted` = 0;
+END//
+
+CREATE PROCEDURE `sp_get_employee_days_spent_on_vacation_by_id`(
+    id INT
+)
+BEGIN
+    SELECT e.`card`, 
+	CONCAT(e.`firstLastName`, ' ', e.`secondLastName`, ' ', e.`name`) AS completeName, 
+    ps.`name`, 
+    ps.`type`,
+    e.`location`, 
+    e.`admissionDate`,
+    SUM(p.`vacationsDays`) AS vacationsDays
+    FROM `employee` e 
+        JOIN `position` ps ON e.`idPosition` = ps.`id` 
+        JOIN `payroll` p ON p.`idEmployee` = e.`id`
+    WHERE e.`id` = id AND e.`isDeleted` = 0 AND p.`isDeleted` = 0 AND ps.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_insert_employee`(
@@ -58,7 +82,6 @@ END//
 
 CREATE PROCEDURE `sp_update_employee`(
     id INT,
-    card VARCHAR(9),
     firstLastName VARCHAR(25),
     secondLastName VARCHAR(25),
     name VARCHAR(50),
@@ -76,8 +99,7 @@ CREATE PROCEDURE `sp_update_employee`(
 )
 BEGIN
 	UPDATE `employee`
-    SET `card` = card,
-        `firstLastName` = firstLastName,
+    SET `firstLastName` = firstLastName,
         `secondLastName` = secondLastName,
         `name` = name,
         `gender` = gender,
@@ -110,11 +132,36 @@ BEGIN
     SELECT* FROM `employee` WHERE `employee`.`card` = card AND `employee`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_position_employee`(
-	id INT
+CREATE PROCEDURE `sp_get_alimonyOnBonus_by_idEmployee_and_year`(
+	idEmployee INT,
+    year INT
 )
 BEGIN
-    SELECT e.location, p.type, p.salary FROM `employee` e
-    JOIN `position` p ON e.`idPosition` = p.`id`
-    WHERE e.`id` = id;
+	SELECT* FROM `alimonyOnBonus` WHERE `alimonyOnBonus`.`idEmployee` = idEmployee AND `alimonyOnBonus`.`year` = year;
+END//
+
+CREATE PROCEDURE `sp_insert_alimonyOnBonus`(
+	idEmployee INT,
+    year INT,
+    mount DECIMAL(11,2)
+)
+BEGIN
+	INSERT INTO `alimonyOnBonus` (
+        `idEmployee`,
+        `year`,
+        `mount`
+        ) VALUES (
+            idEmployee,
+            year,
+            mount);
+END//
+
+CREATE PROCEDURE `sp_update_alimonyOnBonus`(
+    id INT,
+    mount DECIMAL(11,2)
+)
+BEGIN
+	UPDATE `alimonyOnBonus`
+    SET `mount` = mount
+    WHERE `alimonyOnBonus`.`id` = id;
 END//

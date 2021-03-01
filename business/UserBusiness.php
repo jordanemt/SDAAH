@@ -60,7 +60,6 @@ class UserBusiness {
     public function update($entity) {
         //Valid empties
         if (empty($entity['id']) ||
-                empty($entity['card']) ||
                 empty($entity['firstLastName']) ||
                 empty($entity['secondLastName']) ||
                 empty($entity['name']) ||
@@ -70,18 +69,12 @@ class UserBusiness {
         }
 
         //valid lentch
-        if (strlen($entity['card']) !== 9 ||
-                strlen($entity['firstLastName']) > 25 ||
+        if (strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
                 strlen($entity['name']) > 50 ||
                 strlen($entity['email']) > 100 ||
                 ($entity['role'] > 4 || $entity['role'] < 1)) {
             throw new AttributeConflictException();
-        }
-
-        $oldEntity = $this->data->get($entity['id']);
-        if ($entity['card'] != $oldEntity['card']) {
-            $this->validDuplicateCard($entity['card']);
         }
 
         if ($entity['is_changed_password']) {

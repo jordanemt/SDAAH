@@ -23,9 +23,9 @@ include_once 'presentation/public/header.php';
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
-                        <th class="text-center">Nombre</th>
                         <th class="text-center">P/Apellido</th>
                         <th class="text-center">S/Apellido</th>
+                        <th class="text-center">Nombre</th>
                         <th class="text-center">Correo</th>
                         <th class="text-center">Rol</th>
                         <th class="text-center">Acción</th>
@@ -37,9 +37,9 @@ include_once 'presentation/public/header.php';
                         ?>
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
-                            <td class="text-center"><?= $value['name'] ?></td>
                             <td class="text-center"><?= $value['firstLastName'] ?></td>
                             <td class="text-center"><?= $value['secondLastName'] ?></td>
+                            <td class="text-center"><?= $value['name'] ?></td>
                             <td class="text-center"><?= $value['email'] ?></td>
                             <td class="text-center">
                                 <?php

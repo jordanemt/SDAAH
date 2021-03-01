@@ -26,7 +26,7 @@ include_once 'presentation/public/header.php';
                 
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?= $vars['data']['card']; ?>" required>
+                    <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?= $vars['data']['card']; ?>" readonly required>
                 </div>
 
                 <div class="form-group">

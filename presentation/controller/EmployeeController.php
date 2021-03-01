@@ -18,16 +18,13 @@ class EmployeeController {
     }
 
     public function index() {
-        $data = $this->business->getAll();
+        $vars['data'] = $this->business->getAll();
         
-        $newData = array();
         $positionBusiness = new PositionBusiness();
-        foreach ($data as $value) {
-            $value['position'] = $positionBusiness->get($value['idPosition']);
-            array_push($newData, $value);
+        foreach ($vars['data'] as $key => $value) {
+            $vars['data'][$key]['position'] = $positionBusiness->get($value['idPosition']);
         }
         
-        $vars['data'] = $newData;
         $this->view->show($this->controllerName . 'indexView.php', $vars);
     }
 
@@ -44,10 +41,14 @@ class EmployeeController {
         $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
     
-    public function getPositionEmployee() {
+    public function get() {
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        
+        $data = $this->business->get($id);
+        $positionBusiness = new PositionBusiness();
+        $data['position'] = $positionBusiness->get($data['idPosition']);
 
-        echo json_encode($this->business->getPositionEmployee($id));
+        echo json_encode($data);
     }
 
     public function insert() {
@@ -75,7 +76,6 @@ class EmployeeController {
     public function update() {
         $filter = array(
             'id' => Filters::getInt(),
-            'card' => Filters::getString(),
             'firstLastName' => Filters::getString(),
             'secondLastName' => Filters::getString(),
             'name' => Filters::getString(),
@@ -99,6 +99,29 @@ class EmployeeController {
     
     public function remove() {
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
+        exit();
+    }
+    
+    public function insertAlimonyOnBonus() {
+        $filter = array(
+            'idEmployee' => Filters::getInt(),
+            'year' => Filters::getInt(),
+            'mount' => Filters::getFloat()
+        );
+        $entity = filter_input_array(INPUT_POST, $filter);
+        
+        $this->business->insertAlimonyOnBonus($entity);
+        exit();
+    }
+    
+    public function updateAlimonyOnBonus() {
+        $filter = array(
+            'id' => Filters::getInt(),
+            'mount' => Filters::getFloat()
+        );
+        $entity = filter_input_array(INPUT_POST, $filter);
+        
+        $this->business->updateAlimonyOnBonus($entity);
         exit();
     }
 

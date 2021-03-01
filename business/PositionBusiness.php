@@ -4,6 +4,7 @@ require_once 'data/PositionData.php';
 require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
 require_once 'exceptions/DuplicateCodException.php';
+require_once 'exceptions/AssociatedException.php';
 
 class PositionBusiness {
 
@@ -84,12 +85,20 @@ class PositionBusiness {
             throw new AttributeConflictException();
         }
         
+        $this->validAssociatedWithEmployee($id);
+        
         $this->data->remove($id);
     }
 
     private function validDuplicateCod($cod) {
         if ($this->data->duplicateCod($cod)) {
             throw new DuplicateCodException();
+        }
+    }
+    
+    private function validAssociatedWithEmployee($id) {
+        if ($this->data->isAssociatedWithEmployee($id)) {
+            throw new AssociatedException();
         }
     }
 

@@ -16,13 +16,13 @@ include_once 'presentation/public/header.php';
 
             <div class="d-flex flex-column">
 
-                <form id="search" class="col-md-12 px-0">
+                <form id="search" class="col-md-12 px-0" action="/vacation/detail" method="get">
 
                     <div class="d-flex flex-md-row flex-column justify-content-md-end">
 
                         <div class="d-flex flex-row p-1">
                             <label for="">Corte:&nbsp</label>
-                            <input type="date" class="form-control form-control-sm" id="cutoff" name="cutoff" required>
+                            <input type="date" class="form-control form-control-sm" id="cutoff" name="cutoff" onchange="submitSearch();" value="<?= $vars['cutoff'] ?>" required>
                         </div>
 
                     </div>
@@ -48,17 +48,23 @@ include_once 'presentation/public/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                        <td class="text-center">Dato prueba</td>
-                    </tr>
+                    <?php
+                    foreach ($vars['data'] as $value) {
+                        ?>
+                        <tr>
+                            <td class="text-center"><?= $value['card'] ?></td>
+                            <td class="text-center"><?= $value['completeName'] ?></td>
+                            <td class="text-center"><?= $value['name'] ?></td>
+                            <td class="text-center"><?= $value['location'] ?></td>
+                            <td class="text-center"><?= $value['admissionDate'] ?></td>
+                            <td class="text-center"><?= $value['record'] ?></td>
+                            <td class="text-center"><?= $value['daysRight'] ?></td>
+                            <td class="text-center"><?= !empty($value['vacationsDays']) ? $value['vacationsDays'] : 0 ?></td>
+                            <td class="text-center"><?= $value['vacationBalance'] ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
                 </tbody>
             </table>
 
@@ -68,5 +74,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

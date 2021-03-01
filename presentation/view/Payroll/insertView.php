@@ -9,7 +9,7 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Insertar en la Nómina</h2>
+            <h2>Insertar Pago Quincenal</h2>
         </div>
 
         <div class="card-body">
@@ -22,7 +22,7 @@ include_once 'presentation/public/header.php';
                 <h4>Datos Generales</h4>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="idEmployee">Identificación del Empleado</label>
                         <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
                             <option selected disabled>Seleccione una opción</option>
@@ -36,33 +36,38 @@ include_once 'presentation/public/header.php';
                         </select>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="fortnight">Quincena</label>
                         <select class="form-control selectpicker" data-size="5" id="fortnight" name="fortnight" required>
                             <?= Util::getSelectFortnightOptions() ?>
                         </select>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="year">Año</label>
-                        <select class="form-control selectpicker" id="year" name="year" data-size="5" name="fortnight" required>
+                        <select class="form-control selectpicker" id="year" name="year" data-size="5" required>
                             <?= Util::getSelectYearOptions() ?>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="location">Localidad</label>
                         <input type="text" class="form-control" id="location" name="location" placeholder="Localidad" readonly required>
                     </div>
+                    
+                    <div class="form-group col-md-3">
+                        <label for="position">Puesto</label>
+                        <input type="text" class="form-control" id="position" name="position" placeholder="Puesto" readonly required>
+                    </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="type">Tipo</label>
                         <input type="text" class="form-control" id="type" name="type" placeholder="Tipo" readonly required>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="salary">Salario</label>
                         <input type="text" class="form-control moneyMask" id="salary" name="salary" placeholder="Salario" readonly required>
                     </div>

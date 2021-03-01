@@ -1,9 +1,4 @@
 /* global Swal */
-
-function submitSearch() {
-    $('#search').submit();
-}
-
 function insert() {
     if ($("#form").valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
@@ -27,10 +22,28 @@ function insert() {
     }
 }
 
-//function update() {
-//    addHtmlLoadingSpinnerOnSubmitButton();
-//    successMessage("Payroll");
-//}
+function update() {
+    if ($("#form").valid()) {
+        addHtmlLoadingSpinnerOnSubmitButton();
+
+        var url = "/payroll/update";
+        $.ajax({
+            url: url,
+            type: "POST",
+            cache: false,
+            data: $("#form").serialize(),
+            success: function () {
+                successMessage("payroll");
+            },
+            error: function (error) {
+                errorMessage(error.responseText);
+                addHtmlOnSubmitButton('Actualizar');
+            }
+        });
+    } else {
+        errorMessage("Campos vacíos o inválidos");
+    }
+}
 
 function remove(id) {
     var url = "/payroll/remove";
@@ -49,7 +62,7 @@ function remove(id) {
 }
 
 function getPositionEmployee() {
-    var url = "/employee/getPositionEmployee";
+    var url = "/employee/get";
     $.ajax({
         url: url,
         type: "GET",
@@ -64,7 +77,9 @@ function getPositionEmployee() {
     });
 }
 
-function setSalaryOptions(position) {
+function setSalaryOptions(employee) {
+    var position = employee.position;
+    
     switch (position.type) {
         case "Mensual" :
             $("#workingDays").attr("disabled", false);
@@ -77,35 +92,10 @@ function setSalaryOptions(position) {
             break;
     }
 
-    $("#location").val(position.location);
+    $("#location").val(employee.location);
+    $("#position").val(position.name);
     $("#type").val(position.type);
     $("#salary").val("₡" + position.salary);
-}
-
-
-function addDeductions() {
-    switchVisibilityToHide($(".deductions"));
-    $(".deduction-input").attr("disabled", true);
-    deductions = String($("#deductions").val()).split(",");
-    jQuery.each(deductions, function () {
-        $("#deduction-form-group-" + this).show();
-        $("#deduction-" + this).attr("disabled", false);
-    });
-}
-
-function setSearchOptions() {
-    var queryString = window.location.search;
-    var urlParams = new URLSearchParams(queryString);
-    
-    var fortnight = urlParams.get('fortnight');
-    var year = urlParams.get('year');
-    var location = urlParams.get('location');
-    
-    $('#fortnight option[value="' + fortnight + '"]').prop('selected', true);
-    $('#year option[value="' + year + '"]').prop('selected', true);
-    $('#location option[value="' + location + '"]').prop('selected', true);
-    
-    $('.selectpicker').selectpicker('refresh');
 }
 
 $(document).ready(function () {

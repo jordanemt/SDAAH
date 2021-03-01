@@ -2,7 +2,7 @@ CREATE PROCEDURE `sp_get_position`(
 	id INT
 )
 BEGIN
-	SELECT* FROM `position` WHERE `position`.`id` = id;
+	SELECT* FROM `position` WHERE `position`.`id` = id AND `position`.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_get_all_by_type_position`(
@@ -14,7 +14,7 @@ END//
 
 CREATE PROCEDURE `sp_get_all_position`()
 BEGIN
-	SELECT* FROM `position` WHERE `position`.`isDeleted` = 0;;
+	SELECT* FROM `position` WHERE `position`.`isDeleted` = 0;
 END//
 
 CREATE PROCEDURE `sp_insert_position`(
@@ -66,4 +66,11 @@ CREATE PROCEDURE `sp_duplicate_cod_position`(
 )
 BEGIN
     SELECT* FROM `position` WHERE `position`.`cod` = cod AND `position`.`isDeleted` = 0;
+END//
+
+CREATE PROCEDURE `sp_is_associated_with_employee_position`(
+	id INT
+)
+BEGIN
+    SELECT* FROM `employee` WHERE `employee`.`idPosition` = id AND `employee`.`isDeleted` = 0;
 END//

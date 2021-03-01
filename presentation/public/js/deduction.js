@@ -1,25 +1,34 @@
+/* global Swal, fetch */
+
 function insert() {
-    var name = prompt("Inserte el nombre");
-    
-    if (name === null) {
-        return 0;
-    }
-    
-    var url = "/deduction/insert";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: {
-            "name": name
+    Swal.fire({
+        title: 'Inserte el nombre',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
         },
-        success: function () {
-            successMessage("deduction");
+        showCancelButton: true,
+        confirmButtonText: 'Insertar',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (name) => {
+            var url = "/deduction/insert";
+            $.ajax({
+                url: url,
+                type: "POST",
+                cache: false,
+                data: {
+                    "name": name
+                },
+                success: function () {
+                    successMessage("deduction");
+                },
+                error: function (error) {
+                    errorMessage(error.responseText);
+                }
+            });
         },
-        error: function (error) {
-            errorMessage(error.responseText);
-            addHtmlOnSubmitButton('Insertar');
-        }
+        allowOutsideClick: () => !Swal.isLoading()
     });
 }
 

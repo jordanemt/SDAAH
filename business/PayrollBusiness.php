@@ -1,10 +1,11 @@
 <?php
 
 require_once 'data/PayrollData.php';
-require_once 'business/DeductionBusiness.php';
 require_once 'business/EmployeeBusiness.php';
+require_once 'business/DeductionBusiness.php';
 require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
+require_once 'exceptions/PaymentInsertedException.php';
 
 class PayrollBusiness {
 
@@ -15,15 +16,41 @@ class PayrollBusiness {
     }
 
     public function get($id) {
-        return $this->data->get($id);
+        $payroll = $this->data->get($id);
+
+        $employeeBusiness = new EmployeeBusiness();
+        $deductionBusiness = new DeductionBusiness();
+        $payroll['employee'] = $employeeBusiness->get($payroll['idEmployee']);
+        $payroll['deductions'] = $deductionBusiness->getAllByIdPayroll($payroll['id']);
+
+        return $payroll;
+    }
+    
+    public function getByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year) {
+        //Valid empties
+        if (empty($idEmployee) ||
+                empty($fortnight) ||
+                empty($year)) {
+            throw new EmptyAttributeException();
+        }
+        
+        return $this->data->getByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year);
     }
 
     public function getAll() {
         return $this->data->getAll();
     }
 
-    public function getAllByFilter($filter) {
-        $payrolls = $this->data->getAllByFilter($filter);
+    public function getAllByBiweeklyFilter($filter) {
+        return $this->data->getAllByBiweeklyFilter($filter);
+    }
+
+    public function getAllByMonthlyFilter($filter) {
+        return $this->data->getAllByMonthlyFilter($filter);
+    }
+
+    public function getAllOnBonusByYearByIdEmployee($year, $idEmployee) {
+        $payrolls = $this->data->getAllOnBonusByYearByIdEmployee($year, $idEmployee);
 
         $employeeBusiness = new EmployeeBusiness();
         $deductionBusiness = new DeductionBusiness();
@@ -38,11 +65,12 @@ class PayrollBusiness {
     public function insert($entity) {
         //Valid empties
         if (empty($entity['idEmployee']) ||
+                empty($entity['position']) ||
+                empty($entity['type']) ||
+                empty($entity['salary']) ||
                 empty($entity['location']) ||
                 empty($entity['fortnight']) ||
                 empty($entity['year']) ||
-                empty($entity['type']) ||
-                empty($entity['salary']) ||
                 (empty($entity['workingDays']) && empty($entity['ordinaryTimeHours']))) {
             throw new EmptyAttributeException();
         }
@@ -53,70 +81,114 @@ class PayrollBusiness {
             throw new AttributeConflictException();
         }
 
+        if ($this->data->isInserted($entity['idEmployee'], $entity['fortnight'], $entity['year'])) {
+            throw new PaymentInsertedException();
+        }
+
         $this->data->insert($entity);
     }
 
-//    public function update($entity) {
-//        //Valid empties
-//        if (empty($entity['id']) ||
-//                empty($entity['cod']) ||
-//                empty($entity['name']) ||
-//                empty($entity['type']) ||
-//                empty($entity['salary'])) {
-//            throw new EmptyAttributeException();
-//        }
-//
-//        //Valid lentch
-//        if (strlen($entity['cod']) !== 4 ||
-//                strlen($entity['name']) > 25 ||
-//                ($entity['type'] != 'Mensual' && $entity['type'] != 'Diario')) {
-//            throw new AttributeConflictException();
-//        }
-//
-//        $oldEntity = $this->data->get($entity['id']);
-//        if ($entity['cod'] != $oldEntity['cod']) {
-//            $this->validDuplicateCod($entity['cod']);
-//        }
-//
-//        $this->data->update($entity);
-//    }
+    public function update($entity) {
+        //Valid empties
+        if (empty($entity['id']) ||
+                empty($entity['idEmployee']) ||
+                empty($entity['position']) ||
+                empty($entity['type']) ||
+                empty($entity['salary']) ||
+                empty($entity['location']) ||
+                empty($entity['fortnight']) ||
+                empty($entity['year']) ||
+                (empty($entity['workingDays']) && empty($entity['ordinaryTimeHours']))) {
+            throw new EmptyAttributeException();
+        }
+
+        //Valid lentch
+        if (strlen($entity['location']) > 14 ||
+                strlen($entity['type']) > 7) {
+            throw new AttributeConflictException();
+        }
+
+        $this->data->update($entity);
+    }
 
     public function remove($id) {
         $this->data->remove($id);
     }
 
-    public function calcBiweeklyPayroll($payrolls) {
+    public function getBiweeklyPayroll($payments) {
         $biweeklyPayroll = array();
-        foreach ($payrolls as $payroll) {
-            array_push($biweeklyPayroll, $this->calcBiweekly($payroll));
+        $employeeBusiness = new EmployeeBusiness();
+
+        foreach ($payments as $payment) {
+            $calculatedPayment = $this->calcPayment($payment);
+
+            $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
+            $calculatedPayment['card'] = $employee['card'];
+            $calculatedPayment['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
+            $calculatedPayment['bankAccount'] = $employee['bankAccount'];
+
+            array_push($biweeklyPayroll, $calculatedPayment);
         }
 
         return $biweeklyPayroll;
     }
 
-    private function calcBiweekly($payroll) {
-        $type = $payroll['type'];
-        $ordinarySalary = ($type == 'Mensual') ? ($payroll['salary'] / 30) : $payroll['salary'];
+    public function calcPayment($payment) {
+        $type = $payment['type'];
+        $ordinarySalary = ($type == 'Mensual') ? ($payment['salary'] / 30) : $payment['salary'];
         $extraTime = ($type == 'Mensual') ? ($ordinarySalary / 8) * 1.5 : $ordinarySalary * 1.5;
         $doubleTime = ($type == 'Mensual') ? ($ordinarySalary / 8) * 2 : $ordinarySalary * 2;
 
-        $ordinary = ($payroll['type'] == 'Mensual') ? $ordinarySalary * $payroll['workingDays'] : $ordinarySalary * $payroll['ordinaryTimeHours'];
-        $extra = (float) ($extraTime * $payroll['extraTimeHours']);
-        $double = (float) ($doubleTime * $payroll['doubleTimeHours']);
+        $ordinary = ($payment['type'] == 'Mensual') ? $ordinarySalary * $payment['workingDays'] : $ordinarySalary * $payment['ordinaryTimeHours'];
+        $extra = (float) ($extraTime * $payment['extraTimeHours']);
+        $double = (float) ($doubleTime * $payment['doubleTimeHours']);
 
         $accrued = (
                 $ordinary +
                 $extra +
                 $double +
-                floatval($payroll['vacationAmount']) +
-                floatval($payroll['salaryBonus']) +
-                floatval($payroll['incentives']) +
-                floatval($payroll['surcharges']) +
-                floatval($payroll['maternityAmount'])
+                floatval($payment['vacationAmount']) +
+                floatval($payment['salaryBonus']) +
+                floatval($payment['incentives']) +
+                floatval($payment['surcharges']) +
+                floatval($payment['maternityAmount'])
                 );
 
         $workerCss = $accrued * 0.105;
+        $incomeTax = $this->calcIncomeTax($accrued);
 
+        $deductionBusiness = new DeductionBusiness();
+        $deductions = $deductionBusiness->getAllByIdPayroll($payment['id']);
+
+        $deductionsTotal = 0;
+        foreach ($deductions as $deduction) {
+            $deductionsTotal += floatval($deduction['mount']);
+        }
+
+        $deductionsTotal += $workerCss + $incomeTax;
+
+        $net = $accrued - $deductionsTotal + floatval($payment['ccssAmount']) + floatval($payment['insAmount']);
+
+        return array(
+            'id' => $payment['id'],
+            'fortnight' => $payment['fortnight'],
+            'ordinary' => $ordinary,
+            'vacation' => $payment['vacationAmount'],
+            'extra' => $extra,
+            'double' => $double,
+            'surcharges' => $payment['surcharges'],
+            'accrued' => $accrued,
+            'workerCss' => $workerCss,
+            'incomeTax' => $incomeTax,
+            'deductions' => $deductionsTotal,
+            'type' => $payment['type'],
+            'workingDays' => $payment['workingDays'],
+            'ordinaryTimeHours' => $payment['ordinaryTimeHours'],
+            'net' => $net
+        );
+    }
+    
+    public function calcIncomeTax($accrued) {
         $ordinaryMonthly = $accrued * 2;
         if ($ordinaryMonthly > 1226000) {
             $incomeTax = (($ordinaryMonthly - 1226000) * 0.15) / 2;
@@ -125,64 +197,118 @@ class PayrollBusiness {
         } else {
             $incomeTax = 0;
         }
-
-        $deductionsTotal = 0;
-        foreach ($payroll['deductions'] as $deduction) {
-            $deductionsTotal += floatval($deduction['mount']);
-        }
-
-        $deductionsTotal += $workerCss + $incomeTax;
-
-        $net = $accrued - $deductionsTotal + floatval($payroll['ccssAmount']) + floatval($payroll['insAmount']);
-
-        return array(
-            'id' => $payroll['id'],
-            'card' => $payroll['employee']['card'],
-            'completeName' => $payroll['employee']['name'] . ' ' . $payroll['employee']['firstLastName'] . ' ' . $payroll['employee']['secondLastName'],
-            'ordinary' => $ordinary,
-            'vacation' => $payroll['vacationAmount'],
-            'extra' => $extra,
-            'double' => $double,
-            'surcharges' => $payroll['surcharges'],
-            'accrued' => $accrued,
-            'workerCss' => $workerCss,
-            'incomeTax' => $incomeTax,
-            'deductions' => $deductionsTotal,
-            'net' => $net
-        );
+        
+        return $incomeTax;
     }
 
-    public function calcMonthlyPayroll($payrolls) {
+    public function getMonthlyPayroll($payments) {
         $monthlyPayroll = array();
-        foreach ($payrolls as $payroll) {
-            $key = $this->employeeCardExistOnMonthlyPayroll($payroll['employee']['card'], $monthlyPayroll);
+        $employeeBusiness = new EmployeeBusiness();
+
+        foreach ($payments as $payment) {
+            $calculatedPayment = $this->calcPayment($payment);
+
+            $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
+            $key = $this->employeeCardExistOnPayroll($employee['card'], $monthlyPayroll);
             if ($key == -1) {
-                $biweekly = $this->calcBiweekly($payroll);
-                array_push($monthlyPayroll, array(
-                    'id' => $payroll['id'],
-                    'card' => $payroll['employee']['card'],
-                    'completeName' => $payroll['employee']['name'] . ' ' . $payroll['employee']['firstLastName'] . ' ' . $payroll['employee']['secondLastName'],
-                    'cssIns' => $payroll['employee']['cssIns'],
-                    'type' => $payroll['employee']['position']['type'],
-                    'workingDays' => $payroll['workingDays'],
-                    'ordinaryTimeHours' => $payroll['ordinaryTimeHours'],
-                    'salary' => $biweekly['net'],
-                    'occupation' => $payroll['employee']['position']['cod'],
-                    'observations' => $payroll['observations'] ? 'Q-' . $payroll['fortnight'] . ': ' . $payroll['observations'] . '\n' : ''
-                ));
+                $calculatedPayment['card'] = $employee['card'];
+                $calculatedPayment['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
+                $calculatedPayment['bankAccount'] = $employee['bankAccount'];
+                $calculatedPayment['observations'] = $payment['observations'] ? 'Q-' . $payment['fortnight'] . ': ' . $payment['observations'] . ' ' : '';
+
+                array_push($monthlyPayroll, $calculatedPayment);
             } else {
-                $biweekly = $this->calcBiweekly($payroll);
-                $monthlyPayroll[$key]['salary'] += $biweekly['net'];
-                $monthlyPayroll[$key]['observations'] .= $payroll['observations'] ? 'Q-' . $payroll['fortnight'] . ': ' . $payroll['observations'] : '';
+                $monthlyPayroll[$key]['net'] += $calculatedPayment['net'];
+                $monthlyPayroll[$key]['workingDays'] += $calculatedPayment['workingDays'];
+                $monthlyPayroll[$key]['ordinaryTimeHours'] += $calculatedPayment['ordinaryTimeHours'];
+                $monthlyPayroll[$key]['observations'] .= $payment['observations'] ? 'Q-' . $payment['fortnight'] . ': ' . $payment['observations'] : '';
             }
         }
-        
+
         return $monthlyPayroll;
     }
+    
+    public function getProvisionReport($payments) {
+        $provisionReport = array();
 
-    private function employeeCardExistOnMonthlyPayroll($card, $payrolls) {
+        foreach ($payments as $payment) {
+            $calculatedPayment = $this->calcPayment($payment);
+
+            $key = $this->locationExistOnPayroll($payment['location'], $provisionReport);
+            if ($key == -1) {
+                array_push($provisionReport, array(
+                    'location' => $payment['location'],
+                    'salary' => $calculatedPayment['net'],
+                    'ccss' => $calculatedPayment['net'] * 0.2633,
+                    'bonus' => $calculatedPayment['net'] * 0.0833,
+                    'vacations' => $calculatedPayment['net'] * 0.0416,
+                    'unemployment' => $calculatedPayment['net'] * 0.0833,
+                    'pt' => $calculatedPayment['net'] * 0.0475,
+                    'total' => $calculatedPayment['net'] * 0.519
+                ));
+            } else {
+                $provisionReport[$key]['salary'] += $calculatedPayment['net'];
+                $provisionReport[$key]['ccss'] = $provisionReport[$key]['salary'] * 0.2633;
+                $provisionReport[$key]['bonus'] = $provisionReport[$key]['salary'] * 0.0833;
+                $provisionReport[$key]['vacations'] = $provisionReport[$key]['salary'] * 0.0416;
+                $provisionReport[$key]['unemployment'] = $provisionReport[$key]['salary'] * 0.0833;
+                $provisionReport[$key]['pt'] = $provisionReport[$key]['salary'] * 0.0475;
+                $provisionReport[$key]['total'] = $provisionReport[$key]['salary'] * 0.519;
+            }
+        }
+
+        return $provisionReport;
+    }
+    
+    public function getDetailProvisionReport($payments) {
+        $provisionReport = array();
+        $employeeBusiness = new EmployeeBusiness();
+
+        foreach ($payments as $payment) {
+            $calculatedPayment = $this->calcPayment($payment);
+
+            $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
+            $key = $this->locationExistOnPayroll($payment['location'], $provisionReport);
+            if ($key == -1) {
+                array_push($provisionReport, array(
+                    'card' => $employee['card'],
+                    'completeName' => $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'],
+                    'location' => $payment['location'],
+                    'salary' => $calculatedPayment['net'],
+                    'ccss' => $calculatedPayment['net'] * 0.2633,
+                    'bonus' => $calculatedPayment['net'] * 0.0833,
+                    'vacations' => $calculatedPayment['net'] * 0.0416,
+                    'unemployment' => $calculatedPayment['net'] * 0.0833,
+                    'pt' => $calculatedPayment['net'] * 0.0475,
+                    'total' => $calculatedPayment['net'] * 0.519
+                ));
+            } else {
+                $provisionReport[$key]['salary'] += $calculatedPayment['net'];
+                $provisionReport[$key]['ccss'] = $provisionReport[$key]['salary'] * 0.2633;
+                $provisionReport[$key]['bonus'] = $provisionReport[$key]['salary'] * 0.0833;
+                $provisionReport[$key]['vacations'] = $provisionReport[$key]['salary'] * 0.0416;
+                $provisionReport[$key]['unemployment'] = $provisionReport[$key]['salary'] * 0.0833;
+                $provisionReport[$key]['pt'] = $provisionReport[$key]['salary'] * 0.0475;
+                $provisionReport[$key]['total'] = $provisionReport[$key]['salary'] * 0.519;
+            }
+        }
+
+        return $provisionReport;
+    }
+
+    private function employeeCardExistOnPayroll($card, $payrolls) {
         foreach ($payrolls as $key => $payroll) {
             if ($payroll['card'] == $card) {
+                return $key;
+            }
+        }
+
+        return -1;
+    }
+
+    private function locationExistOnPayroll($location, $payrolls) {
+        foreach ($payrolls as $key => $payroll) {
+            if ($payroll['location'] == $location) {
                 return $key;
             }
         }

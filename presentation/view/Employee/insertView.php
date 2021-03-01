@@ -66,7 +66,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control selectpicker" id="type" name="type" onchange="updateSelect();" required>
+                        <select class="form-control" id="type" name="type" onchange="updateSelect();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <option value="Mensual">Mensual</option>
                             <option value="Diario">Diario</option>
