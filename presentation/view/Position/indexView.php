@@ -3,8 +3,6 @@ $vars["viewName"] = 'position';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/position.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 
@@ -15,7 +13,7 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
 
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="/position/insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <a class="btn btn-primary" href="?controller=position&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
             </div>
 
             <hr>
@@ -40,8 +38,8 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['type']?></td>
                             <td class="text-center"><?= '₡' . number_format($value['salary'], 2, '.', ' ') ?></td>
                             <td class="text-center">
-                                <a href="/position/updateView?id=<?= $value['id']?>"><i class="fa fa-edit"></i> Editar</a>
-                                <a class="font-warning" href="#" onclick="confirmDelete(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                <a href="?controller=position&action=updateView&id=<?= $value['id']?>"><i class="fa fa-edit"></i> Editar</a>
+                                <a class="font-warning" href="#" onclick="removePosition(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                         </tr>
                         <?php

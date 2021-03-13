@@ -2,6 +2,8 @@
 
 require 'SessionController.php';
 require_once 'business/BonusBusiness.php';
+require_once 'business/PayrollBusiness.php';
+require_once 'business/EmployeeBusiness.php';
 
 class BonusController {
 
@@ -30,6 +32,33 @@ class BonusController {
 
         $vars['data'] = $this->business->getBonuses($year);
         $this->view->show($this->controllerName . 'detailView.php', $vars);
+    }
+    
+    public function vaucher() {
+        $filter = array(
+            'id' => Filters::getInt(),
+            'year' => Filters::getInt(),
+            'accruing' => Filters::getFloat(),
+            'grossBonus' => Filters::getFloat(),
+            'alimony' => Filters::getFloat(),
+            'net' => Filters::getFloat()
+        );
+        $input = filter_input_array(INPUT_GET, $filter);
+        
+        $employeeBusiness = new EmployeeBusiness();
+        $input['employee'] = $employeeBusiness->get($input['id']);
+        
+        $payments = array();
+        $payrollBusines = new PayrollBusiness();
+        array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['id'], 23, $input['year'] - 1)));
+        array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['id'], 24, $input['year'] - 1)));
+        
+        for ($i = 1; $i < 23; $i++) {
+            array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['id'], $i, $input['year'])));
+        }
+        $input['payments'] = $payments;
+        
+        Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CA_' . $input['employee']['card']);
     }
 
 }

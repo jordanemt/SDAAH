@@ -18,10 +18,10 @@ class DeductionController {
         $vars['data'] = $this->business->getAll();
         $this->view->show($this->controllerName . 'indexView.php', $vars);
     }
-    
+
     public function insert() {
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-        
+
         $this->business->insert($name);
     }
 

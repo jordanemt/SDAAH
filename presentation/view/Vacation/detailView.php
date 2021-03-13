@@ -3,8 +3,6 @@ $vars["viewName"] = 'vacation';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/vacation.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 
@@ -16,7 +14,11 @@ include_once 'presentation/public/header.php';
 
             <div class="d-flex flex-column">
 
-                <form id="search" class="col-md-12 px-0" action="/vacation/detail" method="get">
+                <form id="search" class="col-md-12 px-0" action="" method="get">
+
+                    <input class="d-none" type="text" name="controller" value="vacation" readonly>
+
+                    <input class="d-none" type="text" name="action" value="detail" readonly>
 
                     <div class="d-flex flex-md-row flex-column justify-content-md-end">
 

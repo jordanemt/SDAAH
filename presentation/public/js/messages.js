@@ -8,7 +8,17 @@ function successMessage(controllerName) {
         showConfirmButton: false,
         timer: 1500
     }).then(function () {
-        window.location.replace("/" + controllerName);
+        window.location.replace("?controller=" + controllerName);
+    });
+}
+
+function successMessageVaucher() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Exitoso',
+        text: 'La descarga se realizará automáticamente',
+        showConfirmButton: false,
+        timer: 1500
     });
 }
 
@@ -21,8 +31,8 @@ function errorMessage(message) {
     });
 }
 
-function confirmDelete(id) {
-    Swal.fire({
+function confirmMessage() {
+    return {
         title: '¿Está seguro?',
         text: "Esta acción no se puede revertir",
         icon: 'warning',
@@ -31,9 +41,5 @@ function confirmDelete(id) {
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            remove(id);
-        }
-    });
+    };
 }

@@ -22,7 +22,11 @@ include_once 'presentation/public/header.php';
 
                 <div class="col-md-7 px-0">
 
-                    <form id="search" class="col-md-12 px-0" action="/payroll/bncrReportView" method="get">
+                    <form id="search" class="col-md-12 px-0" action="" method="get">
+                        
+                        <input class="d-none" type="text" name="controller" value="payroll" readonly>
+                        
+                        <input class="d-none" type="text" name="action" value="bncrReportView" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
 
@@ -66,7 +70,7 @@ include_once 'presentation/public/header.php';
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
                             <td class="text-center"><?= $value['completeName'] ?></td>
-                            <td class="text-center"><?= $value['bankAccount'] ?></td>
+                            <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>

@@ -1,5 +1,10 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
+use Spipu\Html2Pdf\Html2Pdf;
+use Luecano\NumeroALetras\NumeroALetras;
+
 class Util {
 
     const MONTHLY = 2;
@@ -41,7 +46,7 @@ class Util {
             $year -= intdiv(24 - $number, 24);
             return 24 + $number;
         }
-        
+
         $year += intdiv($number, 24);
         $mod = $number % 24;
 
@@ -135,6 +140,33 @@ class Util {
         $str = $str . '<option ' . (($month == 12) ? 'selected' : '') . ' value="12">Diciembre</option>\n';
 
         return $str;
+    }
+
+    public static function maskAccount($account) {
+        return preg_replace("/(\d\d\d)(\d\d)(\d\d\d)(\d\d\d\d\d\d)(\d)/", "\\1-\\2-\\3-\\4-\\5", $account);
+    }
+
+    public static function generatePDF($viewName, $data, $pdfName) {
+        $config = Config::singleton();
+        $html2pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');
+
+        try {
+            ob_start();
+            require_once $config->get('viewFolder') . $viewName;
+            $html = ob_get_clean();
+
+            $html2pdf->setDefaultFont('Arial');
+            $html2pdf->writeHTML($html);
+            $html2pdf->output($pdfName . '.pdf');
+        } catch (Exception $e) {
+            $html2pdf->clean();
+            throw $e;
+        }
+    }
+
+    public static function convertToLetter($val) {
+        $formatter = new NumeroALetras();
+        return $formatter->toMoney($val, 2, 'COLONES', '');
     }
 
 }

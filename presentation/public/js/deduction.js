@@ -1,6 +1,6 @@
 /* global Swal, fetch */
 
-function insert() {
+function insertDeduction() {
     Swal.fire({
         title: 'Inserte el nombre',
         input: 'text',
@@ -12,16 +12,16 @@ function insert() {
         cancelButtonText: 'Cancelar',
         showLoaderOnConfirm: true,
         preConfirm: (name) => {
-            var url = "/deduction/insert";
+            let url = '?controller=deduction&action=insert';
             $.ajax({
                 url: url,
-                type: "POST",
+                type: 'POST',
                 cache: false,
                 data: {
-                    "name": name
+                    'name': name
                 },
                 success: function () {
-                    successMessage("deduction");
+                    successMessage('deduction');
                 },
                 error: function (error) {
                     errorMessage(error.responseText);
@@ -32,18 +32,22 @@ function insert() {
     });
 }
 
-function remove(id) {
-    var url = "/deduction/remove";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: {"id": id},
-        success: function () {
-            successMessage("deduction");
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
+function removeDeduction(id) {
+    Swal.fire(confirmMessage()).then((result) => {
+        if (result.isConfirmed) {
+            let url = '?controller=deduction&action=remove';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                cache: false,
+                data: {'id': id},
+                success: function () {
+                    successMessage('deduction');
+                },
+                error: function (error) {
+                    errorMessage(error.responseText);
+                }
+            });
         }
     });
 }

@@ -1,10 +1,10 @@
 /* global Swal */
 
 function login() {
-    var url = "/session/login";
+    var url = '?controller=session&action=login';
     $.ajax({
         url: url,
-        type: "POST",
+        type: 'POST',
         cache: false,
         success: function () {
             successMessage('index');
@@ -16,10 +16,10 @@ function login() {
 }
 
 function logout() {
-    var url = "/session/logout";
+    var url = '?controller=session&action=logout';
     Swal.fire({
         title: '¿Está seguro?',
-        text: "¿Desea cerrar la sesión?",
+        text: '¿Desea cerrar la sesión?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -30,10 +30,10 @@ function logout() {
         if (result.isConfirmed) {
             $.ajax({
                 url: url,
-                type: "POST",
+                type: 'POST',
                 cache: false,
                 success: function () {
-                    window.location.replace("/index");
+                    window.location.replace('?controller=index');
                 },
                 error: function (error) {
                     errorMessage(error.responseText);

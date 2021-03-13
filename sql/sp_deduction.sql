@@ -1,3 +1,10 @@
+CREATE PROCEDURE `sp_get_deduction`(
+    id INT
+)
+BEGIN
+	SELECT* FROM `deduction` WHERE `deduction`.`id` = id AND `deduction`.`isDeleted` = 0;
+END//
+
 CREATE PROCEDURE `sp_get_all_deduction`()
 BEGIN
 	SELECT* FROM `deduction` WHERE `deduction`.`isDeleted` = 0;
@@ -60,11 +67,11 @@ BEGIN
     WHERE `payroll_deduction`.`idPayroll` = idPayroll;
 END//
 
-CALL `sp_insert_deduction` ('Ahorro Asociación Solidarista');
-CALL `sp_insert_deduction` ('Adelanto de Cesantía');
-CALL `sp_insert_deduction` ('Préstamo Asociación Solidarista');
-CALL `sp_insert_deduction` ('Anticipo Salarial');
-CALL `sp_insert_deduction` ('Ahorro Extraordinario');
-CALL `sp_insert_deduction` ('Embargo Salarial');
-CALL `sp_insert_deduction` ('Pensión Alimenticia');
-CALL `sp_insert_deduction` ('Préstamo Vehículo');
+CALL `sp_insert_deduction` ('Ahorro Asociación Solidarista')//
+CALL `sp_insert_deduction` ('Adelanto de Cesantía')//
+CALL `sp_insert_deduction` ('Préstamo Asociación Solidarista')//
+CALL `sp_insert_deduction` ('Anticipo Salarial')//
+CALL `sp_insert_deduction` ('Ahorro Extraordinario')//
+CALL `sp_insert_deduction` ('Embargo Salarial')//
+CALL `sp_insert_deduction` ('Pensión Alimenticia')//
+CALL `sp_insert_deduction` ('Préstamo Vehículo')//

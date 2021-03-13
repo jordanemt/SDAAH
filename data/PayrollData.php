@@ -196,7 +196,7 @@ class PayrollData {
     }
 
     public function isInserted($idEmployee, $fortnight, $year) {
-        $query = $this->db->prepare("CALL `sp_check_inserted` (?,?,?)");
+        $query = $this->db->prepare("CALL `sp_check_inserted_payroll` (?,?,?)");
         $query->bindParam(1, $idEmployee);
         $query->bindParam(2, $fortnight);
         $query->bindParam(3, $year);

@@ -1,16 +1,17 @@
-/* global Swal */
-function insert() {
-    if ($("#form").valid()) {
+/* global Swal, getEmployee */
+
+function insertPayroll() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/payroll/insert";
+        let url = '?controller=payroll&action=insert';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("payroll");
+                successMessage('payroll');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -18,22 +19,22 @@ function insert() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function update() {
-    if ($("#form").valid()) {
+function updatePayroll() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/payroll/update";
+        let url = '?controller=payroll&action=update';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("payroll");
+                successMessage('payroll');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -41,63 +42,53 @@ function update() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function remove(id) {
-    var url = "/payroll/remove";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: {"id": id},
-        success: function () {
-            successMessage("payroll");
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
+function removePayroll(id) {
+    Swal.fire(confirmMessage()).then((result) => {
+        if (result.isConfirmed) {
+            let url = '?controller=payroll&action=remove';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                cache: false,
+                data: {'id': id},
+                success: function () {
+                    successMessage('payroll');
+                },
+                error: function (error) {
+                    errorMessage(error.responseText);
+                }
+            });
         }
     });
 }
 
-function getPositionEmployee() {
-    var url = "/employee/get";
-    $.ajax({
-        url: url,
-        type: "GET",
-        cache: false,
-        data: {"id": $("#idEmployee").val()},
-        success: function (data) {
-            setSalaryOptions(JSON.parse(data));
-        },
-        error: function (error) {
-            errorMessage("No se pudo recuperar la información del empleado: " + error.responseText);
+function chargeEmployeeDataOnPayroll() {
+    let id = $('#idEmployee').val();
+    getEmployee(id).then((result) => {
+        let employee = JSON.parse(result);
+        let position = employee.position;
+
+        switch (position.type) {
+            case 'Mensual' :
+                $('#workingDays').attr('disabled', false);
+                $('#ordinaryTimeHours').attr('disabled', true);
+                break;
+
+            case 'Diario' :
+                $('#workingDays').attr('disabled', true);
+                $('#ordinaryTimeHours').attr('disabled', false);
+                break;
         }
+
+        $('#location').val(employee.location);
+        $('#position').val(position.name);
+        $('#type').val(position.type);
+        $('#salary').val('₡' + position.salary);
+    }).catch(error => {
+        errorMessage(error.responseText);
     });
 }
-
-function setSalaryOptions(employee) {
-    var position = employee.position;
-    
-    switch (position.type) {
-        case "Mensual" :
-            $("#workingDays").attr("disabled", false);
-            $("#ordinaryTimeHours").attr("disabled", true);
-            break;
-
-        case "Diario" :
-            $("#workingDays").attr("disabled", true);
-            $("#ordinaryTimeHours").attr("disabled", false);
-            break;
-    }
-
-    $("#location").val(employee.location);
-    $("#position").val(position.name);
-    $("#type").val(position.type);
-    $("#salary").val("₡" + position.salary);
-}
-
-$(document).ready(function () {
-
-});

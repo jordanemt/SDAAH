@@ -11,19 +11,16 @@ class FrontController {
 
         date_default_timezone_set('America/Costa_Rica');
         
-        $url = parse_url(filter_input(INPUT_SERVER, 'REQUEST_URI'), PHP_URL_PATH);
-        $urlTrim = trim($url, '/');
-        $call = explode('/', $urlTrim);
+        $controllerName = filter_input(INPUT_GET, 'controller', FILTER_SANITIZE_STRING);
+        $actionName = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
-        if (!empty($call[0])) {
-            $controllerName = ucfirst($call[0]) . 'Controller';
+        if (!empty($controllerName)) {
+            $controllerName = ucfirst($controllerName) . 'Controller';
         } else {
             $controllerName = 'IndexController';
         }
 
-        if (!empty($call[1])) {
-            $actionName = $call[1];
-        } else {
+        if (empty($actionName)) {
             $actionName = 'index';
         }
 

@@ -3,8 +3,6 @@ $vars["viewName"] = 'vacation';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/vacation.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 
@@ -16,14 +14,14 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <form id="form" onchange="calcVacationAccrued();">
+            <form id="formVacation" method="get" action="">
                 <h4>Datos Personales</h4>
 
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
                         <label for="idEmployee">Identificación</label>
-                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="chargeEmployeeDataOnVacation();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <?php
                             foreach ($vars['employees'] as $value) {
@@ -42,9 +40,9 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-3">
                         <label for="vacationDays">Días</label>
-                        <input type="tex" class="form-control numberMask" id="vacationDays" name="vacationDays" placeholder="Días" min="1" required>
+                        <input type="tex" class="form-control numberMask active-onchange-vacation" id="vacationDays" name="vacationDays" placeholder="Días" min="1" required>
                     </div>
-                    
+
                     <div class="form-group col-md-2">
                         <label for="vacationFortnight">Quincena</label>
                         <select class="form-control selectpicker" data-size="5" id="vacationFortnight" name="vacationFortnight" required>
@@ -55,20 +53,22 @@ include_once 'presentation/public/header.php';
                 </div>
 
                 <div class="form-row">
+                    
+                    <input type="text" class="d-none" id="card" name="card" required readonly>
 
                     <div class="form-group col-md-4">
                         <label for="completeName">Nombre Completo</label>
-                        <input type="text" class="form-control" id="completeName" name="completeName" placeholder="Nombre del Empleado" required disabled>
+                        <input type="text" class="form-control" id="completeName" name="completeName" placeholder="Nombre del Empleado" required readonly>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="admissionDate">Fecha Ingreso</label>
-                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Fecha de Ingreso" required disabled>
+                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Fecha de Ingreso" required readonly>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="position">Puesto</label>
-                        <input type="text" class="form-control" id="position" name="position" placeholder="Puesto" required disabled>
+                        <input type="text" class="form-control" id="position" name="position" placeholder="Puesto" required readonly>
                     </div>                    
 
                 </div>
@@ -81,21 +81,21 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label>Quincena</label>
-                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="fortnight[]" required>
                             <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(6, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label>Año</label>
-                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="year[]" required>
                             <?= Util::getSelectYearOptions($year) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label>Días</label>
-                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
+                        <input type="text" class="form-control numberMask active-onchange-vacation" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -111,21 +111,21 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Quincena</label>
-                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="fortnight[]" required>
                             <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(5, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Año</label>
-                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="year[]" required>
                             <?= Util::getSelectYearOptions($year) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Días</label>
-                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
+                        <input type="text" class="form-control numberMask active-onchange-vacation" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -141,21 +141,21 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Quincena</label>
-                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="fortnight[]" required>
                             <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(4, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Año</label>
-                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="year[]" required>
                             <?= Util::getSelectYearOptions($year) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Días</label>
-                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
+                        <input type="text" class="form-control numberMask active-onchange-vacation" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -171,21 +171,21 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Quincena</label>
-                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="fortnight[]" required>
                             <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(3, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Año</label>
-                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="year[]" required>
                             <?= Util::getSelectYearOptions($year) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Días</label>
-                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
+                        <input type="text" class="form-control numberMask active-onchange-vacation" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -201,21 +201,21 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Quincena</label>
-                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="fortnight[]" required>
                             <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(2, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Año</label>
-                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="year[]" required>
                             <?= Util::getSelectYearOptions($year) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Días</label>
-                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
+                        <input type="text" class="form-control numberMask active-onchange-vacation" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -231,21 +231,21 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Quincena</label>
-                        <select class="form-control selectpicker" data-size="5" name="fortnight[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="fortnight[]" required>
                             <?= Util::getSelectFortnightOptions(Util::restToCurrentFortnight(1, $year)) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Año</label>
-                        <select class="form-control selectpicker" data-size="5" name="year[]" required>
+                        <select class="form-control selectpicker active-onchange-vacation" data-size="5" name="year[]" required>
                             <?= Util::getSelectYearOptions($year) ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="label-hide">Días</label>
-                        <input type="text" class="form-control numberMask" name="days[]" min="1" value="15" required>
+                        <input type="text" class="form-control numberMask active-onchange-vacation" name="days[]" min="1" value="15" required>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -256,24 +256,24 @@ include_once 'presentation/public/header.php';
                 </div>
 
                 <div class="form-row justify-content-end">
-                    
+
                     <div class="form-group col-md-4">
                         <label for="avgSalary"><strong>Sala. Prom. Diario</strong></label>
                         <input type="text" class="form-control" id="avgSalary" name="avgSalary" required readonly>
                     </div>
-                    
+
                     <div class="form-group col-md-2">
                         <label for="daysTotal"><strong>Total Días</strong></label>
                         <input type="text" class="form-control" id="daysTotal" name="daysTotal" required readonly>
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="salaryTotal"><strong>Total Salarios</strong></label>
                         <input type="text" class="form-control" id="salaryTotal" name="salaryTotal" required readonly>
                     </div>
 
                 </div>
-                
+
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
@@ -282,14 +282,14 @@ include_once 'presentation/public/header.php';
                     </div>
 
                 </div>
-                
+
                 <h4>Detalle de Deducciones</h4>
-                
+
                 <div class="form-row">
-                    
+
                     <div id="deductionsSelector" class="form-group col-md-4">
                         <label for="deductions">Agregar Deducciones</label>
-                        <select class="form-control selectpicker" multiple data-size="5" title="Seleccione ninguna o varias" id="deductions" name="deductions[]" onchange="addDeductions();">
+                        <select class="form-control selectpicker active-onchange-vacation" multiple data-size="5" title="Seleccione ninguna o varias" id="deductions" name="deductions[]" onchange="addDeductions();">
                             <?php
                             foreach ($vars['deductions'] as $value) {
                                 ?>
@@ -304,15 +304,15 @@ include_once 'presentation/public/header.php';
                             ?>
                         </select>
                     </div>
-                    
+
                     <div class="form-group col-md-4">
                         <label for="workerCCSS">Cuota CCSS</label>
-                        <input type="text" class="form-control" id="workerCCSS" name="workerCCSS" required disabled>
+                        <input type="text" class="form-control" id="workerCCSS" name="workerCCSS" required readonly>
                     </div>
-                    
+
                     <div class="form-group col-md-4">
                         <label for="incomeTax">Imp. Sobre la Renta</label>
-                        <input type="text" class="form-control" id="incomeTax" name="incomeTax" required disabled>
+                        <input type="text" class="form-control" id="incomeTax" name="incomeTax" required readonly>
                     </div>
 
                     <?php
@@ -320,7 +320,7 @@ include_once 'presentation/public/header.php';
                         ?>
                         <div id="deduction-form-group-<?= $value['id'] ?>" class="form-group col-md-4 deductions">
                             <label for="deduction-<?= $value['id'] ?>"><?= $value['name'] ?></label>
-                            <input type="text" class="form-control moneyMask deduction-input" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" disabled>
+                            <input type="text" class="form-control moneyMask deduction-input active-onchange-vacation" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" disabled>
                         </div>
                         <?php
                     }
@@ -329,26 +329,26 @@ include_once 'presentation/public/header.php';
                     <script>$(".deductions").hide();</script>
 
                 </div>
-                
+
                 <div class="form-row">
-                    
+
                     <div class="form-group col-md-4">
                         <label for="deductionsTotal"><strong>Total Deducciones</strong></label>
                         <input type="text" class="form-control" id="deductionsTotal" name="deductionsTotal" required readonly>
                     </div>
-                    
+
                 </div>
-                
+
                 <div class="form-row">
-                    
+
                     <div class="form-group col-md-4">
                         <label for="net"><strong>Total Vacac. Neto a Pagar</strong></label>
                         <input type="text" class="form-control" id="net" name="net" required readonly>
                     </div>
-                    
+
                 </div>
 
-                <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="dowloadVacationVaucher();">Descargar Boleta</button>
             </form>
 
         </div>
@@ -357,5 +357,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

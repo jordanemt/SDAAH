@@ -33,7 +33,8 @@ class LiquidationController {
             'vacations' => Filters::getInt(),
             'preCen' => Filters::getInt(),
             'deductions' => Filters::getInt(),
-            'deductionsMounts' => Filters::getFloat()
+            'deductionsMounts' => Filters::getFloat(),
+            'bonusYear' => Filters::getInt()
         );
         $input = filter_input_array(INPUT_GET, $filter);
         $inputVacations = $input['vacations'];
@@ -49,9 +50,8 @@ class LiquidationController {
         
         $preCenAcrrued = $this->calcPreCenAcrrued($inputPreCen);
         
-        $year = (date('m') != 12) ? date('Y') : date('Y') + 1;
         $bonusBusiness = new BonusBusiness();
-        $bonus = $bonusBusiness->calcBonus($input['idEmployee'], $year);
+        $bonus = $bonusBusiness->calcBonus($input['idEmployee'], $input['bonusYear']);
 
         $data = array();
         $data['vacations'] = $vacationAccrued;
@@ -60,6 +60,7 @@ class LiquidationController {
         $data['toPay'] = $vacationAccrued['net'] + $preCenAcrrued['net'] + $bonus['grossBonus'];
 
         echo json_encode($data);
+        exit();
     }
 
     private function calcPreCenAcrrued($input) {
@@ -92,6 +93,58 @@ class LiquidationController {
         $acrreud['net'] = $acrreud['totalPre'] + $acrreud['totalCen'];
 
         return $acrreud;
+    }
+    
+    public function calcRecord() {
+        $date = filter_input(INPUT_GET, 'departureDate', FILTER_SANITIZE_STRING);
+        
+        $date1 = new DateTime($date);
+    }
+    
+    public function vaucher() {
+        $filter = array(
+            'idEmployee' => Filters::getInt(),
+            'card' => Filters::getString(),
+            'completeName' => Filters::getString(),
+            'position' => Filters::getString(),
+            'admissionDate' => Filters::getString(),
+            'departureDate' => Filters::getString(),
+            'record' => Filters::getString(),
+            'reason' => Filters::getString(),
+            'vacations' => Filters::getFloat(),
+            'preCen' => Filters::getFloat(),
+            'bonusYear' => Filters::getInt(),
+            'totalSalariesBonus' => Filters::getFloat(),
+            'totalBonus' => Filters::getFloat(),
+            'toPay' => Filters::getFloat(),
+            'deductions' => Filters::getInt(),
+            'deductionsMounts' => Filters::getFloat(),
+            'workerCCSS' => Filters::getFloat(),
+            'incomeTax' => Filters::getFloat(),
+            'deductionsTotal' => Filters::getFloat(),
+            'netVacation' => Filters::getFloat()
+        );
+        $input = filter_input_array(INPUT_GET, $filter);
+        
+        $input['deductionsArray'] = array();
+        $deductionBusiness = new DeductionBusiness();
+        if (!empty($input['deductions'])) {
+            foreach ($input['deductions'] as $deductionId) {
+                array_push($input['deductionsArray'], $deductionBusiness->get($deductionId));
+            }
+        }
+        
+        $payments = array();
+        $payrollBusines = new PayrollBusiness();
+        array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], 23, $input['bonusYear'] - 1)));
+        array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], 24, $input['bonusYear'] - 1)));
+        
+        for ($i = 1; $i < 23; $i++) {
+            array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], $i, $input['bonusYear'])));
+        }
+        $input['bonusPayments'] = $payments;
+
+        Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CL_' . $input['card'] . '-' . date('Y', strtotime($input['departureDate'])));
     }
 
 }

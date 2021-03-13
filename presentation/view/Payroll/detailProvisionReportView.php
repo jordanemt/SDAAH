@@ -14,7 +14,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="/payroll/provisionReportView"><i class="fa fa-angle-double-left"></i> Reporte Consolidado</a>
+            <a href="?controller=payroll&action=provisionReportView"><i class="fa fa-angle-double-left"></i> Reporte Consolidado</a>
 
             <div class="d-flex flex-md-row flex-column">
 
@@ -25,7 +25,11 @@ include_once 'presentation/public/header.php';
 
                 <div class="col-md-7 px-0">
 
-                    <form id="search" class="col-md-12 px-0" action="/payroll/detailProvisionReportView" method="get">
+                    <form id="search" class="col-md-12 px-0" action="" method="get">
+                        
+                        <input class="d-none" type="text" name="controller" value="payroll" readonly>
+                        
+                        <input class="d-none" type="text" name="action" value="detailProvisionReportView" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
 

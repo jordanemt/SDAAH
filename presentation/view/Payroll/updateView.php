@@ -1,10 +1,7 @@
 <?php
 $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
-require_once 'common/Util.php';
 ?>
-
-<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -15,7 +12,7 @@ require_once 'common/Util.php';
 
         <div class="card-body">
 
-            <a href="/payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -218,7 +215,7 @@ require_once 'common/Util.php';
                     <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"><?= $vars['data']['observations'] ?></textarea>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="updatePayroll();">Actualizar</button>
             </form>
             
             <script>
@@ -227,7 +224,7 @@ require_once 'common/Util.php';
 
             <hr>
 
-            <a href="/payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

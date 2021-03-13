@@ -3,8 +3,6 @@ $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 
@@ -17,13 +15,14 @@ include_once 'presentation/public/header.php';
             <div class="d-flex flex-md-row flex-column">
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-primary mx-1 mb-1-md" href="/payroll/insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
-                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
+                    <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payroll&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
                 </div>
 
                 <div class="col-md-7 px-0">
 
-                    <form id="search" class="col-md-12 px-0" action="/payroll" method="get">
+                    <form id="search" class="col-md-12 px-0" action="" method="get">
+                        
+                        <input class="d-none" type="text" name="controller" value="payroll" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
 
@@ -74,6 +73,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Tot. Deducciones</th>
                         <th class="text-center">Neto</th>
                         <th class="text-center">Acción</th>
+                        <th class="text-center">Boleta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -114,8 +114,11 @@ include_once 'presentation/public/header.php';
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
-                                <a href="/payroll/updateView?id=<?= $value['id']; ?>"><i class="fa fa-edit"></i> Editar</a>
-                                <a class="font-warning" href="#" onclick="confirmDelete(<?= $value['id']; ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                <a href="?controller=payroll&action=updateView&id=<?= $value['id']; ?>"><i class="fa fa-edit"></i> Editar</a>
+                                <a class="font-warning" href="#" onclick="removePayroll(<?= $value['id']; ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="?controller=payroll&action=vaucher&id=<?= $value['id'] ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
                             </td>
                             <?php
                         }

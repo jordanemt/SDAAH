@@ -1,17 +1,29 @@
 /* global Swal */
 
-function insert() {
-    if ($("#form").valid()) {
+async function getAllByTypePosition(type) {
+    let url = '?controller=position&action=getAllByType';
+    return await $.ajax({
+        url: url,
+        type: 'GET',
+        cache: false,
+        data: {
+            'type': type
+        }
+    });
+}
+
+function insertPosition() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/position/insert";
+        let url = '?controller=position&action=insert';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("position");
+                successMessage('position');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -19,22 +31,22 @@ function insert() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function update() {
-    if ($("#form").valid()) {
+function updatePosition() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/position/update";
+        let url = '?controller=position&action=update';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("position");
+                successMessage('position');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -42,22 +54,26 @@ function update() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function remove(id) {
-    var url = "/position/remove";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: {"id": id},
-        success: function () {
-            successMessage("position");
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
+function removePosition(id) {
+    Swal.fire(confirmMessage()).then((result) => {
+        if (result.isConfirmed) {
+            let url = '?controller=position&action=remove';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                cache: false,
+                data: {'id': id},
+                success: function () {
+                    successMessage('position');
+                },
+                error: function (error) {
+                    errorMessage(error.responseText);
+                }
+            });
         }
     });
 }

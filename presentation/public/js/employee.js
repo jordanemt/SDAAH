@@ -1,17 +1,29 @@
-/* global Swal */
+/* global Swal, getAllByTypePosition */
 
-function insert() {
-    if ($("#form").valid()) {
+async function getEmployee(id) {
+    let url = '?controller=employee&action=get';
+    return await $.ajax({
+        url: url,
+        type: 'GET',
+        cache: false,
+        data: {
+            'id': id
+        }
+    });
+}
+
+function insertEmployee() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/employee/insert";
+        let url = '?controller=employee&action=insert';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("employee");
+                successMessage('employee');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -19,22 +31,22 @@ function insert() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function update() {
-    if ($("#form").valid()) {
+function updateEmployee() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/employee/update";
+        let url = '?controller=employee&action=update';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("employee");
+                successMessage('employee');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -42,69 +54,63 @@ function update() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function remove(id) {
-    var url = "/employee/remove";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: {"id": id},
-        success: function () {
-            successMessage("employee");
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
+function removeEmployee(id) {
+    Swal.fire(confirmMessage()).then((result) => {
+        if (result.isConfirmed) {
+            let url = '?controller=employee&action=remove';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                cache: false,
+                data: {'id': id},
+                success: function () {
+                    successMessage('employee');
+                },
+                error: function (error) {
+                    errorMessage(error.responseText);
+                }
+            });
         }
     });
 }
 
-function updateSelect() {
-    type = $("#type").val();
-
-    var url = "/position/getAllByType";
-    $.ajax({
-        url: url,
-        type: "GET",
-        cache: false,
-        data: {
-            "type": type
-        },
-        success: function (data) {
-            if (JSON.parse(data).length === 0) {
-                $("#idPosition").empty();
-                var option = $("<option></option>").attr("disabled", true)
-                        .attr("selected", true).text("No se encontraron Puestos del tipo " + type);
-                $("#idPosition").append(option);
-                return 0;
-            }
-
-            $("#idPosition").empty();
-            var option = $("<option></option>").attr("value", this.id).attr("selected", true).attr("disabled", true).text("Seleccione una opción");
-            $("#idPosition").append(option);
-
-            var idPosition = $("#idPositionSave").val();
-            jQuery.each(JSON.parse(data), function () {
-                switch (this.id) {
-
-                    case idPosition:
-                        var option = $("<option></option>").attr("value", this.id).attr("selected", true).text(this.cod + " " + this.name);
-                        $("#idPosition").append(option);
-                        break;
-
-                    default:
-                        var option = $("<option></option>").attr("value", this.id).text(this.cod + " " + this.name);
-                        $("#idPosition").append(option);
-                        break;
-
-                }
-            });
-        },
-        error: function (error) {
-            errorMessage("No se han podido obtener los puestos: " + error.responseText);
+function updateSelectIdPosition() {
+    let type = $('#type').val();
+    getAllByTypePosition(type).then((result) => {
+        let data = JSON.parse(result);
+        if (data === null || data.length === 0) {
+            $('#idPosition').empty();
+            let option = $('<option></option>').attr('disabled', true)
+                    .attr('selected', true).text('No se encontraron Puestos del tipo ' + type);
+            $('#idPosition').append(option);
+            return 0;
         }
+
+        $('#idPosition').empty();
+        let option = $('<option></option>').attr('value', this.id).attr('selected', true).attr('disabled', true).text('Seleccione una opción');
+        $('#idPosition').append(option);
+
+        var idPosition = $('#idPositionSave').val();
+        jQuery.each(data, function () {
+            switch (this.id) {
+
+                case idPosition:
+                    option = $('<option></option>').attr('value', this.id).attr('selected', true).text(this.cod + ' ' + this.name);
+                    $('#idPosition').append(option);
+                    break;
+
+                default:
+                    option = $('<option></option>').attr('value', this.id).text(this.cod + ' ' + this.name);
+                    $('#idPosition').append(option);
+                    break;
+
+            }
+        });
+    }).catch(error => {
+        errorMessage(error.responseText);
     });
 }

@@ -1,17 +1,17 @@
 /* global Swal */
 
-function insert() {
-    if ($("#form").valid()) {
+function insertUser() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/user/insert";
+        let url = '?controller=user&action=insert';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("user");
+                successMessage('user');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -19,22 +19,22 @@ function insert() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function update() {
-    if ($("#form").valid()) {
+function updateUser() {
+    if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = "/user/update";
+        let url = '?controller=user&action=update';
         $.ajax({
             url: url,
-            type: "POST",
+            type: 'POST',
             cache: false,
-            data: $("#form").serialize(),
+            data: $('#form').serialize(),
             success: function () {
-                successMessage("user");
+                successMessage('user');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -42,23 +42,26 @@ function update() {
             }
         });
     } else {
-        errorMessage("Campos vacíos o inválidos");
+        errorMessage('Campos vacíos o inválidos');
     }
 }
 
-function remove(id) {
-    var url = "/user/remove";
-    $.ajax({
-        url: url,
-        type: "POST",
-        cache: false,
-        data: {"id": id},
-        success: function () {
-            successMessage("user");
-        },
-        error: function (error) {
-            errorMessage(error.response);
-
+function removeUser(id) {
+    Swal.fire(confirmMessage()).then((result) => {
+        if (result.isConfirmed) {
+            let url = '?controller=user&action=remove';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                cache: false,
+                data: {'id': id},
+                success: function () {
+                    successMessage('user');
+                },
+                error: function (error) {
+                    errorMessage(error.response);
+                }
+            });
         }
     });
 }

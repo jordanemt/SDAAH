@@ -15,18 +15,18 @@ function insertAlimony(idEmployee) {
         cancelButtonText: 'Cancelar',
         showLoaderOnConfirm: true,
         preConfirm: (mount) => {
-            var url = "/employee/insertAlimonyOnBonus";
+            var url = '?controller=employee&action=insertAlimonyOnBonus';
             $.ajax({
                 url: url,
-                type: "POST",
+                type: 'POST',
                 cache: false,
                 data: {
-                    "idEmployee": idEmployee,
-                    "year": $("#year").val(),
-                    "mount": mount
+                    'idEmployee': idEmployee,
+                    'year': $('#year').val(),
+                    'mount': mount
                 },
                 success: function () {
-                    successMessage("bonus/detail");
+                    successMessage('bonus&action=detail');
                 },
                 error: function (error) {
                     errorMessage(error.responseText);
@@ -35,7 +35,7 @@ function insertAlimony(idEmployee) {
         },
         allowOutsideClick: () => !Swal.isLoading()
     });
-    setMoneyMaskOnElement(".sweetMoneyMask");
+    setMoneyMaskOnElement('.sweetMoneyMask');
 }
 
 function updateAlimony(id) {
@@ -53,17 +53,17 @@ function updateAlimony(id) {
         cancelButtonText: 'Cancelar',
         showLoaderOnConfirm: true,
         preConfirm: (mount) => {
-            var url = "/employee/updateAlimonyOnBonus";
+            var url = '?controller=employee&action=updateAlimonyOnBonus';
             $.ajax({
                 url: url,
-                type: "POST",
+                type: 'POST',
                 cache: false,
                 data: {
-                    "id": id,
-                    "mount": mount
+                    'id': id,
+                    'mount': mount
                 },
                 success: function () {
-                    successMessage("bonus/detail");
+                    successMessage('bonus&action=detail');
                 },
                 error: function (error) {
                     errorMessage(error.responseText);
@@ -72,5 +72,5 @@ function updateAlimony(id) {
         },
         allowOutsideClick: () => !Swal.isLoading()
     });
-    setMoneyMaskOnElement(".sweetMoneyMask");
+    setMoneyMaskOnElement('.sweetMoneyMask');
 }

@@ -3,8 +3,6 @@ $vars["viewName"] = 'user';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/user.js" type="text/javascript"></script>
-
 <div class="container my-4">
 
     <div class="card">
@@ -15,7 +13,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="/user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -85,12 +83,12 @@ include_once 'presentation/public/header.php';
                     </div>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="updateUser();">Actualizar</button>
             </form>
 
             <hr>
 
-            <a href="/user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

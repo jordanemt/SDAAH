@@ -14,7 +14,7 @@ class PayrollController {
 
         $this->sessionController = new SessionController;
         $this->sessionController->isNotLoggedThenRedirect();
-        
+
         $_SESSION['location'] = 'Administrativo|Operativo';
         $_SESSION['fortnight'] = Util::getFortnight();
         $_SESSION['year'] = date('Y');
@@ -28,7 +28,7 @@ class PayrollController {
             'year' => Filters::getInt()
         );
         $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
-        
+
         $vars['data'] = $this->business->getBiweeklyPayroll($this->business->getAllByBiweeklyFilter($filter));
         $this->view->show($this->controllerName . 'indexView.php', $vars);
     }
@@ -39,7 +39,7 @@ class PayrollController {
             'year' => Filters::getInt()
         );
         $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
-        
+
         $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
         $this->view->show($this->controllerName . 'monthlyView.php', $vars);
     }
@@ -93,9 +93,9 @@ class PayrollController {
 
         $deductionBusiness = new DeductionBusiness();
         $vars['deductions'] = $deductionBusiness->getAll();
-        
+
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        
+
         $vars['data'] = $this->business->get($id);
         $this->view->show($this->controllerName . 'updateView.php', $vars);
     }
@@ -132,7 +132,7 @@ class PayrollController {
 
         $this->business->insert($entity);
     }
-    
+
     public function update() {
         $filter = array(
             'id' => Filters::getInt(),
@@ -169,6 +169,13 @@ class PayrollController {
 
     public function remove() {
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
+    }
+    
+    public function vaucher() {
+        $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+        $data['payment'] = $this->business->calcPayment($data);
+
+        Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CP_Q-' . $data['fortnight'] . '.' . $data['year'] . '.' . $data['employee']['card']);
     }
 
 }

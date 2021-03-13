@@ -1,0 +1,14 @@
+{
+    "name": "vendor/s-d-a-a-h",
+    "description": "Description of project SDAAH.",
+    "authors": [
+        {
+            "name": "Jordan",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "spipu/html2pdf": "dev-master",
+        "luecano/numero-a-letras": "dev-master"
+    }
+}

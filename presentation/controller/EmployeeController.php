@@ -124,5 +124,14 @@ class EmployeeController {
         $this->business->updateAlimonyOnBonus($entity);
         exit();
     }
+    
+    public function vaucher() {
+        $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+        
+        $positionBusiness = new PositionBusiness();
+        $data['position'] = $positionBusiness->get($data['idPosition']);
+        
+        Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CI_' . $data['card']);
+    }
 
 }

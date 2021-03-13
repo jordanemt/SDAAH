@@ -19,6 +19,7 @@ class BonusBusiness {
 
             $bonus = $this->calcBonus($employee['id'], $year);
             $bonus['id'] = $employee['id'];
+            $bonus['year'] = $year;
             $bonus['card'] = $employee['card'];
             $bonus['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
             $bonus['bankAccount'] = $employee['bankAccount'];

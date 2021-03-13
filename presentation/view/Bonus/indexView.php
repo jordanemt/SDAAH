@@ -3,8 +3,6 @@ $vars["viewName"] = 'bonus';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/vacation.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 

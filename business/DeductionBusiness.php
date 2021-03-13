@@ -13,10 +13,14 @@ class DeductionBusiness {
         $this->data = new DeductionData();
     }
     
+    public function get($id) {
+        return $this->data->get($id);
+    }
+    
     public function getAll() {
         return $this->data->getAll();
     }
-    
+
     public function getAllByIdPayroll($id) {
         return $this->data->getAllByIdPayroll($id);
     }
@@ -39,12 +43,12 @@ class DeductionBusiness {
         if (empty($id)) {
             throw new AttributeConflictException();
         }
-        
+
         $this->validAssociatedWithPayroll($id);
-        
+
         $this->data->remove($id);
     }
-    
+
     private function validAssociatedWithPayroll($id) {
         if ($this->data->isAssociatedWithPayroll($id)) {
             throw new AssociatedException();

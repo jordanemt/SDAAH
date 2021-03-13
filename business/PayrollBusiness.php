@@ -2,6 +2,7 @@
 
 require_once 'data/PayrollData.php';
 require_once 'business/EmployeeBusiness.php';
+require_once 'business/PositionBusiness.php';
 require_once 'business/DeductionBusiness.php';
 require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
@@ -20,7 +21,9 @@ class PayrollBusiness {
 
         $employeeBusiness = new EmployeeBusiness();
         $deductionBusiness = new DeductionBusiness();
+        $positionBusiness = new PositionBusiness();
         $payroll['employee'] = $employeeBusiness->get($payroll['idEmployee']);
+        $payroll['employee']['position'] = $positionBusiness->get($payroll['employee']['idPosition']);
         $payroll['deductions'] = $deductionBusiness->getAllByIdPayroll($payroll['id']);
 
         return $payroll;
@@ -134,6 +137,9 @@ class PayrollBusiness {
     }
 
     public function calcPayment($payment) {
+        if (empty($payment)) {
+            return 0;
+        }
         $type = $payment['type'];
         $ordinarySalary = ($type == 'Mensual') ? ($payment['salary'] / 30) : $payment['salary'];
         $extraTime = ($type == 'Mensual') ? ($ordinarySalary / 8) * 1.5 : $ordinarySalary * 1.5;
@@ -154,7 +160,7 @@ class PayrollBusiness {
                 floatval($payment['maternityAmount'])
                 );
 
-        $workerCss = $accrued * 0.105;
+        $workerCss = $this->calcWorkerCCSS($accrued);
         $incomeTax = $this->calcIncomeTax($accrued);
 
         $deductionBusiness = new DeductionBusiness();
@@ -172,6 +178,7 @@ class PayrollBusiness {
         return array(
             'id' => $payment['id'],
             'fortnight' => $payment['fortnight'],
+            'year' => $payment['year'],
             'ordinary' => $ordinary,
             'vacation' => $payment['vacationAmount'],
             'extra' => $extra,
@@ -186,6 +193,10 @@ class PayrollBusiness {
             'ordinaryTimeHours' => $payment['ordinaryTimeHours'],
             'net' => $net
         );
+    }
+    
+    public function calcWorkerCCSS($accrued) {
+        return $accrued * 0.105;
     }
     
     public function calcIncomeTax($accrued) {

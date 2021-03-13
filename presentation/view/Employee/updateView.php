@@ -4,8 +4,6 @@ $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/employee.js" type="text/javascript"></script>
-
 <div class="container my-4">
 
     <div class="card">
@@ -16,7 +14,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -29,7 +27,7 @@ include_once 'presentation/public/header.php';
                 </div>
                 
                 <div class="form-group d-none">
-                    <input type="number" class="form-control" id="idPositionSave" value="<?= $vars['data']['idPosition'] ?>">
+                    <input type="number" class="form-control" id="idPositionSave" value="<?= $vars['data']['idPosition'] ?>" disabled>
                 </div>
 
                 <div class="form-group">
@@ -75,7 +73,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" onchange="updateSelect();" required>
+                        <select class="form-control" id="type" name="type" onchange="updateSelectIdPosition();" required>
                             <option disabled>Seleccione una opción</option>
                             <option <?php if ($vars['data']['position']['type'] == 'Mensual') { echo 'selected'; } ?> value="Mensual">Mensual</option>
                             <option <?php if ($vars['data']['position']['type'] == 'Diario') { echo 'selected'; } ?> value="Diario">Diario</option>
@@ -149,17 +147,17 @@ include_once 'presentation/public/header.php';
                     <textarea class="form-control" id="observations" name="observations" maxlength="500" <?php if (!$vars['data']['isLiquidated']) { echo 'disabled'; } ?> required><?= $vars['data']['observations'] ?></textarea>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="update();">Actualizar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="updateEmployee();">Actualizar</button>
 
             </form>
             
             <script>
-                updateSelect();
+                updateSelectIdPosition();
             </script>
 
             <hr>
 
-            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

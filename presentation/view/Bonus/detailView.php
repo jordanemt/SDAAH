@@ -3,8 +3,6 @@ $vars["viewName"] = 'bonus';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/bonus.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 
@@ -18,7 +16,11 @@ include_once 'presentation/public/header.php';
 
                 <div class="col-md-12 px-0">
 
-                    <form id="search" class="col-md-12 px-0" action="/bonus/detail" method="get">
+                    <form id="search" class="col-md-12 px-0" action="" method="get">
+                        
+                        <input class="d-none" type="text" name="controller" value="bonus" readonly>
+                        
+                        <input class="d-none" type="text" name="action" value="detail" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
 
@@ -61,6 +63,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Aguinaldo Bruto</th>
                         <th class="text-center">Pensión Alimenticia</th>
                         <th class="text-center">Aguinaldo Neto</th>
+                        <th class="text-center">Boleta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,6 +132,15 @@ include_once 'presentation/public/header.php';
                             </td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <a href="?controller=bonus&action=vaucher&id=
+                                    <?= $value['id'] . '&year=' . $value['year'] . 
+                                        '&accruing=' . $value['accruing'] . 
+                                        '&grossBonus=' . $value['grossBonus'] . 
+                                        '&alimony=' . $value['alimony'] . 
+                                        '&net=' . $value['net'] 
+                                    ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
                             </td>
                         </tr>
                         <?php

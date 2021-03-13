@@ -3,8 +3,6 @@ $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/employee.js" type="text/javascript"></script>
-
 <div class="container my-4">
 
     <div class="card">
@@ -15,7 +13,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -66,7 +64,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" onchange="updateSelect();" required>
+                        <select class="form-control" id="type" name="type" onchange="updateSelectIdPosition();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <option value="Mensual">Mensual</option>
                             <option value="Diario">Diario</option>
@@ -125,13 +123,13 @@ include_once 'presentation/public/header.php';
                     </div>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="insert();">Insertar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="insertEmployee();">Insertar</button>
 
             </form>
 
             <hr>
 
-            <a href="/employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=employee"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

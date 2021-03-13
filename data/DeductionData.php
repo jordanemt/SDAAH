@@ -10,6 +10,19 @@ class DeductionData {
         require_once 'SPDO.php';
         $this->db = SPDO::singleton();
     }
+    
+    public function get($id) {
+        $query = $this->db->prepare("CALL `sp_get_deduction` (?)");
+        $query->bindParam(1, $id);
+
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+
+        $data = $query->fetch(PDO::FETCH_ASSOC);
+        $query->closeCursor();
+        return $data;
+    }
 
     public function getAll() {
         $query = $this->db->prepare("CALL `sp_get_all_deduction` ()");

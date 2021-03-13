@@ -1,10 +1,7 @@
 <?php
 $vars["viewName"] = 'employee';
 include_once 'presentation/public/header.php';
-require_once 'common/Util.php';
 ?>
-
-<script src="/presentation/public/js/employee.js" type="text/javascript"></script>
 
 <div class="container my-4">
     <div class="card">
@@ -16,7 +13,7 @@ require_once 'common/Util.php';
         <div class="card-body">
 
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="/employee/insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
             </div>
 
             <hr>
@@ -45,7 +42,7 @@ require_once 'common/Util.php';
                         <th class="text-center">Liquidado</th>
                         <th class="text-center">Observaciones</th>
                         <th class="text-center">Acción</th>
-                        <th class="text-center">Comprobante</th>
+                        <th class="text-center">Boleta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,23 +57,33 @@ require_once 'common/Util.php';
                             <td class="text-center"><?= $value['gender'] ?></td>
                             <td class="text-center"><?= $value['position']['name'] ?></td>
                             <td class="text-center"><?= $value['location'] ?></td>
-                            <td class="text-center"><?= $value['bankAccount'] ?></td>
-                            <td class="text-center"><?=  date_format(date_create($value['birthdate']), 'd/m/Y'); ?></td>
-                            <td class="text-center"><?=  date_format(date_create($value['admissionDate']), 'd/m/Y'); ?></td>
+                            <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
+                            <td class="text-center"><?= date_format(date_create($value['birthdate']), 'd/m/Y'); ?></td>
+                            <td class="text-center"><?= date_format(date_create($value['admissionDate']), 'd/m/Y'); ?></td>
                             <td class="text-center"><?= $value['position']['type'] ?></td>
-                            <td class="text-center"><?= ($value['position']['type'] == 'Mensual') ? 
-                                    '₡' . number_format($value['position']['salary'], 2, ',', ' ') : '---'; ?>
-                            </td>
-                            <td class="text-center"><?= ($value['position']['type'] == 'Diario') ? 
-                                    '₡' . number_format($value['position']['salary'], 2, ',', ' ') : '---'; ?>
+                            <td class="text-center">
+                                <?=
+                                ($value['position']['type'] == 'Mensual') ?
+                                        '₡' . number_format($value['position']['salary'], 2, ',', ' ') : '---';
+                                ?>
                             </td>
                             <td class="text-center">
-                                <?= '₡' . number_format(Util::getExtraTime($value['position']['salary'], 
-                                        $value['position']['type']), 2, ',', ' '); ?>
+                                <?=
+                                ($value['position']['type'] == 'Diario') ?
+                                        '₡' . number_format($value['position']['salary'], 2, ',', ' ') : '---';
+                                ?>
                             </td>
                             <td class="text-center">
-                                <?= '₡' . number_format(Util::getDoubleTime($value['position']['salary'], 
-                                        $value['position']['type']), 2, ',', ' '); ?>
+                                <?=
+                                '₡' . number_format(Util::getExtraTime($value['position']['salary'],
+                                                $value['position']['type']), 2, ',', ' ');
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?=
+                                '₡' . number_format(Util::getDoubleTime($value['position']['salary'],
+                                                $value['position']['type']), 2, ',', ' ');
+                                ?>
                             </td>
                             <td class="text-center"><?= $value['email'] ?></td>
                             <td class="text-center"><?= $value['isAffiliated'] ? 'Sí' : 'No'; ?></td>
@@ -84,11 +91,11 @@ require_once 'common/Util.php';
                             <td class="text-center"><?= $value['isLiquidated'] ? 'Sí' : 'No'; ?></td>
                             <td class="text-center"><?= $value['observations'] ? $value['observations'] : '---'; ?></td>
                             <td class="text-center">
-                                <a href="/employee/updateView?&id=<?= $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
-                                <a class="font-warning" href="#" onclick="confirmDelete(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                <a href="?controller=employee&action=updateView&id=<?= $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
+                                <a class="font-warning" href="#" onclick="removeEmployee(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                             </td>
                             <td class="text-center">
-                                <a href="#"><i class="fa fa-eye"></i> Ver</a>
+                                <a href="?controller=employee&action=vaucher&id=<?= $value['id'] ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
                             </td>
                         </tr>
                         <?php

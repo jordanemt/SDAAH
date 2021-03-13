@@ -3,8 +3,6 @@ $vars["viewName"] = 'payroll';
 include_once 'presentation/public/header.php';
 ?>
 
-<script src="/presentation/public/js/payroll.js" type="text/javascript"></script>
-
 <div class="container my-4">
     <div class="card">
 
@@ -14,7 +12,7 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <a href="/payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
             <hr>
 
@@ -24,7 +22,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="chargeEmployeeDataOnPayroll();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <?php
                             foreach ($vars['employees'] as $value) {
@@ -112,7 +110,7 @@ include_once 'presentation/public/header.php';
                     
                     <div class="form-group col-md-2">
                         <label for="maternityDays">Días Maternidad</label>
-                        <input type="text" class="form-control numberMask" id="INSDamaternityDaysys" name="maternityDays">
+                        <input type="text" class="form-control numberMask" id="maternityDays" name="maternityDays">
                     </div>
 
                     <div class="form-group col-md-4">
@@ -202,12 +200,12 @@ include_once 'presentation/public/header.php';
                     <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"></textarea>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="insert();">Insertar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="insertPayroll();">Insertar</button>
             </form>
 
             <hr>
 
-            <a href="/payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            <a href="?controller=payroll"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 

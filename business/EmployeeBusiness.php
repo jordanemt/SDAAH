@@ -50,7 +50,7 @@ class EmployeeBusiness {
             $data['daysRight'] = $daysRight;
             $data['vacationBalance'] = 0;
             $data['vacationBalance'] = $daysRight - intval($data['vacationsDays']);
-            $data['record'] = $interval->format('%y años, %m meses %d días');
+            $data['record'] = $interval->format('%y años, %m meses, %d días');
             array_push($array, $data);
         }
 
@@ -160,7 +160,7 @@ class EmployeeBusiness {
         //Valid empties
         if (empty($entity['idEmployee']) ||
                 empty($entity['year']) ||
-                empty($entity['mount'])) {
+                !isset($entity['mount'])) {
             throw new EmptyAttributeException();
         }
         
@@ -170,7 +170,7 @@ class EmployeeBusiness {
     public function updateAlimonyOnBonus($entity) {
         //Valid empties
         if (empty($entity['id']) ||
-                empty($entity['mount'])) {
+                !isset($entity['mount'])) {
             throw new EmptyAttributeException();
         }
         
