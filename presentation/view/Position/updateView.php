@@ -37,8 +37,8 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" required">
-                            <option disabled>Seleccione una opción</option>
+                        <select class="form-control" id="type" name="type" required>
+                            <option selected disabled>Seleccione una opción</option>
                             <option <?php if ($vars['data']['type'] == 'Mensual') { echo 'selected'; } ?> value="Mensual">Mensual</option>
                             <option <?php if ($vars['data']['type'] == 'Diario') { echo 'selected'; } ?> value="Diario">Diario</option>
                         </select>

@@ -1,3 +1,7 @@
+<?php
+$currencyPath = 'presentation/public/img/colon.png';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -38,7 +42,9 @@
                     <td style="width: 15%;">
                         <img src="presentation/public/img/logo.png" height="100">
                     </td>
-                    <td style="width: 85%; padding-top: 35px; font-size: 12px;">
+                    <td style="width: 85%; padding-top: 25px; font-size: 12px;">
+                        <p>Departamento de Administración</p>
+                        <p>Módulo de planilla</p>
                         <p>Télefono: (506) 2765-4162</p>
                         <p>Email: acueductoherediana@hotmail.com</p>
                     </td>
@@ -70,22 +76,28 @@
                     <th style="width: 14%; text-align: center;" class="border">Cédula #:</th>
                     <td style="width: 14%; text-align: center;" class="border"><?= $data['card'] ?></td>
                     <th style="width: 14%; text-align: center;" class="border">Nombre:</th>
-                    <td style="width: 30%; text-align: center;" class="border"><?= $data['completeName'] ?></td>
-                    <th style="width: 14%; text-align: center;" class="border">Puesto:</th>
-                    <td style="width: 14%; text-align: center;" class="border"><?= $data['position'] ?></td>
+                    <td style="width: 58%; text-align: center;" class="border"><?= $data['completeName'] ?></td>
                 </tr>
             </table>
 
             <table>
                 <tr>
+                    <th style="width: 14%; text-align: center;" class="border">Puesto:</th>
+                    <td style="width: 30%; text-align: center;" class="border"><?= $data['position'] ?></td>
                     <th style="width: 14%; text-align: center;" class="border">F. Ingreso:</th>
-                    <td style="width: 17%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['admissionDate'])); ?></td>
+                    <td style="width: 14%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['admissionDate'])); ?></td>
                     <th style="width: 14%; text-align: center;" class="border">F. Vacac:</th>
-                    <td style="width: 17%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['vacationDate'])); ?></td>
+                    <td style="width: 14%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['vacationDate'])); ?></td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td style="width: 44%; border-right: 1px solid #8c8c8c;"></td>
                     <th style="width: 14%; text-align: center;" class="border">Días:</th>
-                    <td style="width: 5%; text-align: center;" class="border"><?= $data['vacationDays'] ?></td>
+                    <td style="width: 14%; text-align: center;" class="border"><?= $data['vacationDays'] ?></td>
                     <th style="width: 14%; text-align: center;" class="border">Quincena:</th>
-                    <td style="width: 5%; text-align: center;" class="border"><?= 'Q-' . $data['vacationFortnight'] ?></td>
+                    <td style="width: 14%; text-align: center;" class="border"><?= 'Q-' . $data['vacationFortnight'] ?></td>
                 </tr>
             </table>
 
@@ -95,7 +107,7 @@
                     <th style="width: 100%; text-align: center;" class="border">Salario Base para el Cálculo</th>
                 </tr>
             </table>
-            
+
             <table>
                 <tr>
                     <th style="width: 20%; text-align: center;" class="border">Quincena</th>
@@ -103,81 +115,111 @@
                     <th style="width: 40%; text-align: center;" class="border">Devengando</th>
                     <th style="width: 20%; text-align: center;" class="border">Días</th>
                 </tr>
-                
-                <?php 
-                    foreach ($data['fortnight'] as $key => $value) {
+
+                <?php
+                foreach ($data['fortnight'] as $key => $value) {
                     ?>
                     <tr>
                         <td style="width: 20%; text-align: center;" class="border"><?= $value ?></td>
                         <td style="width: 20%; text-align: center;" class="border"><?= $data['year'][$key] ?></td>
-                        <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['accruing'][$key], 2, '.', ' '); ?></td>
+                        <td style="width: 40%; text-align: center;" class="border">
+                            <img src="<?= $currencyPath ?>" height="12">
+                            <?= number_format($data['accruing'][$key], 2, '.', ' '); ?>
+                        </td>
                         <td style="width: 20%; text-align: center;" class="border"><?= $data['days'][$key] ?></td>
                     </tr>
                     <?php
-                    }
+                }
                 ?>
             </table>
-            
+
             <table>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Total Salarios</th>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['salaryTotal'], 2, '.', ' '); ?></td>
-                    <td style="width: 20%; text-align: center;" class="border"><?= $data['daysTotal']; ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['salaryTotal'], 2, '.', ' '); ?>
+                    </td>
+                    <td style="width: 20%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= $data['daysTotal']; ?>
+                    </td>
                 </tr>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Sal. Prom. Diario</th>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['avgSalary'], 2, '.', ' '); ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['avgSalary'], 2, '.', ' '); ?>
+                    </td>
                     <td style="width: 20%;"></td>
                 </tr>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Devengando</th>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['accruedVacation'], 2, '.', ' '); ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['accruedVacation'], 2, '.', ' '); ?>
+                    </td>
                     <td style="width: 20%;"></td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>
                     <th style="width: 100%; text-align: center;" class="border">Detalle de Deducciones</th>
                 </tr>
             </table>
-            
+
             <table>
                 <tr>
                     <td style="width: 60%; text-align: center;" class="border">Cuota Obrera CCSS</td>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['workerCCSS'], 2, '.', ' '); ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['workerCCSS'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 60%; text-align: center;" class="border">Impuesto Sobre la Renta</td>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['incomeTax'], 2, '.', ' '); ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['incomeTax'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
-                
-                <?php 
-                    foreach ($data['deductionsArray'] as $key => $deduction) {
+
+                <?php
+                foreach ($data['deductionsArray'] as $key => $deduction) {
                     ?>
                     <tr>
                         <td style="width: 60%; text-align: center;" class="border"><?= $deduction['name'] ?></td>
-                        <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['deductionsMounts'][$key], 2, '.', ' '); ?></td>
+                        <td style="width: 40%; text-align: center;" class="border">
+                            <img src="<?= $currencyPath ?>" height="12">
+                            <?= number_format($data['deductionsMounts'][$key], 2, '.', ' '); ?>
+                        </td>
                     </tr>
                     <?php
-                    }
+                }
                 ?>
-                
+
             </table>
-            
+
             <table>
                 <tr>
                     <th style="width: 60%; text-align: center;" class="border">Total Deducciones</th>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['deductionsTotal'], 2, '.', ' '); ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['deductionsTotal'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <br>
                 <tr>
                     <th style="width: 60%; text-align: center;" class="border">Total Vacaciones Neto a Pagar</th>
-                    <td style="width: 40%; text-align: center;" class="border"><?= number_format($data['net'], 2, '.', ' '); ?></td>
+                    <td style="width: 40%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['net'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
             </table>
-            
+
             <table>
                 <tr>
                     <td style="width: 100%; text-align: center;" class="border">
@@ -185,7 +227,7 @@
                     </td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>
@@ -198,7 +240,7 @@
                     <td style="width: 5%"></td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>
@@ -208,7 +250,7 @@
                     <td style="width: 5%"></td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>
@@ -224,7 +266,7 @@
                     <td style="width: 5%"></td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>

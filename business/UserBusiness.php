@@ -5,6 +5,7 @@ require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
 require_once 'exceptions/DuplicateCardException.php';
 require_once 'exceptions/PasswordsMatchException.php';
+require_once 'exceptions/AuthenticationFailedException.php';
 
 class UserBusiness {
 
@@ -12,6 +13,27 @@ class UserBusiness {
 
     function __construct() {
         $this->data = new UserData();
+    }
+    
+    public function auth($card, $pass) {
+        //Valid empties
+        if (empty($card) || empty($pass)) {
+            throw new EmptyAttributeException();
+        }
+
+        //Valid lentch
+        if (strlen($card) !== 9 ||
+                (strlen($pass) > 11 || strlen($pass) < 6)) {
+            throw new AttributeConflictException();
+        }
+
+        $user = $this->data->auth($card, md5($pass));
+        
+        if (!empty($user)) {
+            return $user;
+        } else {
+            throw new AuthenticationFailedException();
+        }
     }
 
     public function get($id) {

@@ -8,6 +8,9 @@ require_once 'business/VacationBusiness.php';
 
 class VacationController {
 
+    private $business;
+    private $sessionController;
+
     public function __construct() {
         $this->view = new View();
         $this->business = new VacationBusiness();
@@ -20,25 +23,38 @@ class VacationController {
     }
 
     public function index() {
-        $employeeBusiness = new EmployeeBusiness();
-        $vars['employees'] = $employeeBusiness->getAll();
+        try {
+            $this->sessionController->checkConsultant();
+            $employeeBusiness = new EmployeeBusiness();
+            $vars['employees'] = $employeeBusiness->getAll();
 
-        $deductionBusiness = new DeductionBusiness();
-        $vars['deductions'] = $deductionBusiness->getAll();
+            $deductionBusiness = new DeductionBusiness();
+            $vars['deductions'] = $deductionBusiness->getAll();
 
-        $this->view->show($this->controllerName . 'indexView.php', $vars);
+            $this->view->show($this->controllerName . 'indexView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function detail() {
-        $cutoff = filter_input(INPUT_GET, 'cutoff');
+        try {
+            $this->sessionController->checkConsultant();
+            $cutoff = filter_input(INPUT_GET, 'cutoff');
 
-        $employeeBusiness = new EmployeeBusiness();
-        $vars['data'] = $employeeBusiness->getAllDaysSpentOnVacation($cutoff);
-        $vars['cutoff'] = !empty($cutoff) ? $cutoff : date('Y-m-d');
-        $this->view->show($this->controllerName . 'detailView.php', $vars);
+            $employeeBusiness = new EmployeeBusiness();
+            $vars['data'] = $employeeBusiness->getAllDaysSpentOnVacation($cutoff);
+            $vars['cutoff'] = !empty($cutoff) ? $cutoff : date('Y-m-d');
+            $this->view->show($this->controllerName . 'detailView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function calcVacationAccrued() {
+        $this->sessionController->checkConsultant();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'vacationDays' => Filters::getInt(),
@@ -51,44 +67,49 @@ class VacationController {
         $input = filter_input_array(INPUT_GET, $filter);
 
         echo json_encode($this->business->calcVacationAccrued($input));
-        exit();
     }
 
     public function vaucher() {
-        $filter = array(
-            'card' => Filters::getInt(),
-            'completeName' => Filters::getString(),
-            'admissionDate' => Filters::getString(),
-            'position' => Filters::getString(),
-            'vacationDate' => Filters::getString(),
-            'vacationDays' => Filters::getInt(),
-            'vacationFortnight' => Filters::getInt(),
-            'fortnight' => Filters::getInt(),
-            'year' => Filters::getInt(),
-            'days' => Filters::getInt(),
-            'accruing' => Filters::getFloat(),
-            'avgSalary' => Filters::getFloat(),
-            'daysTotal' => Filters::getInt(),
-            'salaryTotal' => Filters::getFloat(),
-            'accruedVacation' => Filters::getFloat(),
-            'deductions' => Filters::getInt(),
-            'deductionsMounts' => Filters::getFloat(),
-            'workerCCSS' => Filters::getFloat(),
-            'incomeTax' => Filters::getFloat(),
-            'deductionsTotal' => Filters::getFloat(),
-            'net' => Filters::getFloat()
-        );
-        $input = filter_input_array(INPUT_GET, $filter);
+        try {
+            $this->sessionController->checkConsultant();
+            $filter = array(
+                'card' => Filters::getInt(),
+                'completeName' => Filters::getString(),
+                'admissionDate' => Filters::getString(),
+                'position' => Filters::getString(),
+                'vacationDate' => Filters::getString(),
+                'vacationDays' => Filters::getInt(),
+                'vacationFortnight' => Filters::getInt(),
+                'fortnight' => Filters::getInt(),
+                'year' => Filters::getInt(),
+                'days' => Filters::getInt(),
+                'accruing' => Filters::getFloat(),
+                'avgSalary' => Filters::getFloat(),
+                'daysTotal' => Filters::getInt(),
+                'salaryTotal' => Filters::getFloat(),
+                'accruedVacation' => Filters::getFloat(),
+                'deductions' => Filters::getInt(),
+                'deductionsMounts' => Filters::getFloat(),
+                'workerCCSS' => Filters::getFloat(),
+                'incomeTax' => Filters::getFloat(),
+                'deductionsTotal' => Filters::getFloat(),
+                'net' => Filters::getFloat()
+            );
+            $input = filter_input_array(INPUT_GET, $filter);
 
-        $input['deductionsArray'] = array();
-        $deductionBusiness = new DeductionBusiness();
-        if (!empty($input['deductions'])) {
-            foreach ($input['deductions'] as $deductionId) {
-                array_push($input['deductionsArray'], $deductionBusiness->get($deductionId));
+            $input['deductionsArray'] = array();
+            $deductionBusiness = new DeductionBusiness();
+            if (!empty($input['deductions'])) {
+                foreach ($input['deductions'] as $deductionId) {
+                    array_push($input['deductionsArray'], $deductionBusiness->get($deductionId));
+                }
             }
-        }
 
-        Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CV_' . $input['card']);
+            Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CV_' . $input['card']);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
 }

@@ -80,6 +80,7 @@ function removeEmployee(id) {
 
 function updateSelectIdPosition() {
     let type = $('#type').val();
+    showLoading();
     getAllByTypePosition(type).then((result) => {
         let data = JSON.parse(result);
         if (data === null || data.length === 0) {
@@ -87,6 +88,7 @@ function updateSelectIdPosition() {
             let option = $('<option></option>').attr('disabled', true)
                     .attr('selected', true).text('No se encontraron Puestos del tipo ' + type);
             $('#idPosition').append(option);
+            hideLoading();
             return 0;
         }
 
@@ -110,6 +112,7 @@ function updateSelectIdPosition() {
 
             }
         });
+        hideLoading();
     }).catch(error => {
         errorMessage(error.responseText);
     });

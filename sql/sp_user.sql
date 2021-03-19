@@ -1,3 +1,14 @@
+CREATE PROCEDURE `sp_auth`(
+	card VARCHAR(9),
+    pass VARCHAR(32)
+)
+BEGIN
+	SELECT `id` AS id, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` 
+        WHERE `user`.`card` = card AND 
+            `user`.`pass` = pass AND 
+            `user`.`isDeleted` = 0;
+END//
+
 CREATE PROCEDURE `sp_get_user`(
 	id INT
 )

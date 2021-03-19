@@ -22,6 +22,7 @@ function overwriteJQueryMessages() {
 
 function chargeDataTable(element) {
     $(element).DataTable({
+        'scrollX': true,
         language: {
             lengthMenu: 'Mostrando _MENU_ registros',
             zeroRecords: 'No hay registros',
@@ -37,6 +38,17 @@ function chargeDataTable(element) {
             }
         }
     });
+    
+    var table = $(element).DataTable();
+    $(element + ' tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
 }
 
 function resetForm(element) {
@@ -52,6 +64,32 @@ function addHtmlLoadingSpinnerOnSubmitButton() {
 function addHtmlOnSubmitButton(html) {
     $('#submit-button').removeAttr('disabled');
     $('#submit-button').html(html);
+}
+
+function addHtmlLoadinOnElement(element) {
+    var html = '<br><i class="fa fa-spinner fa-spin"></i> Cargando...';
+    $(element).html(html);
+}
+
+function showLoading() {
+    $('button').attr('disabled', 'true');
+    var html = '<i class=\'fa fa-spinner fa-spin\'></i> Cargando...';
+    $('.loading-div').html(html);
+}
+
+function hideLoading() {
+    $('button').removeAttr('disabled');
+    $('.loading-div').html('');
+}
+
+function showCalculatingLoading() {
+    $('button').attr('disabled', 'true');
+    $('.alert').show();
+}
+
+function hideCalculatingLoading() {
+    $('button').removeAttr('disabled');
+    $('.alert').hide();
 }
 
 function switchVisibility(element) {
@@ -114,6 +152,9 @@ function setMask() {
                 recursive: true
             }
         }
+    });
+    $('.accountMask').mask('000-00-000-000000-0', {
+        placeholder: '000-00-000-000000-0'
     });
     setMoneyMaskOnElement('.moneyMask');
 }

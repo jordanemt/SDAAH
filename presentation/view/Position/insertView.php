@@ -26,14 +26,14 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control textMask" id="name" name="name" maxlength="25" required>
+                        <input type="text" class="form-control" id="name" name="name" maxlength="25" placeholder="Ingrese lo que se le solicita" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="type">Tipo</label>
-                        <select class="form-control" id="type" name="type" required">
+                        <select class="form-control" id="type" name="type" required>
                             <option selected disabled>Seleccione una opción</option>
                             <option value="Mensual">Mensual</option>
                             <option value="Diario">Diario</option>

@@ -19,33 +19,33 @@ include_once 'presentation/public/header.php';
                 <div class="col-md-12 px-0">
 
                     <form id="search" class="col-md-12 px-0" action="" method="get">
-                        
+
                         <input class="d-none" type="text" name="controller" value="payroll" readonly>
-                        
+
                         <input class="d-none" type="text" name="action" value="monthlyView" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
-                            
+
                             <div class="d-flex flex-row p-1">
                                 <label for="month">Mes:&nbsp</label>
                                 <select class="form-control form-control-sm selectpicker" data-size="5" id="month" name="month" onchange="submitSearch();">
                                     <?= Util::getSelectMonthOptions(); ?>
                                 </select>
                             </div>
-                            
+
                             <div class="d-flex flex-row p-1">
                                 <label for="year">Año:&nbsp</label>
                                 <select class="form-control form-control-sm selectpicker" data-size="5" id="year" name="year" onchange="submitSearch();">
                                     <?= Util::getSelectYearOptions(); ?>
                                 </select>
                             </div>
-                            
+
                         </div>
 
                     </form>
 
                 </div>
-                
+
             </div>
 
             <hr>
@@ -64,21 +64,35 @@ include_once 'presentation/public/header.php';
                 </thead>
                 <tbody>
                     <?php
+                    $totalDays = 0;
+                    $totalHours = 0;
+                    $totalSalaries = 0;
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
-                            <td class="text-center"><?= $value['completeName'] ?></td>
+                            <td class="text-center"><p><?= $value['completeName'] ?></p></td>
                             <td class="text-center"><?= $value['type'] == 'Mensual' ? 'Jornada Completa' : 'Tiempo Parcial' ?></td>
                             <td class="text-center"><?= $value['workingDays'] ? $value['workingDays'] : '---' ?></td>
                             <td class="text-center"><?= $value['ordinaryTimeHours'] ? $value['ordinaryTimeHours'] : '---' ?></td>
-                            <td class="text-center">
-                                <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
-                            </td>
+                            <td class="text-center"><?= '₡' . number_format($value['net'], 2, '.', ' '); ?></td>
                             <td class="text-center"><?= $value['observations'] ? $value['observations'] : '---' ?></td>
-                            <?php
-                        }
-                        ?>
+                        </tr>
+                        <?php
+                        $totalDays += $value['workingDays'];
+                        $totalHours += $value['ordinaryTimeHours'];
+                        $totalSalaries += $value['net'];
+                    }
+                    ?>
+                    <tr>
+                        <th class="text-center">Totales</th>
+                        <th class="text-center">---</th>
+                        <th class="text-center">---</th>
+                        <th class="text-center"><?= $totalDays ?></th>
+                        <th class="text-center"><?= $totalHours ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalSalaries, 2, '.', ' '); ?></th>
+                        <th class="text-center">---</th>
+                    </tr>
                 </tbody>
             </table>
 
@@ -88,5 +102,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

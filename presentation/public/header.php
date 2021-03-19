@@ -67,13 +67,22 @@
                         ?>
 
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'user') === 0) {
-                                echo "active";
+                            <?php
+                            if (SessionController::validRole(SessionController::$_ADMIN)) {
+                                ?>
+                                
+                                <li class="nav-item <?php
+                                if (strcasecmp($vars['viewName'], 'user') === 0) {
+                                    echo "active";
+                                }
+                                ?>">
+                                    <a class="nav-link" href="?controller=user">Usuarios</a>
+                                </li>
+                            
+                                <?php
                             }
-                            ?>">
-                                <a class="nav-link" href="?controller=user">Usuarios</a>
-                            </li>
+                            ?>
+                                
                             <li class="nav-item <?php
                             if (strcasecmp($vars['viewName'], 'employee') === 0) {
                                 echo "active";
@@ -88,13 +97,23 @@
                             ?>">
                                 <a class="nav-link" href="?controller=position">Puestos</a>
                             </li>
-                            <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'deduction') === 0) {
-                                echo "active";
+                            
+                            <?php
+                            if (SessionController::validRole(SessionController::$_ADMIN)) {
+                                ?>
+                                
+                                <li class="nav-item <?php
+                                if (strcasecmp($vars['viewName'], 'deduction') === 0) {
+                                    echo "active";
+                                }
+                                ?>">
+                                    <a class="nav-link" href="?controller=deduction">Deducciones</a>
+                                </li>
+                            
+                                <?php
                             }
-                            ?>">
-                                <a class="nav-link" href="?controller=deduction">Deducciones</a>
-                            </li>
+                            ?>
+                                
                             <li class="nav-item dropdown <?php
                             if (strcasecmp($vars['viewName'], 'payroll') === 0) {
                                 echo "active";

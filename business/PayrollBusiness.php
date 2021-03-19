@@ -79,7 +79,7 @@ class PayrollBusiness {
         }
 
         //Valid lentch
-        if (strlen($entity['location']) > 14 ||
+        if (($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
                 strlen($entity['type']) > 7) {
             throw new AttributeConflictException();
         }
@@ -106,7 +106,7 @@ class PayrollBusiness {
         }
 
         //Valid lentch
-        if (strlen($entity['location']) > 14 ||
+        if (($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
                 strlen($entity['type']) > 7) {
             throw new AttributeConflictException();
         }
@@ -279,7 +279,7 @@ class PayrollBusiness {
             $calculatedPayment = $this->calcPayment($payment);
 
             $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
-            $key = $this->locationExistOnPayroll($payment['location'], $provisionReport);
+            $key = $this->employeeCardExistOnPayroll($employee['card'], $provisionReport);
             if ($key == -1) {
                 array_push($provisionReport, array(
                     'card' => $employee['card'],

@@ -10,6 +10,20 @@ class UserData {
         require_once 'SPDO.php';
         $this->db = SPDO::singleton();
     }
+    
+    public function auth($card, $pass) {
+        $query = $this->db->prepare("CALL `sp_auth` (?,?)");
+        $query->bindParam(1, $card);
+        $query->bindParam(2, $pass);
+
+        if (!$query->execute()) {
+            throw new DataBaseException(PDO::FETCH_ASSOC);
+        }
+
+        $data = $query->fetch();
+        $query->closeCursor();
+        return $data;
+    }
 
     public function get($id) {
         $query = $this->db->prepare("CALL `sp_get_user` (?)");

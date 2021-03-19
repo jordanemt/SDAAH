@@ -4,8 +4,9 @@ require 'SessionController.php';
 require_once 'business/UserBusiness.php';
 
 class UserController {
-    
+
     private $business;
+    private $sessionController;
 
     public function __construct() {
         $this->view = new View();
@@ -17,20 +18,39 @@ class UserController {
     }
 
     public function index() {
-        $vars['data'] = $this->business->getAll();
-        $this->view->show($this->controllerName . 'indexView.php', $vars);
+        try {
+            $this->sessionController->checkAdmin();
+            $vars['data'] = $this->business->getAll();
+            $this->view->show($this->controllerName . 'indexView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function insertView() {
-        $this->view->show($this->controllerName . 'insertView.php', null);
+        try {
+            $this->sessionController->checkAdmin();
+            $this->view->show($this->controllerName . 'insertView.php', null);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function updateView() {
-        $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
-        $this->view->show($this->controllerName . 'updateView.php', $vars);
+        try {
+            $this->sessionController->checkAdmin();
+            $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+            $this->view->show($this->controllerName . 'updateView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function insert() {
+        $this->sessionController->checkAdmin();
         $filter = array(
             'card' => Filters::getInt(),
             'pass' => Filters::getString(),
@@ -47,7 +67,8 @@ class UserController {
         exit();
     }
 
-    public function update() {        
+    public function update() {
+        $this->sessionController->checkAdmin();
         $filter = array(
             'id' => Filters::getInt(),
             'pass' => Filters::getString(),
@@ -66,6 +87,7 @@ class UserController {
     }
 
     public function remove() {
+        $this->sessionController->checkAdmin();
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
         exit();
     }

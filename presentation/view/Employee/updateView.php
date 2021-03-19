@@ -85,6 +85,7 @@ include_once 'presentation/public/header.php';
                         <select class="form-control" id="idPosition" name="idPosition" required>
                             <option selected disabled>Debe seleccionar un Tipo</option>
                         </select>
+                        <div class="loading-div"></div>
                     </div>
                 </div>
 
@@ -108,13 +109,13 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="bankAccount">Número de Cuenta Bancaria</label>
-                    <input type="text" class="form-control accountMask" id="bankAccount" name="bankAccount" minlength="15" maxlength="15" value="<?= $vars['data']['bankAccount'] ?>" required>
+                    <input type="text" class="form-control accountMask" id="bankAccount" name="bankAccount" minlength="19" maxlength="19" value="<?= $vars['data']['bankAccount'] ?>" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" maxlength="100" value="<?= $vars['data']['email'] ?>" required>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="100" value="<?= $vars['data']['email'] ?>">
                     </div>
 
                     <div class="form-group col-md-6">

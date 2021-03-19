@@ -68,6 +68,7 @@ function removePayroll(id) {
 
 function chargeEmployeeDataOnPayroll() {
     let id = $('#idEmployee').val();
+    showLoading();
     getEmployee(id).then((result) => {
         let employee = JSON.parse(result);
         let position = employee.position;
@@ -88,6 +89,9 @@ function chargeEmployeeDataOnPayroll() {
         $('#position').val(position.name);
         $('#type').val(position.type);
         $('#salary').val('₡' + position.salary);
+        
+        hideLoading();
+        $('#form').valid();
     }).catch(error => {
         errorMessage(error.responseText);
     });

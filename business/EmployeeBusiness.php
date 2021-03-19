@@ -69,7 +69,6 @@ class EmployeeBusiness {
                 empty($entity['location']) ||
                 empty($entity['admissionDate']) ||
                 empty($entity['bankAccount']) ||
-                empty($entity['email']) ||
                 empty($entity['cssIns'])) {
             throw new EmptyAttributeException();
         }
@@ -78,14 +77,11 @@ class EmployeeBusiness {
         if (strlen($entity['card']) !== 9 ||
                 strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
-                strlen($entity['name']) > 25 ||
-                strlen($entity['gender']) > 25 ||
-                strlen($entity['birthdate']) > 25 ||
-                strlen($entity['idPosition']) > 25 ||
-                strlen($entity['location']) > 25 ||
-                strlen($entity['admissionDate']) > 25 ||
+                strlen($entity['name']) > 50 ||
+                ($entity['gender'] != 'Masculino' && $entity['gender'] != 'Femenino') ||
+                ($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
                 strlen($entity['bankAccount']) !== 15 ||
-                strlen($entity['email']) > 25 ||
+                (!empty($entity['email']) && strlen($entity['email']) > 100) ||
                 strlen($entity['cssIns']) !== 4 ||
                 (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1) {
             throw new AttributeConflictException();
@@ -107,7 +103,6 @@ class EmployeeBusiness {
                 empty($entity['location']) ||
                 empty($entity['admissionDate']) ||
                 empty($entity['bankAccount']) ||
-                empty($entity['email']) ||
                 empty($entity['cssIns']) ||
                 (!empty($entity['isLiquidated']) && empty($entity['observations']))) {
             throw new EmptyAttributeException();
@@ -116,14 +111,11 @@ class EmployeeBusiness {
         //Valid lentch
         if (strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
-                strlen($entity['name']) > 25 ||
-                strlen($entity['gender']) > 25 ||
-                strlen($entity['birthdate']) > 25 ||
-                strlen($entity['idPosition']) > 25 ||
-                strlen($entity['location']) > 25 ||
-                strlen($entity['admissionDate']) > 25 ||
+                strlen($entity['name']) > 50 ||
+                ($entity['gender'] != 'Masculino' && $entity['gender'] != 'Femenino') ||
+                ($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
                 strlen($entity['bankAccount']) !== 15 ||
-                strlen($entity['email']) > 25 ||
+                (!empty($entity['email']) && strlen($entity['email']) > 100) ||
                 strlen($entity['cssIns']) !== 4 ||
                 (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1 ||
                 (!empty($entity['isLiquidated']) && $entity['isLiquidated'] != 1) ||

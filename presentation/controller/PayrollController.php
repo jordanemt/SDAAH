@@ -7,6 +7,9 @@ require_once 'business/DeductionBusiness.php';
 
 class PayrollController {
 
+    private $business;
+    private $sessionController;
+
     public function __construct() {
         $this->view = new View();
         $this->business = new PayrollBusiness();
@@ -22,85 +25,128 @@ class PayrollController {
     }
 
     public function index() {
-        $inputFilter = array(
-            'location' => Filters::getString(),
-            'fortnight' => Filters::getInt(),
-            'year' => Filters::getInt()
-        );
-        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
+        try {
+            $this->sessionController->checkConsultant();
+            $inputFilter = array(
+                'location' => Filters::getString(),
+                'fortnight' => Filters::getInt(),
+                'year' => Filters::getInt()
+            );
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
 
-        $vars['data'] = $this->business->getBiweeklyPayroll($this->business->getAllByBiweeklyFilter($filter));
-        $this->view->show($this->controllerName . 'indexView.php', $vars);
+            $vars['data'] = $this->business->getBiweeklyPayroll($this->business->getAllByBiweeklyFilter($filter));
+            $this->view->show($this->controllerName . 'indexView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function monthlyView() {
-        $inputFilter = array(
-            'month' => Filters::getInt(),
-            'year' => Filters::getInt()
-        );
-        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+        try {
+            $this->sessionController->checkConsultant();
+            $inputFilter = array(
+                'month' => Filters::getInt(),
+                'year' => Filters::getInt()
+            );
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
 
-        $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
-        $this->view->show($this->controllerName . 'monthlyView.php', $vars);
+            $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
+            $this->view->show($this->controllerName . 'monthlyView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function provisionReportView() {
-        $inputFilter = array(
-            'month' => Filters::getInt(),
-            'year' => Filters::getInt()
-        );
-        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+        try {
+            $this->sessionController->checkConsultant();
+            $inputFilter = array(
+                'month' => Filters::getInt(),
+                'year' => Filters::getInt()
+            );
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
 
-        $vars['data'] = $this->business->getProvisionReport($this->business->getAllByMonthlyFilter($filter));
-        $this->view->show($this->controllerName . 'provisionReportView.php', $vars);
+            $vars['data'] = $this->business->getProvisionReport($this->business->getAllByMonthlyFilter($filter));
+            $this->view->show($this->controllerName . 'provisionReportView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function detailProvisionReportView() {
-        $inputFilter = array(
-            'month' => Filters::getInt(),
-            'year' => Filters::getInt()
-        );
-        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+        try {
+            $this->sessionController->checkConsultant();
+            $inputFilter = array(
+                'month' => Filters::getInt(),
+                'year' => Filters::getInt()
+            );
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
 
-        $vars['data'] = $this->business->getDetailProvisionReport($this->business->getAllByMonthlyFilter($filter));
-        $this->view->show($this->controllerName . 'detailProvisionReportView.php', $vars);
+            $vars['data'] = $this->business->getDetailProvisionReport($this->business->getAllByMonthlyFilter($filter));
+            $this->view->show($this->controllerName . 'detailProvisionReportView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function bncrReportView() {
-        $inputFilter = array(
-            'month' => Filters::getInt(),
-            'year' => Filters::getInt()
-        );
-        $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+        try {
+            $this->sessionController->checkConsultant();
+            $inputFilter = array(
+                'month' => Filters::getInt(),
+                'year' => Filters::getInt()
+            );
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
 
-        $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
-        $this->view->show($this->controllerName . 'bncrReportView.php', $vars);
+            $vars['data'] = $this->business->getMonthlyPayroll($this->business->getAllByMonthlyFilter($filter));
+            $this->view->show($this->controllerName . 'bncrReportView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function insertView() {
-        $employeeBusiness = new EmployeeBusiness();
-        $vars['employees'] = $employeeBusiness->getAll();
+        try {
+            $this->sessionController->checkDigitizer();
+            $employeeBusiness = new EmployeeBusiness();
+            $vars['employees'] = $employeeBusiness->getAll();
 
-        $deductionBusiness = new DeductionBusiness();
-        $vars['deductions'] = $deductionBusiness->getAll();
+            $deductionBusiness = new DeductionBusiness();
+            $vars['deductions'] = $deductionBusiness->getAll();
 
-        $this->view->show($this->controllerName . 'insertView.php', $vars);
+            $this->view->show($this->controllerName . 'insertView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function updateView() {
-        $employeeBusiness = new EmployeeBusiness();
-        $vars['employees'] = $employeeBusiness->getAll();
+        try {
+            $this->sessionController->checkDigitizer();
+            $employeeBusiness = new EmployeeBusiness();
+            $vars['employees'] = $employeeBusiness->getAll();
 
-        $deductionBusiness = new DeductionBusiness();
-        $vars['deductions'] = $deductionBusiness->getAll();
+            $deductionBusiness = new DeductionBusiness();
+            $vars['deductions'] = $deductionBusiness->getAll();
 
-        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-        $vars['data'] = $this->business->get($id);
-        $this->view->show($this->controllerName . 'updateView.php', $vars);
+            $vars['data'] = $this->business->get($id);
+            $this->view->show($this->controllerName . 'updateView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function insert() {
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'position' => Filters::getString(),
@@ -131,9 +177,11 @@ class PayrollController {
         $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->insert($entity);
+        exit();
     }
 
     public function update() {
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'id' => Filters::getInt(),
             'idEmployee' => Filters::getInt(),
@@ -165,17 +213,26 @@ class PayrollController {
         $entity = filter_input_array(INPUT_POST, $filter);
 
         $this->business->update($entity);
+        exit();
     }
 
     public function remove() {
+        $this->sessionController->checkDigitizer();
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
+        exit();
     }
-    
-    public function vaucher() {
-        $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
-        $data['payment'] = $this->business->calcPayment($data);
 
-        Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CP_Q-' . $data['fortnight'] . '.' . $data['year'] . '.' . $data['employee']['card']);
+    public function vaucher() {
+        try {
+            $this->sessionController->checkConsultant();
+            $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+            $data['payment'] = $this->business->calcPayment($data);
+
+            Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CP_Q-' . $data['fortnight'] . '.' . $data['year'] . '.' . $data['employee']['card']);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
 }

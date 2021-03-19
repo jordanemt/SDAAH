@@ -19,16 +19,15 @@ include_once 'presentation/public/header.php';
             <div class="d-flex flex-md-row flex-column">
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
                     <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
                 </div>
 
                 <div class="col-md-7 px-0">
 
                     <form id="search" class="col-md-12 px-0" action="" method="get">
-                        
+
                         <input class="d-none" type="text" name="controller" value="payroll" readonly>
-                        
+
                         <input class="d-none" type="text" name="action" value="provisionReportView" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
@@ -72,6 +71,13 @@ include_once 'presentation/public/header.php';
                 </thead>
                 <tbody>
                     <?php
+                    $totalAccrued = 0;
+                    $totalCCSS = 0;
+                    $totalBonus = 0;
+                    $totalVacation = 0;
+                    $totalUnemployment = 0;
+                    $totalPt = 0;
+                    $total = 0;
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
@@ -97,9 +103,27 @@ include_once 'presentation/public/header.php';
                             <td class="text-center">
                                 <?= '₡' . number_format($value['total'], 2, '.', ' '); ?>
                             </td>
-                            <?php
-                        }
-                        ?>
+                        </tr>
+                        <?php
+                        $totalAccrued += $value['salary'];
+                        $totalCCSS += $value['ccss'];
+                        $totalBonus += $value['bonus'];
+                        $totalVacation += $value['vacations'];
+                        $totalUnemployment += $value['unemployment'];
+                        $totalPt += $value['pt'];
+                        $total += $value['total'];
+                    }
+                    ?>
+                    <tr>
+                        <th class="text-center">Totales</th>
+                        <th class="text-center"><?= '₡' . number_format($totalAccrued, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalCCSS, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalBonus, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalVacation, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalUnemployment, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalPt, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($total, 2, '.', ' '); ?></th>
+                    </tr>
                 </tbody>
             </table>
 

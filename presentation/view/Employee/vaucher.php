@@ -1,3 +1,7 @@
+<?php
+$currencyPath = 'presentation/public/img/colon.png';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -38,9 +42,11 @@
                     <td style="width: 15%;">
                         <img src="presentation/public/img/logo.png" height="100">
                     </td>
-                    <td style="width: 85%; padding-top: 35px; font-size: 12px;">
+                    <td style="width: 85%; padding-top: 25px; font-size: 12px;">
                         <p>Departamento de Administración</p>
                         <p>Módulo de planilla</p>
+                        <p>Télefono: (506) 2765-4162</p>
+                        <p>Email: acueductoherediana@hotmail.com</p>
                     </td>
                 </tr>
             </table>
@@ -73,7 +79,10 @@
                     <th style="width: 13%; text-align: center;" class="border">Puesto:</th>
                     <td style="width: 20%; text-align: center;" class="border"><?= $data['position']['name'] ?></td>
                     <th style="width: 13%; text-align: center;" class="border">Salario:</th>
-                    <td style="width: 21%; text-align: center;" class="border"><?= number_format($data['position']['salary'], 2, '.', ' '); ?></td>
+                    <td style="width: 21%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['position']['salary'], 2, '.', ' '); ?>
+                    </td>
                     <th style="width: 13%; text-align: center;" class="border">Localidad:</th>
                     <td style="width: 20%; text-align: center;" class="border"><?= $data['location'] ?></td>
                 </tr>
@@ -147,9 +156,11 @@
                     <td style="width: 5%;">
                         <img src="presentation/public/img/logo.png" height="100">
                     </td>
-                    <td style="width: 95%; padding-top: 35px;">
+                    <td style="width: 85%; padding-top: 25px; font-size: 12px;">
                         <p>Departamento de Administración</p>
                         <p>Módulo de planilla</p>
+                        <p>Télefono: (506) 2765-4162</p>
+                        <p>Email: acueductoherediana@hotmail.com</p>
                     </td>
                 </tr>
             </table>
@@ -182,7 +193,10 @@
                     <th style="width: 13%; text-align: center;" class="border">Puesto:</th>
                     <td style="width: 20%; text-align: center;" class="border"><?= $data['position']['name'] ?></td>
                     <th style="width: 13%; text-align: center;" class="border">Salario:</th>
-                    <td style="width: 21%; text-align: center;" class="border"><?= number_format($data['position']['salary'], 2, '.', ' '); ?></td>
+                    <td style="width: 21%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['position']['salary'], 2, '.', ' '); ?>
+                    </td>
                     <th style="width: 13%; text-align: center;" class="border">Localidad:</th>
                     <td style="width: 20%; text-align: center;" class="border"><?= $data['location'] ?></td>
                 </tr>

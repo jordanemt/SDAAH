@@ -1,3 +1,7 @@
+<?php
+$currencyPath = 'presentation/public/img/colon.png';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -38,9 +42,11 @@
                     <td style="width: 15%;">
                         <img src="presentation/public/img/logo.png" height="100">
                     </td>
-                    <td style="width: 85%; padding-top: 35px; font-size: 12px;">
+                    <td style="width: 85%; padding-top: 25px; font-size: 12px;">
                         <p>Departamento de Administración</p>
                         <p>Módulo de planilla</p>
+                        <p>Télefono: (506) 2765-4162</p>
+                        <p>Email: acueductoherediana@hotmail.com</p>
                     </td>
                 </tr>
             </table>
@@ -83,9 +89,9 @@
             <table>
                 <tr>
                     <th style="width: 10%; text-align: center;" class="border">Nombre:</th>
-                    <td style="width: 60%; text-align: center;" class="border"><?= $data['employee']['firstLastName'] . ' ' . $data['employee']['secondLastName'] . ' ' . $data['employee']['name'] ?></td>
+                    <td style="width: 50%; text-align: center;" class="border"><?= $data['employee']['firstLastName'] . ' ' . $data['employee']['secondLastName'] . ' ' . $data['employee']['name'] ?></td>
                     <th style="width: 10%; text-align: center;" class="border">Puesto:</th>
-                    <td style="width: 20%; text-align: center;" class="border"><?= $data['employee']['position']['name'] ?></td>
+                    <td style="width: 30%; text-align: center;" class="border"><?= $data['employee']['position']['name'] ?></td>
                 </tr>
             </table>
 
@@ -94,7 +100,10 @@
             <table>
                 <tr>
                     <th style="width: 10%; text-align: center;" class="border">Ingresos:</th>
-                    <td style="width: 30%; text-align: center;" class="border"><strong><?= number_format($data['payment']['accrued'] + floatval($data['ccssAmount']) + floatval($data['insAmount']), 2, '.', ' '); ?></strong></td>
+                    <td style="width: 30%; text-align: center;" class="border"><strong>
+                            <img src="<?= $currencyPath ?>" height="12">
+                            <?= number_format($data['payment']['accrued'] + floatval($data['ccssAmount']) + floatval($data['insAmount']), 2, '.', ' '); ?>
+                        </strong></td>
                     <td style="width: 60%;"></td>
                 </tr>
             </table>
@@ -106,43 +115,73 @@
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Ordinario</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['payment']['ordinary'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['payment']['ordinary'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Extraordinario</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['payment']['extra'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['payment']['extra'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Doble</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['payment']['double'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['payment']['double'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Vacaciones</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['vacationAmount'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['vacationAmount'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Bono</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['salaryBonus'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['salaryBonus'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Maternidad</td>
-                    <td style="width: 21%; text-align: center;" class="border"><?= number_format($data['maternityAmount'], 2, '.', ' '); ?></td>
+                    <td style="width: 21%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['maternityAmount'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">CCSS</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['ccssAmount'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['ccssAmount'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">INS</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['insAmount'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['insAmount'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Incentivo</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['incentives'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['incentives'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Recargos</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['surcharges'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['surcharges'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
             </table>
 
@@ -150,7 +189,10 @@
             <table>
                 <tr>
                     <th style="width: 10%; text-align: center;" class="border">Deducc:</th>
-                    <td style="width: 30%; text-align: center;" class="border"><strong><?= number_format($data['payment']['deductions'], 2, '.', ' '); ?></strong></td>
+                    <td style="width: 30%; text-align: center;" class="border"><strong>
+                            <img src="<?= $currencyPath ?>" height="12">
+                            <?= number_format($data['payment']['deductions'], 2, '.', ' '); ?>
+                        </strong></td>
                     <td style="width: 60%;"></td>
                 </tr>
             </table>
@@ -162,19 +204,28 @@
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">CCSS/Bco. Popular</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['payment']['workerCss'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['payment']['workerCss'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Impuesto Sobre Renta</td>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['payment']['incomeTax'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['payment']['incomeTax'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
-                
+
                 <?php
                 foreach ($data['deductions'] as $deduction) {
                     ?>
                     <tr>
                         <td style="width: 40%; text-align: center;" class="border"><?= $deduction['name'] ?></td>
-                        <td style="width: 60%; text-align: center;" class="border"><?= number_format($deduction['mount'], 2, '.', ' '); ?></td>
+                        <td style="width: 60%; text-align: center;" class="border">
+                            <img src="<?= $currencyPath ?>" height="12">
+                            <?= number_format($deduction['mount'], 2, '.', ' '); ?>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -185,10 +236,13 @@
             <table>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Neto a Pagar:</th>
-                    <td style="width: 60%; text-align: center;" class="border"><strong><?= number_format($data['payment']['net'], 2, '.', ' '); ?></strong></td>
+                    <td style="width: 60%; text-align: center;" class="border"><strong>
+                            <img src="<?= $currencyPath ?>" height="12">
+                            <?= number_format($data['payment']['net'], 2, '.', ' '); ?>
+                        </strong></td>
                 </tr>
             </table>
-            
+
             <table>
                 <tr>
                     <td style="width: 100%; text-align: center;" class="border">

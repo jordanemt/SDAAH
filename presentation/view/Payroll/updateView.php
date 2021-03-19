@@ -24,7 +24,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="getPositionEmployee();" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="chargeEmployeeDataOnPayroll();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <?php
                             foreach ($vars['employees'] as $value) {
@@ -35,6 +35,7 @@ include_once 'presentation/public/header.php';
                             }
                             ?>
                         </select>
+                        <div class="loading-div"></div>
                     </div>
 
                     <div class="form-group col-md-3">

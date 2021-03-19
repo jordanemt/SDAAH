@@ -37,5 +37,15 @@ class Filters {
                 return $filtered ? $filtered : "";
             });
     }
+    
+    public static function getBankAccount() {
+        return array(
+            'filter' => FILTER_CALLBACK,
+            'options' => function ($input) {
+                $filtered = filter_var($input, FILTER_SANITIZE_NUMBER_INT);
+                preg_match_all('!\d+!', $filtered, $matches);
+                return $filtered ? implode('', $matches[0]) : "";
+            });
+    }
 
 }

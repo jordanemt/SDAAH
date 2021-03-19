@@ -23,9 +23,9 @@ include_once 'presentation/public/header.php';
                 <div class="col-md-7 px-0">
 
                     <form id="search" class="col-md-12 px-0" action="" method="get">
-                        
+
                         <input class="d-none" type="text" name="controller" value="payroll" readonly>
-                        
+
                         <input class="d-none" type="text" name="action" value="bncrReportView" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
@@ -65,18 +65,27 @@ include_once 'presentation/public/header.php';
                 </thead>
                 <tbody>
                     <?php
+                    $total = 0;
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
-                            <td class="text-center"><?= $value['completeName'] ?></td>
+                            <td class="text-center"><p><?= $value['completeName'] ?></p></td>
                             <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
-                            <?php
-                        }
-                        ?>
+                        </tr>
+                        <?php
+                        $total += $value['net'];
+                    }
+                    ?>
+                    <tr>
+                        <th class="text-center">Totales</th>
+                        <th class="text-center">---</th>
+                        <th class="text-center">---</th>
+                        <th class="text-center"><?= '₡' . number_format($total, 2, '.', ' '); ?></th>
+                    </tr>
                 </tbody>
             </table>
 

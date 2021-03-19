@@ -8,6 +8,9 @@ require_once 'common/Filters.php';
 
 class EmployeeController {
 
+    private $business;
+    private $sessionController;
+
     public function __construct() {
         $this->view = new View();
         $this->business = new EmployeeBusiness();
@@ -18,32 +21,51 @@ class EmployeeController {
     }
 
     public function index() {
-        $vars['data'] = $this->business->getAll();
-        
-        $positionBusiness = new PositionBusiness();
-        foreach ($vars['data'] as $key => $value) {
-            $vars['data'][$key]['position'] = $positionBusiness->get($value['idPosition']);
+        try {
+            $this->sessionController->checkConsultant();
+            $vars['data'] = $this->business->getAll();
+
+            $positionBusiness = new PositionBusiness();
+            foreach ($vars['data'] as $key => $value) {
+                $vars['data'][$key]['position'] = $positionBusiness->get($value['idPosition']);
+            }
+
+            $this->view->show($this->controllerName . 'indexView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
         }
-        
-        $this->view->show($this->controllerName . 'indexView.php', $vars);
     }
 
     public function insertView() {
-        $this->view->show($this->controllerName . 'insertView.php', null);
+        try {
+            $this->sessionController->checkDigitizer();
+            $this->view->show($this->controllerName . 'insertView.php', null);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
     public function updateView() {
-        $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
-        
-        $positionBusiness = new PositionBusiness();
-        $vars['data']['position'] = $positionBusiness->get($vars['data']['idPosition']);
-        
-        $this->view->show($this->controllerName . 'updateView.php', $vars);
+        try {
+            $this->sessionController->checkDigitizer();
+            $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
+            $positionBusiness = new PositionBusiness();
+            $vars['data']['position'] = $positionBusiness->get($vars['data']['idPosition']);
+
+            $this->view->show($this->controllerName . 'updateView.php', $vars);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
-    
+
     public function get() {
+        $this->sessionController->checkConsultant();
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        
+
         $data = $this->business->get($id);
         $positionBusiness = new PositionBusiness();
         $data['position'] = $positionBusiness->get($data['idPosition']);
@@ -52,6 +74,7 @@ class EmployeeController {
     }
 
     public function insert() {
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'card' => Filters::getString(),
             'firstLastName' => Filters::getString(),
@@ -62,18 +85,19 @@ class EmployeeController {
             'idPosition' => Filters::getInt(),
             'location' => Filters::getString(),
             'admissionDate' => Filters::getString(),
-            'bankAccount' => Filters::getInt(),
+            'bankAccount' => Filters::getBankAccount(),
             'email' => Filters::getEmail(),
             'cssIns' => Filters::getInt(),
             'isAffiliated' => Filters::getInt()
         );
         $entity = filter_input_array(INPUT_POST, $filter);
-        
+
         $this->business->insert($entity);
         exit();
     }
-    
+
     public function update() {
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'id' => Filters::getInt(),
             'firstLastName' => Filters::getString(),
@@ -84,7 +108,7 @@ class EmployeeController {
             'idPosition' => Filters::getInt(),
             'location' => Filters::getString(),
             'admissionDate' => Filters::getString(),
-            'bankAccount' => Filters::getInt(),
+            'bankAccount' => Filters::getBankAccount(),
             'email' => Filters::getEmail(),
             'cssIns' => Filters::getInt(),
             'isAffiliated' => Filters::getInt(),
@@ -92,46 +116,55 @@ class EmployeeController {
             'observations' => Filters::getString()
         );
         $entity = filter_input_array(INPUT_POST, $filter);
-        
+
         $this->business->update($entity);
         exit();
     }
-    
+
     public function remove() {
+        $this->sessionController->checkDigitizer();
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
         exit();
     }
-    
+
     public function insertAlimonyOnBonus() {
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'year' => Filters::getInt(),
             'mount' => Filters::getFloat()
         );
         $entity = filter_input_array(INPUT_POST, $filter);
-        
+
         $this->business->insertAlimonyOnBonus($entity);
         exit();
     }
-    
+
     public function updateAlimonyOnBonus() {
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'id' => Filters::getInt(),
             'mount' => Filters::getFloat()
         );
         $entity = filter_input_array(INPUT_POST, $filter);
-        
+
         $this->business->updateAlimonyOnBonus($entity);
         exit();
     }
-    
+
     public function vaucher() {
-        $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
-        
-        $positionBusiness = new PositionBusiness();
-        $data['position'] = $positionBusiness->get($data['idPosition']);
-        
-        Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CI_' . $data['card']);
+        try {
+            $this->sessionController->checkConsultant();
+            $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
+            $positionBusiness = new PositionBusiness();
+            $data['position'] = $positionBusiness->get($data['idPosition']);
+
+            Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CI_' . $data['card']);
+        } catch (Exception $e) {
+            $errorController = new ErrorController();
+            $errorController->index($e->getMessage());
+        }
     }
 
 }

@@ -35,7 +35,7 @@ CREATE TABLE `employee` (
     `location` VARCHAR(14) NOT NULL CHECK(location IN('Administrativo', 'Operativo')),
     `admissionDate` DATE NOT NULL,
     `bankAccount` VARCHAR(15) NOT NULL,
-    `email` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100) NULL,
     `cssIns` VARCHAR(4) NOT NULL,
     `isAffiliated` SMALLINT NULL DEFAULT 0,
     `isLiquidated` SMALLINT NULL DEFAULT 0,

@@ -1,18 +1,26 @@
 /* global Swal */
 
 function login() {
-    var url = '?controller=session&action=login';
-    $.ajax({
-        url: url,
-        type: 'POST',
-        cache: false,
-        success: function () {
-            successMessage('index');
-        },
-        error: function (error) {
-            errorMessage(error.responseText);
-        }
-    });
+    if ($('#form').valid()) {
+        addHtmlLoadingSpinnerOnSubmitButton();
+
+        var url = '?controller=session&action=login';
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            data: $('#form').serialize(),
+            success: function (data) {
+                successMessage('index');
+            },
+            error: function (error) {
+                errorMessage(error.responseText);
+                addHtmlOnSubmitButton('Insertar');
+            }
+        });
+    } else {
+        errorMessage('Campos vacíos o inválidos');
+    }
 }
 
 function logout() {

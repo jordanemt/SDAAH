@@ -10,7 +10,7 @@ class EmployeeData {
         require_once 'SPDO.php';
         $this->db = SPDO::singleton();
     }
-
+    
     public function get($id) {
         $query = $this->db->prepare("CALL `sp_get_employee` (?)");
         $query->bindParam(1, $id);

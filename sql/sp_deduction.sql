@@ -66,12 +66,3 @@ BEGIN
 	DELETE FROM `payroll_deduction`
     WHERE `payroll_deduction`.`idPayroll` = idPayroll;
 END//
-
-CALL `sp_insert_deduction` ('Ahorro Asociación Solidarista')//
-CALL `sp_insert_deduction` ('Adelanto de Cesantía')//
-CALL `sp_insert_deduction` ('Préstamo Asociación Solidarista')//
-CALL `sp_insert_deduction` ('Anticipo Salarial')//
-CALL `sp_insert_deduction` ('Ahorro Extraordinario')//
-CALL `sp_insert_deduction` ('Embargo Salarial')//
-CALL `sp_insert_deduction` ('Pensión Alimenticia')//
-CALL `sp_insert_deduction` ('Préstamo Vehículo')//

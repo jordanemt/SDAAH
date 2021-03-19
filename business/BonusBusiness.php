@@ -32,7 +32,8 @@ class BonusBusiness {
                 $bonus['alimony'] = 0;
             }
             $bonus['net'] = $bonus['grossBonus'] - $bonus['alimony'];
-
+            $bonus['net'] = $bonus['net'] < 0 ? 0 : $bonus['net'];
+            
             array_push($bonuses, $bonus);
         }
 

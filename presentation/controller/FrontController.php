@@ -8,6 +8,7 @@ class FrontController {
         require 'common/Util.php';
         require 'common/Filters.php';
         require 'exceptions/ExceptionsHandler.php';
+        require 'ErrorController.php';
 
         date_default_timezone_set('America/Costa_Rica');
         

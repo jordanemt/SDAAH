@@ -145,7 +145,7 @@ class Util {
     public static function maskAccount($account) {
         return preg_replace("/(\d\d\d)(\d\d)(\d\d\d)(\d\d\d\d\d\d)(\d)/", "\\1-\\2-\\3-\\4-\\5", $account);
     }
-
+    
     public static function generatePDF($viewName, $data, $pdfName) {
         $config = Config::singleton();
         $html2pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');

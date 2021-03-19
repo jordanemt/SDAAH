@@ -13,7 +13,13 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
 
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <?php
+                if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                    ?>
+                    <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                    <?php
+                }
+                ?>
             </div>
 
             <hr>
@@ -41,7 +47,13 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">CSS/INS</th>
                         <th class="text-center">Liquidado</th>
                         <th class="text-center">Observaciones</th>
-                        <th class="text-center">Acción</th>
+                        <?php
+                        if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                            ?>
+                            <th class="text-center">Acción</th>
+                            <?php
+                        }
+                        ?>
                         <th class="text-center">Boleta</th>
                     </tr>
                 </thead>
@@ -85,15 +97,27 @@ include_once 'presentation/public/header.php';
                                                 $value['position']['type']), 2, ',', ' ');
                                 ?>
                             </td>
-                            <td class="text-center"><?= $value['email'] ?></td>
+                            <td class="text-center"><?= $value['email'] ? $value['email'] : '---' ?></td>
                             <td class="text-center"><?= $value['isAffiliated'] ? 'Sí' : 'No'; ?></td>
                             <td class="text-center"><?= $value['cssIns'] ?></td>
                             <td class="text-center"><?= $value['isLiquidated'] ? 'Sí' : 'No'; ?></td>
                             <td class="text-center"><?= $value['observations'] ? $value['observations'] : '---'; ?></td>
-                            <td class="text-center">
-                                <a href="?controller=employee&action=updateView&id=<?= $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
-                                <a class="font-warning" href="#" onclick="removeEmployee(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
-                            </td>
+                            <?php
+                            if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                                ?>
+                                <td class="text-center">
+                                    <a href="?controller=employee&action=updateView&id=<?= $value['id'] ?>"><i class="fa fa-edit"></i> Editar</a>
+                                    <?php
+                                    if (SessionController::validRole(SessionController::$_ADMIN)) {
+                                        ?>
+                                        <a class="font-warning" href="#" onclick="removeEmployee(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                        <?php
+                                    }
+                                    ?>
+                                </td>
+                                <?php
+                            }
+                            ?>
                             <td class="text-center">
                                 <a href="?controller=employee&action=vaucher&id=<?= $value['id'] ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
                             </td>

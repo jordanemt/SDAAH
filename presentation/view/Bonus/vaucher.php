@@ -1,3 +1,8 @@
+<?php
+$currencyPath = 'presentation/public/img/colon.png';
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -43,7 +48,9 @@
                     <td style="width: 15%;">
                         <img src="presentation/public/img/logo.png" height="100">
                     </td>
-                    <td style="width: 85%; padding-top: 35px; font-size: 12px;">
+                    <td style="width: 85%; padding-top: 25px; font-size: 12px;">
+                        <p>Departamento de Administración</p>
+                        <p>Módulo de planilla</p>
                         <p>Télefono: (506) 2765-4162</p>
                         <p>Email: acueductoherediana@hotmail.com</p>
                     </td>
@@ -96,7 +103,10 @@
                         <tr>
                             <td style="width: 20%; text-align: center;" class="border">Q-<?= $key < 2 ? $key + 23 : $key - 1; ?></td>
                             <td style="width: 20%; text-align: center;" class="border"><?= $payment['year'] ?></td>
-                            <td style="width: 60%; text-align: center;" class="border"><?= number_format($payment['net'], 2, '.', ' '); ?></td>
+                            <td style="width: 60%; text-align: center;" class="border">
+                                <img src="<?= $currencyPath ?>" height="12">
+                                <?= number_format($payment['net'], 2, '.', ' '); ?>
+                            </td>
                         </tr>
                         <?php
                     } else {
@@ -104,7 +114,10 @@
                         <tr>
                             <td style="width: 20%; text-align: center;" class="border">Q-<?= $key < 2 ? $key + 23 : $key - 1; ?></td>
                             <td style="width: 20%; text-align: center;" class="border"><?= $key < 2 ? $data['year'] - 1 : $data['year'] ?></td>
-                            <td style="width: 60%; text-align: center;" class="border">-</td>
+                            <td style="width: 60%; text-align: center;" class="border">
+                                <img src="<?= $currencyPath ?>" height="12">
+                                0.00
+                            </td>
                         </tr>
                         <?php
                     }
@@ -116,19 +129,30 @@
             <table>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Total Salarios:</th>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['accruing'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['accruing'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Dividido entre 12 =</th>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['grossBonus'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['grossBonus'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">Menos Pensión Alimenticia:</th>
-                    <td style="width: 60%; text-align: center;" class="border"><?= !empty($data['alimony']) ? number_format($data['alimony'], 2, '.', ' ') : '-'; ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= !empty($data['alimony']) ? number_format($data['alimony'], 2, '.', ' ') : '0.00'; ?></td>
                 </tr>
                 <tr>
                     <th style="width: 40%; text-align: center;" class="border">A pagar: </th>
-                    <td style="width: 60%; text-align: center;" class="border"><?= number_format($data['net'], 2, '.', ' '); ?></td>
+                    <td style="width: 60%; text-align: center;" class="border">
+                        <img src="<?= $currencyPath ?>" height="12">
+                        <?= number_format($data['net'], 2, '.', ' '); ?>
+                    </td>
                 </tr>
             </table>
 

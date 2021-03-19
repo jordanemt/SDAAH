@@ -32,6 +32,8 @@ include_once 'presentation/public/header.php';
                             }
                             ?>
                         </select>
+                        <label id="idEmployee-error" class="error" for="idEmployee" style="display: none;">Este campo es necesario</label>
+                        <div class="loading-div"></div>
                     </div>
 
                     <div class="form-group col-md-3">
