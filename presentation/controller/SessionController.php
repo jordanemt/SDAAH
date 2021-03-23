@@ -11,8 +11,11 @@ class SessionController {
     public function __construct() {
         $this->view = new View();
         $this->controllerName = 'Session/';
-
+        
         session_start();
+        if (isset($_SESSION['id'])) {
+            $this->loadSession();
+        }
     }
 
     public function index() {
@@ -25,16 +28,26 @@ class SessionController {
 
         $userBusiness = new UserBusiness();
         $user = $userBusiness->auth($card, $pass);
-        
         $_SESSION['id'] = $user['id'];
+        
+        exit();
+    }
+    
+    private function loadSession() {
+        $userBusiness = new UserBusiness();
+        $user = $userBusiness->get($_SESSION['id']);
+        if (empty($user)) {
+            $this->logout();
+            header('Location: ?controller=index');
+            exit();
+        }
+        
         $_SESSION['card'] = $user['card'];
         $_SESSION['firstLastName'] = $user['firstLastName'];
         $_SESSION['secondLastName'] = $user['secondLastName'];
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
-        
-        exit();
     }
 
     public function logout() {
@@ -43,28 +56,28 @@ class SessionController {
 
     public function isNotLoggedThenRedirect() {
         if (!isset($_SESSION['id'])) {
-            header('Location: /Index');
+            header('Location: ?controller=index');
             die();
         }
     }
     
     public function checkConsultant() {
         if ($_SESSION['role'] < self::$_CONSULTANT) {
-            header('Location: /Index');
+            header('Location: ?controller=index');
             die();
         }
     }
     
     public function checkDigitizer() {
         if ($_SESSION['role'] < self::$_DIGITIZER) {
-            header('Location: /Index');
+            header('Location: ?controller=index');
             die();
         }
     }
     
     public function checkAdmin() {
         if ($_SESSION['role'] < self::$_ADMIN) {
-            header('Location: /Index');
+            header('Location: ?controller=index');
             die();
         }
     }

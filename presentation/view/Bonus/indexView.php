@@ -7,779 +7,206 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Cálculo de Aguinaldo</h2>
+            <h2>Detalle de Aguinaldos</h2>
         </div>
 
         <div class="card-body">
 
+            <div class="d-flex flex-md-row flex-column">
+                
+                <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
+                    <a href="" class="toggle-vis">Alternar Meses</a>
+                </div>
+
+                <div class="col-md-7 px-0">
+
+                    <form id="search" class="col-md-12 px-0" action="" method="get">
+
+                        <input class="d-none" type="text" name="controller" value="bonus" readonly>
+
+                        <div class="d-flex flex-md-row flex-column justify-content-md-end">
+
+                            <div class="d-flex flex-row p-1">
+                                <label for="">Año:&nbsp</label>
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="year" name="year" onchange="submitSearch();">
+                                    <?= Util::getSelectYearOptions() ?>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
             <hr>
 
-            <form id="form">
-                <h4>Datos Personales</h4>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-4">
-                        <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control form-control-sm selectpicker" data-size="5" id="idEmployee" name="idEmployee" required>
-                            <option selected disabled>Seleccione una opción</option>
-                            <?php
-                            foreach ($vars['employees'] as $value) {
-                                ?>
-                                <option value="<?= $value['id'] ?>"><?= $value['card'] . ' ' . $value['name'] . ' ' . $value['firstLastName'] . ' ' . $value['secondLastName'] ?></option>
+            <table id="bonus-table" class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">Cédula</th>
+                        <th class="text-center">Nombre Completo</th>
+                        <th class="text-center">Cuenta Bancaria</th>
+                        <th class="text-center">Diciembre</th>
+                        <th class="text-center">Enero</th>
+                        <th class="text-center">Febrero</th>
+                        <th class="text-center">Marzo</th>
+                        <th class="text-center">Abril</th>
+                        <th class="text-center">Mayo</th>
+                        <th class="text-center">Junio</th>
+                        <th class="text-center">Julio</th>
+                        <th class="text-center">Agosto</th>
+                        <th class="text-center">Septiembre</th>
+                        <th class="text-center">Octubre</th>
+                        <th class="text-center">Noviembre</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center">Aguinaldo Bruto</th>
+                        <th class="text-center">Pensión Alimenticia</th>
+                        <th class="text-center">Aguinaldo Neto</th>
+                        <th class="text-center">Boleta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $totalDecember = 0;
+                    $totalJanuary = 0;
+                    $totalFebruary = 0;
+                    $totalMarch = 0;
+                    $totalApril = 0;
+                    $totalMay = 0;
+                    $totalJune = 0;
+                    $totalJuly = 0;
+                    $totalAugust = 0;
+                    $totalSeptemer = 0;
+                    $totalOctuber = 0;
+                    $totalNovember = 0;
+                    $totalAcrued = 0;
+                    $totalGrossBonus = 0;
+                    $totalAlimony = 0;
+                    $total = 0;
+                    foreach ($vars['data'] as $value) {
+                        ?>
+                        <tr>
+                            <td class="text-center"><?= $value['card'] ?></td>
+                            <td class="text-center"><p><?= $value['completeName'] ?></p></td>
+                            <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['december'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['january'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['february'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['march'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['april'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['may'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['june'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['july'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['agoust'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['september'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['octuber'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['november'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['accruing'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['grossBonus'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['alimony'], 2, '.', ' '); ?>
                                 <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year">Año</label>
-                        <select class="form-control form-control-sm selectpicker" id="year" name="year" data-size="5" name="fortnight" required>
-                            <?= Util::getSelectYearOptions() ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="completeName">Nombre Completo</label>
-                        <input type="text" class="form-control form-control-sm" id="completeName" name="completeName" placeholder="Nombre del Empleado" required disabled>
-                    </div>
-
-                </div>
-
-                <h4>Salarios Devengados por Quincena</h4>
-
-                <h6 class="label-hide">Salario #1</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight1">Quincena</label>
-                        <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight1" name="fortnight[]" required>
-                            <?= Util::getSelectFortnightOptions(23) ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year1">Año</label>
-                        <select class="form-control form-control-sm selectpicker" id="year1" name="year[]" data-size="5" required>
-                            <?= Util::getSelectYearOptions(intval(date('Y')) - 1) ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days1">Días</label>
-                        <input type="number" class="form-control form-control-sm" id="days1" name="days[]" min="1" required readonly>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing1">Devengado</label>
-                        <input type="text" class="form-control form-control-sm" id="accruing1" name="accruing[]" required readonly>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #2</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight2" class="label-hide">Quincena</label>
-                        <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight2" name="fortnight[]" required>
-                            <?= Util::getSelectFortnightOptions(24) ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year2" class="label-hide">Año</label>
-                        <select class="form-control form-control-sm selectpicker" id="year2" name="year[]" data-size="5" required>
-                            <?= Util::getSelectYearOptions(intval(date('Y')) - 1) ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days2" class="label-hide">Días</label>
-                        <input type="number" class="form-control form-control-sm" id="days2" name="days[]" min="1" required readonly>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing2" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control form-control-sm" id="accruing2" name="accruing[]" required readonly>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #3</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight2" class="label-hide">Quincena</label>
-                        <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight2" name="fortnight[]" required>
-                            <?= Util::getSelectFortnightOptions(1) ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year2" class="label-hide">Año</label>
-                        <select class="form-control form-control-sm selectpicker" id="year2" name="year[]" data-size="5" required>
-                            <?= Util::getSelectYearOptions(intval(date('Y'))) ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days2" class="label-hide">Días</label>
-                        <input type="number" class="form-control form-control-sm" id="days2" name="days[]" min="1" required readonly>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing2" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control form-control-sm" id="accruing2" name="accruing[]" required readonly>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #4</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #5</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight5" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #6</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnigh6" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year6" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days6" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing6" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #7</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #8</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #9</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight3" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year3" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days3" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing3" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #10</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #11</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight5" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #12</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnigh6" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year6" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days6" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing6" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #13</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #14</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #15</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight3" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year3" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days3" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing3" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #16</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #17</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight5" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #18</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnigh6" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year6" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days6" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing6" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #19</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #20</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight2" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year2" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days2" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing2" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #21</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight3" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year3" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days3" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing3" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #22</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #23</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnight5" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year5" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days5" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing5" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <h6 class="label-hide">Salario #24</h6>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-2">
-                        <label for="fortnight" class="label-hide">Quincena</label>
-                        <select class="form-control" id="fortnigh6" name="fortnights[]" required>
-                            <option value="1">Q-1</option>
-                            <option value="2">Q-2</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="year" class="label-hide">Año</label>
-                        <input type="number" class="form-control" id="year6" name="years[]" value="2021" required>
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label for="days" class="label-hide">Días</label>
-                        <input type="number" class="form-control" id="days6" name="days[]" min="1" value="15" required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="accruing" class="label-hide">Devengado</label>
-                        <input type="text" class="form-control" id="accruing6" name="accruing[]" required disabled>
-                    </div>
-
-                </div>
-
-                <div class="form-row justify-content-end">
-
-                    <div class="form-group col-md-6">
-                        <label for="totalSalaries"><strong>Total Salarios</strong></label>
-                        <input type="text" class="form-control" id="totalSalaries" name="totalSalaries" required disabled>
-                    </div>
-
-                </div>
-
-                <h4>Cálculos para Aguinaldo</h4>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-4">
-                        <label for="totalVacation">Total Salarios / 12 =</label>
-                        <input type="text" class="form-control" id="totalVacation" name="totalVacation" required disabled>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="totalVacation">Menos Pensión Alimenticia</label>
-                        <input type="text" class="form-control" id="totalVacation" name="totalVacation" required>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="totalVacation"><strong>A Pagar</strong></label>
-                        <input type="text" class="form-control" id="totalVacation" name="totalVacation" required disabled>
-                    </div>
-
-                </div>
-
-                <a class="btn btn-info" href="#" role="button"><i class="fa fa-file"></i> Generar Boleta</a>
-            </form>
+                                if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                                    if (empty($value['alimonyId'])) {
+                                        ?>
+                                        <a href="#" onclick="insertAlimony(<?= $value['id'] ?>)"><i class="fa fa-edit"></i> Editar</a>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <a href="#" onclick="updateAlimony(<?= $value['alimonyId'] ?>)"><i class="fa fa-edit"></i> Editar</a>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
+                                <a href="?controller=bonus&action=vaucher&id=
+                                <?=
+                                $value['id'] . '&year=' . $value['year'] .
+                                '&accruing=' . $value['accruing'] .
+                                '&grossBonus=' . $value['grossBonus'] .
+                                '&alimony=' . $value['alimony'] .
+                                '&net=' . $value['net']
+                                ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
+                            </td>
+                        </tr>
+                        <?php
+                        $totalDecember += $value['december'];
+                        $totalJanuary += $value['january'];
+                        $totalFebruary += $value['february'];
+                        $totalMarch += $value['march'];
+                        $totalApril += $value['april'];
+                        $totalMay += $value['may'];
+                        $totalJune += $value['june'];
+                        $totalJuly += $value['july'];
+                        $totalAugust += $value['agoust'];
+                        $totalSeptemer += $value['september'];
+                        $totalOctuber += $value['octuber'];
+                        $totalNovember += $value['november'];
+                        $totalAcrued += $value['accruing'];
+                        $totalGrossBonus += $value['grossBonus'];
+                        $totalAlimony += $value['alimony'];
+                        $total += $value['net'];
+                    }
+                    ?>
+                    <tr>
+                        <th class="text-center">Totales</th>
+                        <th class="text-center">---</th>
+                        <th class="text-center">---</th>
+                        <th class="text-center"><?= '₡' . number_format($totalDecember, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalJanuary, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalFebruary, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalMarch, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalApril, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalMay, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalJune, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalJuly, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalAugust, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalSeptemer, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalOctuber, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalNovember, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalAcrued, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalGrossBonus, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalAlimony, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($total, 2, '.', ' '); ?></th>
+                        <th class="text-center">-</th>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
 
@@ -787,5 +214,4 @@ include_once 'presentation/public/header.php';
 </div>
 
 <?php
-
 include_once 'presentation/public/footer.php';

@@ -2,7 +2,7 @@ CREATE PROCEDURE `sp_get_employee`(
 	id INT
 )
 BEGIN
-	SELECT* FROM `employee` WHERE `employee`.`id` = id AND `employee`.`isDeleted` = 0;
+	SELECT* FROM `employee` WHERE `employee`.`id` = id AND `employee`.`isDeleted` = 0  ORDER BY `location`;
 END//
 
 CREATE PROCEDURE `sp_get_employee_with_deleted`(

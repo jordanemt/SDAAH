@@ -63,7 +63,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <table class="table table-striped table-hover table-bordered nowrap" style="width: 100%">
+            <table class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
@@ -168,8 +168,6 @@ include_once 'presentation/public/header.php';
                         }
                         ?>
                     </tr>
-                </tbody>
-                <tfoot>
                     <tr>
                         <th class="text-center">Totales</th>
                         <th class="text-center">---</th>
@@ -192,7 +190,7 @@ include_once 'presentation/public/header.php';
                         ?>
                         <th class="text-center">-</th>
                     </tr>
-                </tfoot>
+                </tbody>
             </table>
 
         </div>

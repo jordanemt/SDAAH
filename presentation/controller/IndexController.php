@@ -1,6 +1,7 @@
 <?php
 
 require 'SessionController.php';
+require 'business/EmployeeBusiness.php';
 
 class IndexController {
 
@@ -12,7 +13,9 @@ class IndexController {
     }
 
     public function index() {
-        $this->view->show($this->controllerName . 'indexView.php', null);
+        $employeeBusiness = new EmployeeBusiness();
+        $vars['employeesOnMonthBirthday'] = $employeeBusiness->getAllOnMonthBirthday();
+        $this->view->show($this->controllerName . 'indexView.php', $vars);
     }
 
 }

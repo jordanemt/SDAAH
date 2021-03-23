@@ -186,7 +186,7 @@ include_once 'presentation/public/header.php';
                         ?>
                         <div id="deduction-form-group-<?= $value['id'] ?>" class="form-group col-md-4 deductions">
                             <label for="deduction-<?= $value['id'] ?>"><?= $value['name'] ?></label>
-                            <input type="text" class="form-control moneyMask deduction-input active-onchange-liquidation" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" required disabled>
+                            <input type="text" class="form-control moneyMask deduction-input active-onchange-liquidation" id="deduction-<?= $value['id'] ?>" name="deductionsMounts[]" disabled>
                         </div>
                         <?php
                     }

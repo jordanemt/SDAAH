@@ -101,7 +101,17 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['isAffiliated'] ? 'Sí' : 'No'; ?></td>
                             <td class="text-center"><?= $value['cssIns'] ?></td>
                             <td class="text-center"><?= $value['isLiquidated'] ? 'Sí' : 'No'; ?></td>
-                            <td class="text-center"><?= $value['observations'] ? $value['observations'] : '---'; ?></td>
+                            <td class="text-center">
+                                <?php
+                                    if ($value['observations']) {
+                                        ?>
+                                        <a href="#" onclick="message('<?= $value['observations'] ?>')"><i class="fa fa-eye"></i> Ver</a>
+                                        <?php
+                                    } else {
+                                        echo '---';
+                                    }
+                                ?>
+                            </td>
                             <?php
                             if (SessionController::validRole(SessionController::$_DIGITIZER)) {
                                 ?>

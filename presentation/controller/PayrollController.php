@@ -18,10 +18,9 @@ class PayrollController {
         $this->sessionController = new SessionController;
         $this->sessionController->isNotLoggedThenRedirect();
 
-        $_SESSION['location'] = 'Administrativo|Operativo';
-        $_SESSION['fortnight'] = Util::getFortnight();
-        $_SESSION['year'] = date('Y');
-        $_SESSION['month'] = date('m');
+        $_SESSION['location'] = isset($_SESSION['location']) ? $_SESSION['location'] : 'Administrativo|Operativo';
+        $_SESSION['fortnight'] = isset($_SESSION['fortnight']) ? $_SESSION['fortnight'] : Util::getFortnight();
+        $_SESSION['year'] = isset($_SESSION['year']) ? $_SESSION['year'] : date('Y');
     }
 
     public function index() {

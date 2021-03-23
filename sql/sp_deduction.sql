@@ -7,7 +7,7 @@ END//
 
 CREATE PROCEDURE `sp_get_all_deduction`()
 BEGIN
-	SELECT* FROM `deduction` WHERE `deduction`.`isDeleted` = 0;
+	SELECT* FROM `deduction` WHERE `deduction`.`isDeleted` = 0 ORDER BY `name`;
 END//
 
 CREATE PROCEDURE `sp_insert_deduction`(

@@ -32,6 +32,21 @@ class EmployeeBusiness {
     public function getAll() {
         return $this->data->getAll();
     }
+    
+    public function getAllOnMonthBirthday() {
+        $employees = $this->data->getAll();
+        
+        $month = date('m');
+        $employeesOnBirthday = Array();
+        foreach ($employees as $employee) {
+            $employeeMonthBirthday = date_format(date_create($employee['birthdate']), 'm');
+            if ($month == $employeeMonthBirthday) {
+                array_push($employeesOnBirthday, $employee);
+            }
+        }
+        
+        return $employeesOnBirthday;
+    }
 
     public function getAllDaysSpentOnVacation($cutoff) {
         $employees = $this->data->getAll();

@@ -55,7 +55,7 @@ function calcLiquidation() {
             hideCalculatingLoading();
         },
         error: function (error) {
-            errorMessage('No se pudo recuperar la información del empleado: ' + error.responseText);
+            errorMessage(error);
         }
     });
 }

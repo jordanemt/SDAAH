@@ -18,7 +18,7 @@ END//
 
 CREATE PROCEDURE `sp_get_all_user`()
 BEGIN
-	SELECT `id`, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`isDeleted` = 0;
+	SELECT `id`, `card`, `firstLastName`, `secondLastName`, `name`, `email`, `role` FROM `user` WHERE `user`.`isDeleted` = 0 ORDER BY `firstLastName`;
 END//
 
 CREATE PROCEDURE sp_insert_user(

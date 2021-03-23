@@ -154,14 +154,7 @@
                                 echo "active";
                             }
                             ?>">
-                                <a class="nav-link" href="?controller=bonus&action=detail">Aguinaldos</a>
-<!--                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Aguinaldos
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="?controller=bonus">Calcular</a>
-                                    <a class="dropdown-item" href="?controller=bonus&action=detail">Detalle</a>
-                                </div>-->
+                                <a class="nav-link" href="?controller=bonus">Aguinaldos</a>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">

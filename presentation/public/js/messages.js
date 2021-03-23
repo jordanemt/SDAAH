@@ -1,5 +1,11 @@
 /* global Swal */
 
+function message(msg) {
+    Swal.fire({
+        text: msg
+    });
+}
+
 function successMessage(controllerName) {
     Swal.fire({
         icon: 'success',

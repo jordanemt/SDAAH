@@ -22,7 +22,9 @@ function overwriteJQueryMessages() {
 
 function chargeDataTable(element) {
     $(element).DataTable({
-        'scrollX': true,
+        'ordering': false,
+        'order': [],
+        'pageLength': 25,
         language: {
             lengthMenu: 'Mostrando _MENU_ registros',
             zeroRecords: 'No hay registros',
@@ -38,17 +40,6 @@ function chargeDataTable(element) {
             }
         }
     });
-    
-    var table = $(element).DataTable();
-    $(element + ' tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-    } );
 }
 
 function resetForm(element) {

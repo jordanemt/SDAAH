@@ -9,7 +9,7 @@ CREATE PROCEDURE `sp_get_all_by_type_position`(
 	type VARCHAR(7)
 )
 BEGIN
-    SELECT* FROM `position` WHERE `position`.`type` = type AND `position`.`isDeleted` = 0;
+    SELECT* FROM `position` WHERE `position`.`type` = type AND `position`.`isDeleted` = 0 ORDER BY `name`;
 END//
 
 CREATE PROCEDURE `sp_get_all_position`()

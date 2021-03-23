@@ -76,7 +76,29 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['workingDays'] ? $value['workingDays'] : '---' ?></td>
                             <td class="text-center"><?= $value['ordinaryTimeHours'] ? $value['ordinaryTimeHours'] : '---' ?></td>
                             <td class="text-center"><?= '₡' . number_format($value['net'], 2, '.', ' '); ?></td>
-                            <td class="text-center"><?= $value['observations'] ? $value['observations'] : '---' ?></td>
+                            <td class="text-center">
+                                <?php
+                                    if($value['observations'][0]['text'] || $value['observations'][1]['text']) {
+                                        ?>
+                                        <a href="#"><i class="fa fa-eye"></i></a>
+                                        <?php
+                                    } else {
+                                        echo '---';
+                                    }
+                                
+                                    if ($value['observations'][0]['text']) {
+                                        ?>
+                                        <a href="#" onclick="message('<?= $value['observations'][0]['text'] ?>')"><?= 'Q-' . $value['observations'][0]['fortnight'] ?></a>
+                                        <?php
+                                    } 
+                                    
+                                    if ($value['observations'][1]['text']) {
+                                        ?>
+                                        <a href="#" onclick="message('<?= $value['observations'][1]['text'] ?>')"><?= 'Q-' . $value['observations'][1]['fortnight'] ?></a>
+                                        <?php
+                                    }
+                                ?>
+                            </td>
                         </tr>
                         <?php
                         $totalDays += $value['workingDays'];

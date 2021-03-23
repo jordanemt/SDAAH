@@ -13,7 +13,7 @@ include_once 'presentation/public/header.php';
         <div class="card-body">
 
             <div class="d-flex justify-content-md-start justify-content-center">
-                <a class="btn btn-primary" href="#" role="button" onclick="insertDeduction();"><i class="fa fa-folder-plus"></i> Insertar</a>
+                <button id="submit-button" class="btn btn-primary" href="#" role="button" onclick="insertDeduction();"><i class="fa fa-folder-plus"></i> Insertar</button>
             </div>
 
             <hr>

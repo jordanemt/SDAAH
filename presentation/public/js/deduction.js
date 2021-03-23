@@ -13,6 +13,7 @@ function insertDeduction() {
         showLoaderOnConfirm: true,
         preConfirm: (name) => {
             let url = '?controller=deduction&action=insert';
+            addHtmlLoadingSpinnerOnSubmitButton();
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -25,6 +26,7 @@ function insertDeduction() {
                 },
                 error: function (error) {
                     errorMessage(error.responseText);
+                    addHtmlOnSubmitButton('<i class="fa fa-folder-plus"></i> Insertar');
                 }
             });
         },
@@ -36,6 +38,7 @@ function removeDeduction(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
             let url = '?controller=deduction&action=remove';
+            addHtmlLoadingSpinnerOnSubmitButton();
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -46,6 +49,7 @@ function removeDeduction(id) {
                 },
                 error: function (error) {
                     errorMessage(error.responseText);
+                    addHtmlOnSubmitButton('<i class="fa fa-folder-plus"></i> Insertar');
                 }
             });
         }

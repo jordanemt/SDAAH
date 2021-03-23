@@ -174,6 +174,10 @@ class PayrollBusiness {
         $deductionsTotal += $workerCss + $incomeTax;
 
         $net = $accrued - $deductionsTotal + floatval($payment['ccssAmount']) + floatval($payment['insAmount']);
+        
+        if ($net < 0.0) {
+            $net = 0.0;
+        }
 
         return array(
             'id' => $payment['id'],
@@ -225,14 +229,16 @@ class PayrollBusiness {
                 $calculatedPayment['card'] = $employee['card'];
                 $calculatedPayment['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
                 $calculatedPayment['bankAccount'] = $employee['bankAccount'];
-                $calculatedPayment['observations'] = $payment['observations'] ? 'Q-' . $payment['fortnight'] . ': ' . $payment['observations'] . ' ' : '';
+                $calculatedPayment['observations'][0]['fortnight'] = $payment['fortnight'];
+                $calculatedPayment['observations'][0]['text'] = $payment['observations'] ? $payment['observations'] : null;
 
                 array_push($monthlyPayroll, $calculatedPayment);
             } else {
                 $monthlyPayroll[$key]['net'] += $calculatedPayment['net'];
                 $monthlyPayroll[$key]['workingDays'] += $calculatedPayment['workingDays'];
                 $monthlyPayroll[$key]['ordinaryTimeHours'] += $calculatedPayment['ordinaryTimeHours'];
-                $monthlyPayroll[$key]['observations'] .= $payment['observations'] ? 'Q-' . $payment['fortnight'] . ': ' . $payment['observations'] : '';
+                $monthlyPayroll[$key]['observations'][1]['fortnight'] = $payment['fortnight'];
+                $monthlyPayroll[$key]['observations'][1]['text'] = $payment['observations'] ? $payment['observations'] : null;
             }
         }
 

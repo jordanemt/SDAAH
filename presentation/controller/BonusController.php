@@ -17,14 +17,6 @@ class BonusController {
     }
 
     public function index() {
-        $this->sessionController->checkConsultant();
-        $employeeBusiness = new EmployeeBusiness();
-        $vars['employees'] = $employeeBusiness->getAll();
-
-        $this->view->show($this->controllerName . 'indexView.php', $vars);
-    }
-
-    public function detail() {
         try {
             $this->sessionController->checkConsultant();
             $year = filter_input(INPUT_GET, 'year', FILTER_SANITIZE_NUMBER_INT);
@@ -34,7 +26,7 @@ class BonusController {
             $_SESSION['year'] = $year;
 
             $vars['data'] = $this->business->getBonuses($year);
-            $this->view->show($this->controllerName . 'detailView.php', $vars);
+            $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
             $errorController = new ErrorController();
             $errorController->index($e->getMessage());

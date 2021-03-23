@@ -9,6 +9,8 @@ class Util {
 
     const MONTHLY = 2;
     const BEWEEKLY = 1;
+    const PURCHASE = 317;
+    const SALE = 318;
 
     public static function existOnSomeKey($array, $evaluate, $key) {
         foreach ($array as $keyArray => $value) {
@@ -59,8 +61,8 @@ class Util {
     }
 
     public static function getSanitazeFilter($filter, $selector) {
-        $filter['location'] = !empty($filter['location']) ? $filter['location'] : 'Administrativo|Operativo';
-        $filter['year'] = !empty($filter['year']) ? $filter['year'] : date('Y');
+        $filter['location'] = !empty($filter['location']) ? $filter['location'] : $_SESSION['location'];
+        $filter['year'] = !empty($filter['year']) ? $filter['year'] : $_SESSION['year'];
 
         $_SESSION['location'] = $filter['location'];
         $_SESSION['year'] = $filter['year'];
@@ -72,7 +74,7 @@ class Util {
                 break;
 
             case self::BEWEEKLY:
-                $filter['fortnight'] = !empty($filter['fortnight']) ? $filter['fortnight'] : self::getFortnight();
+                $filter['fortnight'] = !empty($filter['fortnight']) ? $filter['fortnight'] : $_SESSION['fortnight'];
                 $_SESSION['fortnight'] = $filter['fortnight'];
                 break;
         }
@@ -145,7 +147,7 @@ class Util {
     public static function maskAccount($account) {
         return preg_replace("/(\d\d\d)(\d\d)(\d\d\d)(\d\d\d\d\d\d)(\d)/", "\\1-\\2-\\3-\\4-\\5", $account);
     }
-    
+
     public static function generatePDF($viewName, $data, $pdfName) {
         $config = Config::singleton();
         $html2pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');
@@ -169,4 +171,26 @@ class Util {
         return $formatter->toMoney($val, 2, 'COLONES', '');
     }
 
+    public static function getExchangeRate($indicator) {
+        $doc = new DOMDocument();
+        $ind_econom_ws = 'https://gee.bccr.fi.cr/Indicadores/Suscripciones/WS/wsindicadoreseconomicos.asmx/ObtenerIndicadoresEconomicos';
+        $fecha = date("d/m/Y");
+        $nombre = 'Luis';
+        $email = 'jordanea02@gmail.com';
+        $tokenBCCR = '3RSRR2NRNN';
+
+        $urlWS = $ind_econom_ws . "?Indicador=" . $indicator . "&FechaInicio=" . $fecha . "&FechaFinal=" . $fecha . "&Nombre=" . $nombre .
+                "&SubNiveles=N&CorreoElectronico=" . $email . "&Token=" . $tokenBCCR;
+
+        $xml = @file_get_contents($urlWS);
+        if ($xml === false) {
+            return 'No disponible';
+        } else {
+            $doc->loadXML($xml);
+            $ind = $doc->getElementsByTagName('INGC011_CAT_INDICADORECONOMIC')->item(0);
+            $val = $ind->getElementsByTagName('NUM_VALOR')->item(0);
+            $purchase = substr($val->nodeValue, 0, -6);
+            return $purchase;
+        }
+    }
 }
