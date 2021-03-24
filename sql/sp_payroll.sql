@@ -5,7 +5,7 @@ BEGIN
 	SELECT* FROM `payroll` WHERE `payroll`.`id` = id AND `payroll`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_by_idEmployee_and_fortnight_and_year_payroll`(
+CREATE PROCEDURE `sp_get_all_by_idEmployee_and_fortnight_and_year_payroll`(
     idEmployee INT,
     fortnight INT,
 	year INT
@@ -199,14 +199,4 @@ BEGIN
 	UPDATE `payroll`
     SET `isDeleted` = 1
     WHERE `payroll`.`id` = id;
-END//
-
-CREATE PROCEDURE `sp_check_inserted_payroll`(
-	idEmployee INT,
-    fortnight INT,
-    year INT
-)
-BEGIN
-	SELECT `id` FROM `payroll` WHERE `payroll`.`idEmployee` = idEmployee AND
-         `payroll`.`fortnight` = fortnight AND `payroll`.`year` = year AND `payroll`.`isDeleted` = 0;
 END//

@@ -24,7 +24,7 @@ class VacationController {
 
     public function index() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->sessionController->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
             $vars['employees'] = $employeeBusiness->getAll();
 
@@ -40,7 +40,7 @@ class VacationController {
 
     public function detail() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->sessionController->checkDigitizer();
             $cutoff = filter_input(INPUT_GET, 'cutoff');
 
             $employeeBusiness = new EmployeeBusiness();
@@ -54,7 +54,7 @@ class VacationController {
     }
 
     public function calcVacationAccrued() {
-        $this->sessionController->checkConsultant();
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'vacationDays' => Filters::getInt(),
@@ -71,7 +71,7 @@ class VacationController {
 
     public function vaucher() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->sessionController->checkDigitizer();
             $filter = array(
                 'card' => Filters::getInt(),
                 'completeName' => Filters::getString(),

@@ -123,6 +123,11 @@ include_once 'presentation/public/header.php';
                         </label>
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    <label for="observations">Observaciones</label>
+                    <textarea class="form-control" id="observations" name="observations" maxlength="500"></textarea>
+                </div>
 
                 <button id="submit-button" type="button" class="btn btn-primary" onclick="insertEmployee();">Insertar</button>
 

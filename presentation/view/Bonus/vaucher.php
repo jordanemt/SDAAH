@@ -51,7 +51,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 85%; padding-top: 25px; font-size: 12px;">
                         <p>Departamento de Administración</p>
                         <p>Módulo de planilla</p>
-                        <p>Télefono: (506) 2765-4162</p>
+                        <p>Whatsapp: (506) 8652-0144</p>
                         <p>Email: acueductoherediana@hotmail.com</p>
                     </td>
                 </tr>

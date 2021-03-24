@@ -98,7 +98,8 @@ class EmployeeBusiness {
                 strlen($entity['bankAccount']) !== 15 ||
                 (!empty($entity['email']) && strlen($entity['email']) > 100) ||
                 strlen($entity['cssIns']) !== 4 ||
-                (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1) {
+                (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1 ||
+                (!empty($entity['observations']) && $entity['observations'] > 500)) {
             throw new AttributeConflictException();
         }
 
@@ -118,8 +119,7 @@ class EmployeeBusiness {
                 empty($entity['location']) ||
                 empty($entity['admissionDate']) ||
                 empty($entity['bankAccount']) ||
-                empty($entity['cssIns']) ||
-                (!empty($entity['isLiquidated']) && empty($entity['observations']))) {
+                empty($entity['cssIns'])) {
             throw new EmptyAttributeException();
         }
 
@@ -134,7 +134,7 @@ class EmployeeBusiness {
                 strlen($entity['cssIns']) !== 4 ||
                 (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1 ||
                 (!empty($entity['isLiquidated']) && $entity['isLiquidated'] != 1) ||
-                (!empty($entity['isLiquidated']) && $entity['observations'] > 500)) {
+                (!empty($entity['observations']) && $entity['observations'] > 500)) {
             throw new AttributeConflictException();
         }
 

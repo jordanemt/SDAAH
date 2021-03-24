@@ -136,7 +136,7 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="isLiquidated" name="isLiquidated" <?php if ($vars['data']['isLiquidated']) { echo 'checked'; } ?> value="1" onchange="switchDisabled('#observations')">
+                        <input class="form-check-input" type="checkbox" id="isLiquidated" name="isLiquidated" <?php if ($vars['data']['isLiquidated']) { echo 'checked'; } ?> value="1">
                         <label class="form-check-label" for="isLiquidated">
                             Liquidado
                         </label>
@@ -145,7 +145,7 @@ include_once 'presentation/public/header.php';
 
                 <div class="form-group">
                     <label for="observations">Observaciones</label>
-                    <textarea class="form-control" id="observations" name="observations" maxlength="500" <?php if (!$vars['data']['isLiquidated']) { echo 'disabled'; } ?> required><?= $vars['data']['observations'] ?></textarea>
+                    <textarea class="form-control" id="observations" name="observations" maxlength="500"><?= $vars['data']['observations'] ?></textarea>
                 </div>
 
                 <button id="submit-button" type="button" class="btn btn-primary" onclick="updateEmployee();">Actualizar</button>

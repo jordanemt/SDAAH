@@ -73,6 +73,14 @@ function loadLiquidation(data) {
     $('#incomeTax').val(data.vacations.incomeTax.toFixed(2));
     $('#deductionsTotal').val(data.vacations.deductionsTotal.toFixed(2));
     $('#netVacation').val(data.vacations.net.toFixed(2));
+    
+    if (data.vacations.net >= 0) {
+        $('#netVacation').val(data.vacations.net.toFixed(2));
+    } else {
+        errorMessage('Neto Vacac. Proporcionales inferior a cero');
+        $('#netVacation').val(0.0);
+    }
+
 
     jQuery.each(data.preCen.accrueding, function (key, value) {
         $('#accruing' + (key + 6)).val(value.toFixed(2));

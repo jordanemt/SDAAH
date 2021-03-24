@@ -1,7 +1,6 @@
 <?php
-$vars["viewName"] = 'user';
+$vars["viewName"] = 'profile';
 include_once 'presentation/public/header.php';
-$pass = Util::randomPassword();
 ?>
 
 <div class="container my-4">
@@ -9,20 +8,18 @@ $pass = Util::randomPassword();
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Actualizar Usuario</h2>
+            <h2>Perfil del Usuario</h2>
         </div>
 
         <div class="card-body">
-
-            <a href="?controller=user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
+            
+            <div class="text-center">
+                <i class="fa fa-user-circle fa-7x" style="color: #03A9F4;"></i>
+            </div>
 
             <hr>
 
             <form id="form">
-                <div class="form-group d-none">
-                    <input type="number" class="form-control" id="id" name="id" value="<?= $vars['data']['id']; ?>">
-                </div>
-
                 <div class="form-group">
                     <label for="card">Cédula</label>
                     <input type="text" class="form-control cardMask" id="card" name="card" minlength="9" maxlength="9" value="<?= $vars['data']['card']; ?>" readonly required>
@@ -37,22 +34,16 @@ $pass = Util::randomPassword();
                     </div>
                 </div>
 
-                <div id="changePassword-container"> <script>switchVisibilityToHide('#changePassword-container')</script>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="pass">Contraseña <a href="#" onclick="copyPass();"><i class="fa fa-copy"></i> Copiar contraseña</a></label>
-                            <input type="password" class="form-control" id="pass" name="pass" minlength="6" maxlength="11" placeholder="Ingrese lo que se le solicita" value="<?= $pass ?>" required>
-                            <small id="passHelp" class="form-text text-muted">Digite entre 6 a 11 carácteres</small>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="passConfirm">Confirmar Contraseña</label>
-                            <input type="password" class="form-control" id="passConfirm" name="passConfirm" minlength="6" maxlength="11" placeholder="Ingrese lo que se le solicita" value="<?= $pass ?>" required>
-                        </div>
+                <div id="changePassword-container" class="form-row"> <script>switchVisibilityToHide('#changePassword-container')</script>
+                    <div class="form-group col-md-6">
+                        <label for="pass">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="pass" name="pass" minlength="6" maxlength="11" placeholder="Ingrese lo que se le solicita" required>
+                        <small id="passHelp" class="form-text text-muted">Digite entre 6 a 11 carácteres</small>
                     </div>
 
-                    <div class="alert alert-warning" role="alert">
-                        (Generada) Recuerde copiar la contraseña
+                    <div class="form-group col-md-6">
+                        <label for="passConfirm">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="passConfirm" name="passConfirm" minlength="6" maxlength="11" placeholder="Ingrese lo que se le solicita" required>
                     </div>
                 </div>
 
@@ -66,7 +57,7 @@ $pass = Util::randomPassword();
                         <label for="secondLastName">Segundo apellido</label>
                         <input type="text" class="form-control textMask" id="secondLastName" name="secondLastName" maxlength="25" value="<?= $vars['data']['secondLastName']; ?>" required>
                     </div>
-
+                    
                     <div class="form-group col-md-4">
                         <label for="name">Nombre</label>
                         <input type="text" class="form-control textMask" id="name" name="name" maxlength="50" value="<?= $vars['data']['name']; ?>" required>
@@ -81,33 +72,19 @@ $pass = Util::randomPassword();
 
                     <div class="form-group col-md-6">
                         <label for="role">Rol</label>
-                        <select class="form-control" id="role" name="role" required>
+                        <select class="form-control" id="role" name="role" <?= SessionController::validRole(SessionController::$_ADMIN) ? '' : 'disabled'; ?>>
                             <option disabled>Seleccione una opción</option>
-                            <option <?php
-                            if ($vars['data']['role'] == 1) {
-                                echo 'selected';
-                            }
-                            ?> value="1">Consultor</option>
-                            <option <?php
-                            if ($vars['data']['role'] == 2) {
-                                echo 'selected';
-                            }
-                            ?> value="2">Digitador</option>
-                            <option <?php
-                            if ($vars['data']['role'] == 3) {
-                                echo 'selected';
-                            }
-                            ?> value="3">Administrador</option>
+                            <option <?php if ($vars['data']['role'] == 1) { echo 'selected'; } ?> value="1">Consultor</option>
+                            <option <?php if ($vars['data']['role'] == 2) { echo 'selected'; } ?> value="2">Digitador</option>
+                            <option <?php if ($vars['data']['role'] == 3) { echo 'selected'; } ?> value="3">Administrador</option>
                         </select>
                     </div>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="updateUser();">Actualizar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="updateProfile();">Actualizar</button>
             </form>
 
             <hr>
-
-            <a href="?controller=user"><i class="fa fa-angle-double-left"></i> Volver a la Lista</a>
 
         </div>
 
@@ -115,4 +92,5 @@ $pass = Util::randomPassword();
 </div>
 
 <?php
+
 include_once 'presentation/public/footer.php';

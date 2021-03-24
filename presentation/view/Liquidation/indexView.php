@@ -39,7 +39,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-2">
                         <label for="admissionDate">Fecha Ingreso</label>
-                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Fecha de Ingreso" required>
+                        <input type="date" class="form-control" id="admissionDate" name="admissionDate" placeholder="Fecha de Ingreso" required readonly>
                     </div>
 
                     <div class="form-group col-md-2">

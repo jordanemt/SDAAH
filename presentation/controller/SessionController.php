@@ -19,6 +19,7 @@ class SessionController {
     }
 
     public function index() {
+        $this->isLoggedThenRedirect();
         $this->view->show($this->controllerName . 'indexView.php', null);
     }
 
@@ -56,6 +57,13 @@ class SessionController {
 
     public function isNotLoggedThenRedirect() {
         if (!isset($_SESSION['id'])) {
+            header('Location: ?controller=index');
+            die();
+        }
+    }
+    
+    public function isLoggedThenRedirect() {
+        if (isset($_SESSION['id'])) {
             header('Location: ?controller=index');
             die();
         }

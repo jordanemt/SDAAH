@@ -6,7 +6,6 @@ require_once 'business/PositionBusiness.php';
 require_once 'business/DeductionBusiness.php';
 require_once 'exceptions/AttributeConflictException.php';
 require_once 'exceptions/EmptyAttributeException.php';
-require_once 'exceptions/PaymentInsertedException.php';
 
 class PayrollBusiness {
 
@@ -29,7 +28,7 @@ class PayrollBusiness {
         return $payroll;
     }
     
-    public function getByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year) {
+    public function getAllByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year) {
         //Valid empties
         if (empty($idEmployee) ||
                 empty($fortnight) ||
@@ -37,7 +36,7 @@ class PayrollBusiness {
             throw new EmptyAttributeException();
         }
         
-        return $this->data->getByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year);
+        return $this->data->getAllByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year);
     }
 
     public function getAll() {
@@ -82,10 +81,6 @@ class PayrollBusiness {
         if (($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
                 strlen($entity['type']) > 7) {
             throw new AttributeConflictException();
-        }
-
-        if ($this->data->isInserted($entity['idEmployee'], $entity['fortnight'], $entity['year'])) {
-            throw new PaymentInsertedException();
         }
 
         $this->data->insert($entity);

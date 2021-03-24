@@ -24,8 +24,8 @@ class PayrollData {
         return $data;
     }
     
-    public function getByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year) {
-        $query = $this->db->prepare("CALL `sp_get_by_idEmployee_and_fortnight_and_year_payroll` (?,?,?)");
+    public function getAllByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year) {
+        $query = $this->db->prepare("CALL `sp_get_all_by_idEmployee_and_fortnight_and_year_payroll` (?,?,?)");
         $query->bindParam(1, $idEmployee);
         $query->bindParam(2, $fortnight);
         $query->bindParam(3, $year);
@@ -34,7 +34,7 @@ class PayrollData {
             throw new DataBaseException(PDO::FETCH_ASSOC);
         }
 
-        $data = $query->fetch();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         $query->closeCursor();
         return $data;
     }
@@ -193,25 +193,6 @@ class PayrollData {
         if (!$query->execute()) {
             throw new DataBaseException();
         }
-    }
-
-    public function isInserted($idEmployee, $fortnight, $year) {
-        $query = $this->db->prepare("CALL `sp_check_inserted_payroll` (?,?,?)");
-        $query->bindParam(1, $idEmployee);
-        $query->bindParam(2, $fortnight);
-        $query->bindParam(3, $year);
-
-        if (!$query->execute()) {
-            throw new DataBaseException();
-        }
-
-        if (count($query->fetchAll(PDO::FETCH_ASSOC)) > 0) {
-            $query->closeCursor();
-            return true;
-        }
-
-        $query->closeCursor();
-        return false;
     }
 
     private function insertPayrollDeduction($deductions, $mounts, $idPayroll) {

@@ -88,7 +88,8 @@ class EmployeeController {
             'bankAccount' => Filters::getBankAccount(),
             'email' => Filters::getEmail(),
             'cssIns' => Filters::getInt(),
-            'isAffiliated' => Filters::getInt()
+            'isAffiliated' => Filters::getInt(),
+            'observations' => Filters::getString()
         );
         $entity = filter_input_array(INPUT_POST, $filter);
 

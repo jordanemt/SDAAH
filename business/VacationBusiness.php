@@ -15,11 +15,14 @@ class VacationBusiness {
         $acrreud['incomeTax'] = 0.0;
         $payrollBusiness = new PayrollBusiness();
         foreach ($input['fortnight'] as $key => $value) {
-            $payment = $payrollBusiness->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
+            $payments = $payrollBusiness->getAllByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
 
-            if (!empty($payment)) {
-                $calcultedPaymet = $payrollBusiness->calcPayment($payment);
-                $net = $calcultedPaymet['net'];
+            $net = 0.0;
+            if (count($payments) > 0) {
+                foreach ($payments as $payment) {
+                    $calcultedPaymet = $payrollBusiness->calcPayment($payment);
+                    $net += $calcultedPaymet['net'];
+                }
             } else {
                 $net = 0.0;
             }

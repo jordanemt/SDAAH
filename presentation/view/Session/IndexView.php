@@ -13,8 +13,7 @@ include_once 'presentation/public/header.php';
             <form id="form">
                 <div class="form-group">
                     <label for="card">Cédula</label>
-                    <input type="text" class="form-control" id="card" name="card" placeholder="Ingrese su identificación" minlength="9" maxlength="9" required>
-                    <small id="passHelp" class="form-text text-muted">Digite la cédula con los ceros</small>
+                    <input type="text" class="form-control" id="card" name="card" placeholder="000000000" minlength="9" maxlength="9" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Contraseña</label>

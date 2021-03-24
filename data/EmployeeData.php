@@ -63,7 +63,7 @@ class EmployeeData {
     }
 
     public function insert($entity) {
-        $query = $this->db->prepare("CALL `sp_insert_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_insert_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['card']);
         $query->bindParam(2, $entity['firstLastName']);
         $query->bindParam(3, $entity['secondLastName']);
@@ -77,6 +77,7 @@ class EmployeeData {
         $query->bindParam(11, $entity['email']);
         $query->bindParam(12, $entity['cssIns']);
         $query->bindParam(13, $entity['isAffiliated']);
+        $query->bindParam(14, $entity['observations']);
 
         if (!$query->execute()) {
             throw new DataBaseException();

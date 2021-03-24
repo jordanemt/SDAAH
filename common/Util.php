@@ -9,8 +9,6 @@ class Util {
 
     const MONTHLY = 2;
     const BEWEEKLY = 1;
-    const PURCHASE = 317;
-    const SALE = 318;
 
     public static function existOnSomeKey($array, $evaluate, $key) {
         foreach ($array as $keyArray => $value) {
@@ -37,7 +35,10 @@ class Util {
     }
 
     public static function getFortnight() {
-        return ceil(((date('z') + 1) / 365) * 24);
+        $month = date('m');
+        $day = date('d');
+        $fortnight = $month * 2 - ($day < 16);
+        return $fortnight;
     }
 
     public static function restToCurrentFortnight($toRest, &$year = null) {
@@ -168,16 +169,19 @@ class Util {
 
     public static function convertToLetter($val) {
         $formatter = new NumeroALetras();
-        return $formatter->toMoney($val, 2, 'COLONES', '');
+        return $formatter->toMoney($val, 2, 'COLONES', 'CÉNTIMOS');
     }
+
+    const PURCHASE = 317;
+    const SALE = 318;
 
     public static function getExchangeRate($indicator) {
         $doc = new DOMDocument();
         $ind_econom_ws = 'https://gee.bccr.fi.cr/Indicadores/Suscripciones/WS/wsindicadoreseconomicos.asmx/ObtenerIndicadoresEconomicos';
         $fecha = date("d/m/Y");
         $nombre = 'Luis';
-        $email = 'jordanea02@gmail.com';
-        $tokenBCCR = '3RSRR2NRNN';
+        $email = 'ldelgado_2000@yahoo.com';
+        $tokenBCCR = 'L1IE1E0O01';
 
         $urlWS = $ind_econom_ws . "?Indicador=" . $indicator . "&FechaInicio=" . $fecha . "&FechaFinal=" . $fecha . "&Nombre=" . $nombre .
                 "&SubNiveles=N&CorreoElectronico=" . $email . "&Token=" . $tokenBCCR;
@@ -189,8 +193,20 @@ class Util {
             $doc->loadXML($xml);
             $ind = $doc->getElementsByTagName('INGC011_CAT_INDICADORECONOMIC')->item(0);
             $val = $ind->getElementsByTagName('NUM_VALOR')->item(0);
-            $purchase = substr($val->nodeValue, 0, -6);
-            return $purchase;
+            $str = substr($val->nodeValue, 0, -6);
+            return $str;
         }
     }
+
+    public static function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
 }

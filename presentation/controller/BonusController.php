@@ -50,12 +50,11 @@ class BonusController {
             $input['employee'] = $employeeBusiness->get($input['id']);
 
             $payments = array();
-            $payrollBusines = new PayrollBusiness();
-            array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['id'], 23, $input['year'] - 1)));
-            array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['id'], 24, $input['year'] - 1)));
+            $this->pushCalculatedPayments($payments, $input['id'], 23, $input['year'] - 1);
+            $this->pushCalculatedPayments($payments, $input['id'], 24, $input['year'] - 1);
 
             for ($i = 1; $i < 23; $i++) {
-                array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['id'], $i, $input['year'])));
+                $this->pushCalculatedPayments($payments, $input['id'], $i, $input['year']);
             }
             $input['payments'] = $payments;
 
@@ -64,6 +63,27 @@ class BonusController {
             $errorController = new ErrorController();
             $errorController->index($e->getMessage());
         }
+    }
+    
+    private function pushCalculatedPayments(&$array, $idEmployee, $fortnight, $year) {
+        $payrollBusiness = new PayrollBusiness();
+        $data = array(
+            'year' => $year,
+            'net' => 0.0
+        );
+        $payments = $payrollBusiness->getAllByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year);
+        
+        if (count($payments) <= 0) {
+            $array[] = array();
+            return 0;
+        }
+        
+        foreach ($payments as $payment) {
+            $calculated = $payrollBusiness->calcPayment($payment);
+            $data['net'] += $calculated['net'];
+        }
+        
+        $array[] = $data;
     }
 
 }

@@ -22,7 +22,7 @@ class LiquidationController {
 
     public function index() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->sessionController->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
             $vars['employees'] = $employeeBusiness->getAll();
 
@@ -37,7 +37,7 @@ class LiquidationController {
     }
 
     public function calcLiquidation() {
-        $this->sessionController->checkConsultant();
+        $this->sessionController->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'vacations' => Filters::getInt(),
@@ -67,7 +67,7 @@ class LiquidationController {
         $data['vacations'] = $vacationAccrued;
         $data['preCen'] = $preCenAcrrued;
         $data['bonus'] = $bonus;
-        $data['toPay'] = $vacationAccrued['net'] + $preCenAcrrued['net'] + $bonus['grossBonus'];
+        $data['toPay'] = ($vacationAccrued['net'] >= 0 ? $vacationAccrued['net'] : 0.0) + $preCenAcrrued['net'] + $bonus['grossBonus'];
 
         echo json_encode($data);
     }
@@ -82,11 +82,14 @@ class LiquidationController {
         $acrreud['totalCen'] = 0.0;
         $payrollBusiness = new PayrollBusiness();
         foreach ($input['fortnight'] as $key => $value) {
-            $payment = $payrollBusiness->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
+            $payments = $payrollBusiness->getAllByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
 
-            if (!empty($payment)) {
-                $calcultedPaymet = $payrollBusiness->calcPayment($payment);
-                $net = $calcultedPaymet['net'];
+            $net = 0.0;
+            if (count($payments) > 0) {
+                foreach ($payments as $payment) {
+                    $calcultedPaymet = $payrollBusiness->calcPayment($payment);
+                    $net += $calcultedPaymet['net'];
+                }
             } else {
                 $net = 0.0;
             }
@@ -106,7 +109,7 @@ class LiquidationController {
 
     public function vaucher() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->sessionController->checkDigitizer();
             $filter = array(
                 'idEmployee' => Filters::getInt(),
                 'card' => Filters::getString(),

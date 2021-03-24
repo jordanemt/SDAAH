@@ -125,30 +125,46 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="?controller=payroll">Quincenal</a>
                                     <a class="dropdown-item" href="?controller=payroll&action=monthlyView">Mensual</a>
-                                    <a class="dropdown-item" href="?controller=payroll&action=provisionReportView">Reporte de Proviciones de Ley</a>
+                                    <a class="dropdown-item" href="?controller=payroll&action=provisionReportView">Reporte de Provisiones de Ley</a>
                                     <a class="dropdown-item" href="?controller=payroll&action=bncrReportView">Reporte del BNCR</a>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown <?php
-                            if (strcasecmp($vars['viewName'], 'vacation') === 0) {
-                                echo "active";
+                            <?php
+                            if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                                ?>
+                                
+                                <li class="nav-item dropdown <?php
+                                if (strcasecmp($vars['viewName'], 'vacation') === 0) {
+                                    echo "active";
+                                }
+                                ?>">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Vacaciones
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="?controller=vacation">Calcular</a>
+                                        <a class="dropdown-item" href="?controller=vacation&action=detail">Detalle</a>
+                                    </div>
+                                </li>
+                            
+                                <?php
                             }
-                            ?>">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Vacaciones
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="?controller=vacation">Calcular</a>
-                                    <a class="dropdown-item" href="?controller=vacation&action=detail">Detalle</a>
-                                </div>
-                            </li>
-                            <li class="nav-item <?php
-                            if (strcasecmp($vars['viewName'], 'liquidation') === 0) {
-                                echo "active";
+                            ?>
+                            <?php
+                            if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                                ?>
+                                
+                                <li class="nav-item <?php
+                                if (strcasecmp($vars['viewName'], 'liquidation') === 0) {
+                                    echo "active";
+                                }
+                                ?>">
+                                    <a class="nav-link" href="?controller=liquidation">Liquidaciones</a>
+                                </li>
+                            
+                                <?php
                             }
-                            ?>">
-                                <a class="nav-link" href="?controller=liquidation">Liquidaciones</a>
-                            </li>
+                            ?>
                             <li class="nav-item dropdown <?php
                             if (strcasecmp($vars['viewName'], 'bonus') === 0) {
                                 echo "active";
@@ -158,6 +174,15 @@
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown <?php
+                            if (strcasecmp($vars['viewName'], 'profile') === 0) {
+                                echo "active";
+                            }
+                            ?>">
+                                <a class="nav-link" href="?controller=user&action=profileView"><i class="fa fa-user-circle"></i> Perfil</a>
+                            </li>
+                            </ul>
                             <a class="btn btn-outline-light my-2 my-sm-0" href="#" onclick="logout();" type="submit">Salir</a>
                         </form>
 

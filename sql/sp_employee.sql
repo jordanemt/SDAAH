@@ -47,7 +47,8 @@ CREATE PROCEDURE `sp_insert_employee`(
     bankAccount VARCHAR(15),
     email VARCHAR(100),
     cssIns VARCHAR(4),
-    isAffiliated SMALLINT
+    isAffiliated SMALLINT,
+    observations VARCHAR(500)
 )
 BEGIN
 	INSERT INTO `employee` (
@@ -63,7 +64,8 @@ BEGIN
         `bankAccount`,
         `email`,
         `cssIns`,
-        `isAffiliated`
+        `isAffiliated`,
+        `observations`
         ) VALUES (
             card,
             firstLastName,
@@ -77,7 +79,8 @@ BEGIN
             bankAccount,
             email,
             cssIns,
-            isAffiliated);
+            isAffiliated,
+            observations);
 END//
 
 CREATE PROCEDURE `sp_update_employee`(

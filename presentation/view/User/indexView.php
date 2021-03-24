@@ -32,6 +32,9 @@ include_once 'presentation/public/header.php';
                 <tbody>
                     <?php
                     foreach ($vars['data'] as $value) {
+                        if ($_SESSION['id'] == $value['id']) {
+                            continue;
+                        }
                         ?>
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
