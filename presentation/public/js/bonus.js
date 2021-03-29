@@ -49,7 +49,7 @@ function updateAlimony(id) {
             input: 'sweetMoneyMask'
         },
         showCancelButton: true,
-        confirmButtonText: 'Insertar',
+        confirmButtonText: 'Actualizar',
         cancelButtonText: 'Cancelar',
         showLoaderOnConfirm: true,
         preConfirm: (mount) => {

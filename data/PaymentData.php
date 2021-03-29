@@ -2,7 +2,7 @@
 
 require_once 'exceptions/DataBaseException.php';
 
-class PayrollData {
+class PaymentData {
 
     protected $db;
 
@@ -12,7 +12,7 @@ class PayrollData {
     }
 
     public function get($id) {
-        $query = $this->db->prepare("CALL `sp_get_payroll` (?)");
+        $query = $this->db->prepare("CALL `sp_get_payment` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -25,7 +25,7 @@ class PayrollData {
     }
     
     public function getAllByIdEmployeeAndFortnightAndYear($idEmployee, $fortnight, $year) {
-        $query = $this->db->prepare("CALL `sp_get_all_by_idEmployee_and_fortnight_and_year_payroll` (?,?,?)");
+        $query = $this->db->prepare("CALL `sp_get_all_by_idEmployee_and_fortnight_and_year_payment` (?,?,?)");
         $query->bindParam(1, $idEmployee);
         $query->bindParam(2, $fortnight);
         $query->bindParam(3, $year);
@@ -40,7 +40,7 @@ class PayrollData {
     }
 
     public function getAll() {
-        $query = $this->db->prepare("CALL `sp_get_all_payroll` ()");
+        $query = $this->db->prepare("CALL `sp_get_all_payment` ()");
 
         if (!$query->execute()) {
             throw new DataBaseException();
@@ -52,7 +52,7 @@ class PayrollData {
     }
 
     public function getAllByBiweeklyFilter($filter) {
-        $query = $this->db->prepare("CALL `sp_get_all_by_filter_biweekly_payroll` (?,?,?)");
+        $query = $this->db->prepare("CALL `sp_get_all_by_filter_biweekly_payment` (?,?,?)");
         $query->bindParam(1, $filter['fortnight']);
         $query->bindParam(2, $filter['year']);
         $query->bindParam(3, $filter['location']);
@@ -67,7 +67,7 @@ class PayrollData {
     }
 
     public function getAllByMonthlyFilter($filter) {
-        $query = $this->db->prepare("CALL `sp_get_all_by_filter_monthly_payroll` (?,?)");
+        $query = $this->db->prepare("CALL `sp_get_all_by_filter_monthly_payment` (?,?)");
         $query->bindParam(1, $filter['month']);
         $query->bindParam(2, $filter['year']);
 
@@ -81,7 +81,7 @@ class PayrollData {
     }
 
     public function getAllOnBonusByYearByIdEmployee($year, $idEmployee) {
-        $query = $this->db->prepare("CALL `sp_get_all_on_bonus_by_year_by_idEmployee` (?,?)");
+        $query = $this->db->prepare("CALL `sp_get_all_on_bonus_by_year_by_idEmployee_payment` (?,?)");
         $query->bindParam(1, $idEmployee);
         $query->bindParam(2, $year);
 
@@ -97,7 +97,7 @@ class PayrollData {
     public function insert($entity) {
         $this->db->beginTransaction();
         try {
-            $query = $this->db->prepare("CALL `sp_insert_payroll` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $query = $this->db->prepare("CALL `sp_insert_payment` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             $query->bindParam(1, $entity['idEmployee']);
             $query->bindParam(2, $entity['position']);
             $query->bindParam(3, $entity['type']);
@@ -121,6 +121,14 @@ class PayrollData {
             $query->bindParam(21, $entity['maternityDays']);
             $query->bindParam(22, $entity['maternityAmount']);
             $query->bindParam(23, $entity['observations']);
+            $query->bindParam(24, $entity['ordinary']);
+            $query->bindParam(25, $entity['extra']);
+            $query->bindParam(26, $entity['double']);
+            $query->bindParam(27, $entity['gross']);
+            $query->bindParam(28, $entity['workerCCSS']);
+            $query->bindParam(29, $entity['incomeTax']);
+            $query->bindParam(30, $entity['deductionsTotal']);
+            $query->bindParam(31, $entity['net']);
 
             if (!$query->execute()) {
                 throw new DataBaseException();
@@ -130,7 +138,7 @@ class PayrollData {
             $query->closeCursor();
 
             if (isset($entity['deductions']) && isset($entity['deductionsMounts'])) {
-                $this->insertPayrollDeduction($entity['deductions'], $entity['deductionsMounts'], $id);
+                $this->insertPaymentDeduction($entity['deductions'], $entity['deductionsMounts'], $id);
             }
 
             $this->db->commit();
@@ -143,7 +151,7 @@ class PayrollData {
     public function update($entity) {
         $this->db->beginTransaction();
         try {
-            $query = $this->db->prepare("CALL `sp_update_payroll` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $query = $this->db->prepare("CALL `sp_update_payment` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             $query->bindParam(1, $entity['id']);
             $query->bindParam(2, $entity['idEmployee']);
             $query->bindParam(3, $entity['position']);
@@ -168,15 +176,24 @@ class PayrollData {
             $query->bindParam(22, $entity['maternityDays']);
             $query->bindParam(23, $entity['maternityAmount']);
             $query->bindParam(24, $entity['observations']);
+            $query->bindParam(25, $entity['ordinary']);
+            $query->bindParam(26, $entity['extra']);
+            $query->bindParam(27, $entity['double']);
+            $query->bindParam(28, $entity['gross']);
+            $query->bindParam(29, $entity['workerCCSS']);
+            $query->bindParam(30, $entity['incomeTax']);
+            $query->bindParam(31, $entity['deductionsTotal']);
+            $query->bindParam(32, $entity['net']);
+
 
             if (!$query->execute()) {
                 throw new DataBaseException();
             }
 
-            $this->removeByIdPayrollPayrollDeduction($entity['id']);
+            $this->removeByIdPaymentDeduction($entity['id']);
 
             if (isset($entity['deductions']) && isset($entity['deductionsMounts'])) {
-                $this->insertPayrollDeduction($entity['deductions'], $entity['deductionsMounts'], $entity['id']);
+                $this->insertPaymentDeduction($entity['deductions'], $entity['deductionsMounts'], $entity['id']);
             }
 
             $this->db->commit();
@@ -187,7 +204,7 @@ class PayrollData {
     }
 
     public function remove($id) {
-        $query = $this->db->prepare("CALL `sp_remove_payroll` (?)");
+        $query = $this->db->prepare("CALL `sp_remove_payment` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {
@@ -195,15 +212,15 @@ class PayrollData {
         }
     }
 
-    private function insertPayrollDeduction($deductions, $mounts, $idPayroll) {
+    private function insertPaymentDeduction($deductions, $mounts, $idPayment) {
         for ($i = 0; $i < count($mounts); $i++) {
             $mount = floatval($mounts[$i]);
             if ($mount == 0) {
                 continue;
             }
 
-            $query = $this->db->prepare("CALL `sp_insert_payroll_deduction` (?,?,?)");
-            $query->bindParam(1, $idPayroll);
+            $query = $this->db->prepare("CALL `sp_insert_payment_deduction` (?,?,?)");
+            $query->bindParam(1, $idPayment);
             $query->bindParam(2, $deductions[$i]);
             $query->bindParam(3, $mount);
 
@@ -214,9 +231,9 @@ class PayrollData {
         }
     }
 
-    private function removeByIdPayrollPayrollDeduction($idPayroll) {
-        $query = $this->db->prepare("CALL `sp_remove_by_idPayroll_payroll_deduction` (?)");
-        $query->bindParam(1, $idPayroll);
+    private function removeByIdPaymentDeduction($idPayment) {
+        $query = $this->db->prepare("CALL `sp_remove_by_idPayment_payment_deduction` (?)");
+        $query->bindParam(1, $idPayment);
 
         if (!$query->execute()) {
             throw new DataBaseException();

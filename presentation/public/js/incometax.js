@@ -1,17 +1,17 @@
 /* global Swal */
 
-function login() {
+function insertIncomeTax() {
     if ($('#form').valid()) {
         addHtmlLoadingSpinnerOnSubmitButton();
 
-        var url = '?controller=session&action=login';
+        let url = '?controller=incomeTax&action=insert';
         $.ajax({
             url: url,
             type: 'POST',
             cache: false,
             data: $('#form').serialize(),
-            success: function (data) {
-                successMessage('index');
+            success: function () {
+                successMessage('incomeTax');
             },
             error: function (error) {
                 errorMessage(error.responseText);
@@ -23,28 +23,22 @@ function login() {
     }
 }
 
-function logout() {
-    var url = '?controller=session&action=logout';
-    Swal.fire({
-        title: '¿Está seguro?',
-        text: '¿Desea cerrar la sesión?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
+function removeIncomeTax(id) {
+    Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            let url = '?controller=incomeTax&action=remove';
+            addHtmlLoadingSpinnerOnSubmitButton();
             $.ajax({
                 url: url,
                 type: 'POST',
                 cache: false,
+                data: {'id': id},
                 success: function () {
-                    window.location.replace('?controller=index');
+                    successMessage('incomeTax');
                 },
                 error: function (error) {
                     errorMessage(error.responseText);
+                    addHtmlOnSubmitButton('<i class="fa fa-folder-plus"></i> Insertar');
                 }
             });
         }

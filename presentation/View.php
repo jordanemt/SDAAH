@@ -16,7 +16,7 @@ class View {
                 $key = $value;
             }
         }
-
+        
         include $path;
     }
 

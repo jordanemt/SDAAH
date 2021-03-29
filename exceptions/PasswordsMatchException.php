@@ -7,4 +7,8 @@ class PasswordsMatchException extends Exception implements IControlledException 
         http_response_code(409);
     }
 
+    public function control() {
+        return $this->getMessage();
+    }
+
 }

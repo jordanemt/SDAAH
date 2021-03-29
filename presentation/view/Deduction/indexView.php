@@ -1,5 +1,5 @@
 <?php
-$vars["viewName"] = 'deduction';
+$vars["viewName"] = 'parameters';
 include_once 'presentation/public/header.php';
 ?>
 
@@ -21,7 +21,6 @@ include_once 'presentation/public/header.php';
             <table id="data-table" class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="text-center">Id</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Acción</th>
                     </tr>
@@ -31,7 +30,6 @@ include_once 'presentation/public/header.php';
                     foreach ($vars['data'] as $value) {
                         ?>
                         <tr>
-                            <td class="text-center"><?= $value['id'] ?></td>
                             <td class="text-center"><?= $value['name'] ?></td>
                             <td class="text-center">
                                 <a class="font-warning" href="#" onclick="removeDeduction(<?= $value['id'] ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>

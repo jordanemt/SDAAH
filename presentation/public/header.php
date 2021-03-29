@@ -1,3 +1,7 @@
+<?php 
+$session = Session::singleton();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -28,16 +32,18 @@
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.22/b-1.6.5/r-2.2.6/sc-2.0.3/sl-1.3.1/datatables.min.js"></script>
 
         <script src="presentation/public/js/script.js" type="text/javascript"></script>
-        <script src="presentation/public/js/session.js" type="text/javascript"></script>
+        <script src="presentation/public/js/login.js" type="text/javascript"></script>
         <script src="presentation/public/js/messages.js" type="text/javascript"></script>
         <script src="presentation/public/js/user.js" type="text/javascript"></script>
         <script src="presentation/public/js/position.js" type="text/javascript"></script>
         <script src="presentation/public/js/employee.js" type="text/javascript"></script>
         <script src="presentation/public/js/deduction.js" type="text/javascript"></script>
-        <script src="presentation/public/js/payroll.js" type="text/javascript"></script>
+        <script src="presentation/public/js/payment.js" type="text/javascript"></script>
         <script src="presentation/public/js/vacation.js" type="text/javascript"></script>
         <script src="presentation/public/js/liquidation.js" type="text/javascript"></script>
         <script src="presentation/public/js/bonus.js" type="text/javascript"></script>
+        <script src="presentation/public/js/incometax.js" type="text/javascript"></script>
+        <script src="presentation/public/js/param.js" type="text/javascript"></script>
     </head>
 
     <body class="d-none">
@@ -59,7 +65,7 @@
                         <ul class="navbar-nav mr-auto">
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
-                            <a class="btn btn-outline-light my-2 my-sm-0" href="?controller=session" type="submit">Iniciar Sesión</a>
+                            <a class="btn btn-outline-light my-2 my-sm-0" href="?controller=login" type="submit">Iniciar Sesión</a>
                         </form>
 
                         <?php
@@ -68,7 +74,7 @@
 
                         <ul class="navbar-nav mr-auto">
                             <?php
-                            if (SessionController::validRole(SessionController::$_ADMIN)) {
+                            if ($session->validRole(Session::$_ADMIN)) {
                                 ?>
                                 
                                 <li class="nav-item <?php
@@ -97,17 +103,24 @@
                             ?>">
                                 <a class="nav-link" href="?controller=position">Puestos</a>
                             </li>
-                            
+                                
                             <?php
-                            if (SessionController::validRole(SessionController::$_ADMIN)) {
+                            if ($session->validRole(Session::$_ADMIN)) {
                                 ?>
                                 
-                                <li class="nav-item <?php
-                                if (strcasecmp($vars['viewName'], 'deduction') === 0) {
+                                <li class="nav-item dropdown <?php
+                                if (strcasecmp($vars['viewName'], 'parameters') === 0) {
                                     echo "active";
                                 }
                                 ?>">
-                                    <a class="nav-link" href="?controller=deduction">Deducciones</a>
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Parámetros
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="?controller=param">Generales</a>
+                                        <a class="dropdown-item" href="?controller=incomeTax">Tramos Imp. Renta</a>
+                                        <a class="dropdown-item" href="?controller=deduction">Catálogo de Deducciones</a>
+                                    </div>
                                 </li>
                             
                                 <?php
@@ -130,7 +143,7 @@
                                 </div>
                             </li>
                             <?php
-                            if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                            if ($session->validRole(Session::$_DIGITIZER)) {
                                 ?>
                                 
                                 <li class="nav-item dropdown <?php
@@ -151,7 +164,7 @@
                             }
                             ?>
                             <?php
-                            if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                            if ($session->validRole(Session::$_DIGITIZER)) {
                                 ?>
                                 
                                 <li class="nav-item <?php

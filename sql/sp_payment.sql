@@ -1,67 +1,67 @@
-CREATE PROCEDURE `sp_get_payroll`(
+CREATE PROCEDURE `sp_get_payment`(
 	id INT
 )
 BEGIN
-	SELECT* FROM `payroll` WHERE `payroll`.`id` = id AND `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payment` WHERE `payment`.`id` = id AND `payment`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_all_by_idEmployee_and_fortnight_and_year_payroll`(
+CREATE PROCEDURE `sp_get_all_by_idEmployee_and_fortnight_and_year_payment`(
     idEmployee INT,
     fortnight INT,
 	year INT
 )
 BEGIN
-	SELECT* FROM `payroll` WHERE `payroll`.`idEmployee` = idEmployee AND 
-        `payroll`.`fortnight` = fortnight AND
-        `payroll`.`year` = year AND 
-        `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payment` WHERE `payment`.`idEmployee` = idEmployee AND 
+        `payment`.`fortnight` = fortnight AND
+        `payment`.`year` = year AND 
+        `payment`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_all_by_filter_biweekly_payroll`(
+CREATE PROCEDURE `sp_get_all_by_filter_biweekly_payment`(
     fortnight INT,
 	year INT,
     location VARCHAR(25)
 )
 BEGIN
-	SELECT* FROM `payroll` WHERE  
-        `payroll`.`location` REGEXP location AND
-        `payroll`.`fortnight` = fortnight AND
-        `payroll`.`year` = year AND 
-        `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payment` WHERE  
+        `payment`.`location` REGEXP location AND
+        `payment`.`fortnight` = fortnight AND
+        `payment`.`year` = year AND 
+        `payment`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_all_by_filter_monthly_payroll`(
+CREATE PROCEDURE `sp_get_all_by_filter_monthly_payment`(
     month INT,
 	year INT
 )
 BEGIN
-	SELECT* FROM `payroll` WHERE  
-        `payroll`.`fortnight` IN ((month * 2), (month * 2 - 1)) AND
-        `payroll`.`year` = year AND 
-        `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payment` WHERE  
+        `payment`.`fortnight` IN ((month * 2), (month * 2 - 1)) AND
+        `payment`.`year` = year AND 
+        `payment`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_all_payroll`()
+CREATE PROCEDURE `sp_get_all_payment`()
 BEGIN
-	SELECT* FROM `payroll` WHERE `payroll`.`isDeleted` = 0;
+	SELECT* FROM `payment` WHERE `payment`.`isDeleted` = 0;
 END//
 
-CREATE PROCEDURE `sp_get_all_on_bonus_by_year_by_idEmployee`(
+CREATE PROCEDURE `sp_get_all_on_bonus_by_year_by_idEmployee_payment`(
     idEmployee INT,
     year INT
 )
 BEGIN
-	SELECT * FROM `payroll` WHERE 
-	    ((`payroll`.`fortnight` IN (23, 24) AND
-        `payroll`.`year` = year - 1) OR
-        (`payroll`.`fortnight` BETWEEN 1 AND 22 AND
-        `payroll`.`year` = year)) AND
-        `payroll`.`idEmployee` = idEmployee AND
-        `payroll`.`isDeleted` = 0
-        ORDER BY `payroll`.`fortnight` ASC;
+	SELECT * FROM `payment` WHERE 
+	    ((`payment`.`fortnight` IN (23, 24) AND
+        `payment`.`year` = year - 1) OR
+        (`payment`.`fortnight` BETWEEN 1 AND 22 AND
+        `payment`.`year` = year)) AND
+        `payment`.`idEmployee` = idEmployee AND
+        `payment`.`isDeleted` = 0
+        ORDER BY `payment`.`fortnight` ASC;
 END//
 
-CREATE PROCEDURE `sp_insert_payroll`(
+CREATE PROCEDURE `sp_insert_payment`(
     idEmployee INT,
     position VARCHAR(25),
     type VARCHAR(7),
@@ -84,10 +84,18 @@ CREATE PROCEDURE `sp_insert_payroll`(
     surcharges DECIMAL(11,2),
     maternityDays INT,
     maternityAmount DECIMAL(11,2),
-    observations VARCHAR(500)
+    observations VARCHAR(500),
+    ordinary DECIMAL(11,2),
+    extra DECIMAL(11,2),
+    doubleS DECIMAL(11,2),
+    gross DECIMAL(11,2),
+    workerCCSS DECIMAL(11,2),
+    incomeTax DECIMAL(11,2),
+    deductionsTotal DECIMAL(11,2),
+    net DECIMAL(11,2)
 )
 BEGIN
-	INSERT INTO `payroll` (
+	INSERT INTO `payment` (
         `idEmployee`,
         `position`,
         `type`,
@@ -110,7 +118,15 @@ BEGIN
         `surcharges`,
         `maternityDays`,
         `maternityAmount`,
-        `observations`
+        `observations`,
+        `ordinary`,
+        `extra`,
+        `double`,
+        `gross`,
+        `workerCCSS`,
+        `incomeTax`,
+        `deductionsTotal`,
+        `net`
         ) VALUES (
             idEmployee,
             position,
@@ -134,11 +150,19 @@ BEGIN
             surcharges,
             maternityDays,
             maternityAmount,
-            observations);
+            observations,
+            ordinary,
+            extra,
+            doubleS,
+            gross,
+            workerCCSS,
+            incomeTax,
+            deductionsTotal,
+            net);
     SELECT LAST_INSERT_ID() as id; 
 END//
 
-CREATE PROCEDURE `sp_update_payroll`(
+CREATE PROCEDURE `sp_update_payment`(
     id INT,
 	idEmployee INT,
     position VARCHAR(25),
@@ -162,10 +186,18 @@ CREATE PROCEDURE `sp_update_payroll`(
     surcharges DECIMAL(11,2),
     maternityDays INT,
     maternityAmount DECIMAL(11,2),
-    observations VARCHAR(500)
+    observations VARCHAR(500),
+    ordinary DECIMAL(11,2),
+    extra DECIMAL(11,2),
+    doubleS DECIMAL(11,2),
+    gross DECIMAL(11,2),
+    workerCCSS DECIMAL(11,2),
+    incomeTax DECIMAL(11,2),
+    deductionsTotal DECIMAL(11,2),
+    net DECIMAL(11,2)
 )
 BEGIN
-	UPDATE `payroll`
+	UPDATE `payment`
     SET `idEmployee` = idEmployee,
         `position` = position,
         `type` = type,
@@ -178,7 +210,7 @@ BEGIN
         `extraTimeHours` = extraTimeHours,
         `doubleTimeHours` = doubleTimeHours,
         `vacationsDays` = vacationsDays,
-        `vacationAmount` = vacationsDays,
+        `vacationAmount` = vacationAmount,
         `ccssDays` = ccssDays,
         `ccssAmount` = ccssAmount,
         `insDays` = insDays,
@@ -188,15 +220,23 @@ BEGIN
         `surcharges` = surcharges,
         `maternityDays` = maternityDays,
         `maternityAmount` = maternityAmount,
-        `observations` = observations
-    WHERE `payroll`.`id` = id;
+        `observations` = observations,
+        `ordinary` = ordinary,
+        `extra` = extra,
+        `double` = doubleS,
+        `gross` = gross,
+        `workerCCSS` = workerCCSS,
+        `incomeTax` = incomeTax,
+        `deductionsTotal` = deductionsTotal,
+        `net` = net
+    WHERE `payment`.`id` = id;
 END//
 
-CREATE PROCEDURE `sp_remove_payroll`(
+CREATE PROCEDURE `sp_remove_payment`(
 	id INT
 )
 BEGIN
-	UPDATE `payroll`
+	UPDATE `payment`
     SET `isDeleted` = 1
-    WHERE `payroll`.`id` = id;
+    WHERE `payment`.`id` = id;
 END//

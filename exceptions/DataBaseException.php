@@ -9,4 +9,8 @@ class DataBaseException extends Exception implements IControlledException {
         http_response_code(500);
     }
 
+    public function control() {
+        return $this->getMessage();
+    }
+
 }

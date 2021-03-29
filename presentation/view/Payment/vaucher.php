@@ -102,7 +102,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <th style="width: 10%; text-align: center;" class="border">Ingresos:</th>
                     <td style="width: 30%; text-align: center;" class="border"><strong>
                             <img src="<?= $currencyPath ?>" height="12">
-                            <?= number_format($data['payment']['accrued'] + floatval($data['ccssAmount']) + floatval($data['insAmount']), 2, '.', ' '); ?>
+                            <?= number_format($data['gross'] + floatval($data['ccssAmount']) + floatval($data['insAmount']), 2, '.', ' '); ?>
                         </strong></td>
                     <td style="width: 60%;"></td>
                 </tr>
@@ -117,21 +117,21 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 40%; text-align: center;" class="border">Ordinario</td>
                     <td style="width: 60%; text-align: center;" class="border">
                         <img src="<?= $currencyPath ?>" height="12">
-                        <?= number_format($data['payment']['ordinary'], 2, '.', ' '); ?>
+                        <?= number_format($data['ordinary'], 2, '.', ' '); ?>
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Extraordinario</td>
                     <td style="width: 60%; text-align: center;" class="border">
                         <img src="<?= $currencyPath ?>" height="12">
-                        <?= number_format($data['payment']['extra'], 2, '.', ' '); ?>
+                        <?= number_format($data['extra'], 2, '.', ' '); ?>
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Doble</td>
                     <td style="width: 60%; text-align: center;" class="border">
                         <img src="<?= $currencyPath ?>" height="12">
-                        <?= number_format($data['payment']['double'], 2, '.', ' '); ?>
+                        <?= number_format($data['double'], 2, '.', ' '); ?>
                     </td>
                 </tr>
                 <tr>
@@ -191,7 +191,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <th style="width: 10%; text-align: center;" class="border">Deducc:</th>
                     <td style="width: 30%; text-align: center;" class="border"><strong>
                             <img src="<?= $currencyPath ?>" height="12">
-                            <?= number_format($data['payment']['deductions'], 2, '.', ' '); ?>
+                            <?= number_format($data['deductionsTotal'], 2, '.', ' '); ?>
                         </strong></td>
                     <td style="width: 60%;"></td>
                 </tr>
@@ -206,14 +206,14 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 40%; text-align: center;" class="border">CCSS/Bco. Popular</td>
                     <td style="width: 60%; text-align: center;" class="border">
                         <img src="<?= $currencyPath ?>" height="12">
-                        <?= number_format($data['payment']['workerCss'], 2, '.', ' '); ?>
+                        <?= number_format($data['workerCCSS'], 2, '.', ' '); ?>
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 40%; text-align: center;" class="border">Impuesto Sobre Renta</td>
                     <td style="width: 60%; text-align: center;" class="border">
                         <img src="<?= $currencyPath ?>" height="12">
-                        <?= number_format($data['payment']['incomeTax'], 2, '.', ' '); ?>
+                        <?= number_format($data['incomeTax'], 2, '.', ' '); ?>
                     </td>
                 </tr>
 
@@ -238,7 +238,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <th style="width: 40%; text-align: center;" class="border">Neto a Pagar:</th>
                     <td style="width: 60%; text-align: center;" class="border"><strong>
                             <img src="<?= $currencyPath ?>" height="12">
-                            <?= number_format($data['payment']['net'], 2, '.', ' '); ?>
+                            <?= number_format($data['net'], 2, '.', ' '); ?>
                         </strong></td>
                 </tr>
             </table>
@@ -247,7 +247,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                 <tr>
                     <td style="width: 100%; text-align: center;" class="border">
                         <?php
-                        echo Util::convertToLetter($data['payment']['net']);
+                        echo Util::convertToLetter($data['net']);
                         ?>
                     </td>
                 </tr>

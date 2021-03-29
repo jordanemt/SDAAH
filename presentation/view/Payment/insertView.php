@@ -7,7 +7,7 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Insertar Pago Quincenal</h2>
+            <h2>Insertar Pago</h2>
         </div>
 
         <div class="card-body">
@@ -22,7 +22,7 @@ include_once 'presentation/public/header.php';
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="idEmployee">Identificación del Empleado</label>
-                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="chargeEmployeeDataOnPayroll();" required>
+                        <select class="form-control selectpicker" data-size="5" id="idEmployee" name="idEmployee" onchange="chargeEmployeeDataOnPayment();" required>
                             <option selected disabled>Seleccione una opción</option>
                             <?php
                             foreach ($vars['employees'] as $value) {
@@ -202,7 +202,7 @@ include_once 'presentation/public/header.php';
                     <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"></textarea>
                 </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="insertPayroll();">Insertar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="insertPayment();">Insertar</button>
             </form>
 
             <hr>

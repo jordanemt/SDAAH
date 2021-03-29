@@ -28,3 +28,12 @@ INSERT INTO `employee` (`id`, `card`, `firstLastName`, `secondLastName`, `name`,
 (5, '302600857', 'Herrera', 'Brenes', 'Manuel Jesús', 'Masculino', '1963-12-26', 3, 'Operativo', '2019-12-01', '200010170742990', NULL, '7136', 0, 0, NULL, 0),
 (6, '702230137', 'Herrera', 'Víquez', 'Fernelly Manuel', 'Masculino', '1993-10-07', 3, 'Operativo', '2019-12-01', '200010170630130', 'fer93manuel@gmail.com', '7136', 0, 0, NULL, 0),
 (7, '700750502', 'Salas', 'Chavarría', 'Raúl Enrique', 'Masculino', '1963-03-18', 4, 'Operativo', '2019-12-01', '200010170740564', NULL, '9152', 0, 0, NULL, 0);
+
+INSERT INTO `param` (`id`, `name`, `percentage`, `isDeleted`) VALUES 
+('1', 'Seguro Social', '10.5', '0'), 
+('2', 'CCSS', '26.33', '0'), 
+('3', 'Aguinaldo', '8.33', '0'), 
+('4', 'Vacaciones', '4.16', '0'), 
+('5', 'Pre-Aviso', '4.16', '0'), 
+('6', 'Cesantia', '8.33', '0'), 
+('7', 'Ley PT', '4.75', '0');

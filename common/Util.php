@@ -7,9 +7,6 @@ use Luecano\NumeroALetras\NumeroALetras;
 
 class Util {
 
-    const MONTHLY = 2;
-    const BEWEEKLY = 1;
-
     public static function existOnSomeKey($array, $evaluate, $key) {
         foreach ($array as $keyArray => $value) {
             if ($value[$key] == $evaluate[$key]) {
@@ -60,6 +57,9 @@ class Util {
 
         return $mod;
     }
+    
+    const BEWEEKLY = 1;
+    const MONTHLY = 2;
 
     public static function getSanitazeFilter($filter, $selector) {
         $filter['location'] = !empty($filter['location']) ? $filter['location'] : $_SESSION['location'];
@@ -187,7 +187,7 @@ class Util {
                 "&SubNiveles=N&CorreoElectronico=" . $email . "&Token=" . $tokenBCCR;
 
         $xml = @file_get_contents($urlWS);
-        if ($xml === false) {
+        if (!$xml) {
             return 'No disponible';
         } else {
             $doc->loadXML($xml);

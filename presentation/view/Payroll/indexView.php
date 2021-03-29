@@ -16,9 +16,9 @@ include_once 'presentation/public/header.php';
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
                     <?php
-                    if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                    if ($session->validRole(Session::$_DIGITIZER)) {
                         ?>
-                        <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payroll&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
+                        <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payment&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
                         <?php
                     }
                     ?>
@@ -77,9 +77,10 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Seguro Social</th>
                         <th class="text-center">Imp. Renta</th>
                         <th class="text-center">Tot. Deducciones</th>
+                        <th class="text-center">Incapacidades</th>
                         <th class="text-center">Neto</th>
                         <?php
-                        if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                        if ($session->validRole(Session::$_DIGITIZER)) {
                             ?>
                             <th class="text-center">Acción</th>
                             <?php
@@ -99,6 +100,7 @@ include_once 'presentation/public/header.php';
                     $totalCCSS = 0;
                     $totalIncome = 0;
                     $totalDeduction = 0;
+                    $totalDisabilities = 0;
                     $totalNet = 0;
                     foreach ($vars['data'] as $value) {
                         ?>
@@ -109,7 +111,7 @@ include_once 'presentation/public/header.php';
                                 <?= '₡' . number_format($value['ordinary'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
-                                <?= '₡' . number_format($value['vacation'], 2, '.', ' '); ?>
+                                <?= '₡' . number_format($value['vacationAmount'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['extra'], 2, '.', ' '); ?>
@@ -121,29 +123,38 @@ include_once 'presentation/public/header.php';
                                 <?= '₡' . number_format($value['surcharges'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
-                                <?= '₡' . number_format($value['accrued'], 2, '.', ' '); ?>
+                                <a href="#" class="details-a" onclick="showAccruedDetails(<?= $value['id'] ?>)">
+                                    <?= '₡' . number_format($value['gross'], 2, '.', ' '); ?>
+                                </a>
                             </td>
                             <td class="text-center">
-                                <?= '₡' . number_format($value['workerCss'], 2, '.', ' '); ?>
+                                <?= '₡' . number_format($value['workerCCSS'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['incomeTax'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
-                                <?= '₡' . number_format($value['deductions'], 2, '.', ' '); ?>
+                                <a href="#" class="details-a" onclick="showDeductionsDetails(<?= $value['id'] ?>)">
+                                    <?= '₡' . number_format($value['deductionsTotal'], 2, '.', ' '); ?>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="#" class="details-a" onclick="showDisabilitiesDetails(<?= $value['id'] ?>)">
+                                    <?= '₡' . number_format($value['ccssAmount'] + $value['insAmount'], 2, '.', ' '); ?>
+                                </a>
                             </td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
                             <?php
-                            if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                            if ($session->validRole(Session::$_DIGITIZER)) {
                                 ?>
                                 <td class="text-center">
-                                    <a href="?controller=payroll&action=updateView&id=<?= $value['id']; ?>"><i class="fa fa-edit"></i> Editar</a>
+                                    <a href="?controller=payment&action=updateView&id=<?= $value['id']; ?>"><i class="fa fa-edit"></i> Editar</a>
                                     <?php
-                                    if (SessionController::validRole(SessionController::$_ADMIN)) {
+                                    if ($session->validRole(Session::$_ADMIN)) {
                                         ?>
-                                        <a class="font-warning" href="#" onclick="removePayroll(<?= $value['id']; ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
+                                        <a class="font-warning" href="#" onclick="removePayment(<?= $value['id']; ?>);"><i class="fa fa-trash-alt"></i> Eliminar</a>
                                         <?php
                                     }
                                     ?>
@@ -152,18 +163,19 @@ include_once 'presentation/public/header.php';
                             }
                             ?>
                             <td class="text-center">
-                                <a href="?controller=payroll&action=vaucher&id=<?= $value['id'] ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
+                                <a href="?controller=payment&action=vaucher&id=<?= $value['id'] ?>" onclick="successMessageVaucher();"><i class="fa fa-download"></i> Descargar</a>
                             </td>
                             <?php
                             $totalOrdinary += $value['ordinary'];
-                            $totalVacation += $value['vacation'];
+                            $totalVacation += $value['vacationAmount'];
                             $totalExtra += $value['extra'];
                             $totalDouble += $value['double'];
                             $totalSurcharges += $value['surcharges'];
-                            $totalAccrued += $value['accrued'];
-                            $totalCCSS += $value['workerCss'];
+                            $totalAccrued += $value['gross'];
+                            $totalCCSS += $value['workerCCSS'];
                             $totalIncome += $value['incomeTax'];
-                            $totalDeduction += $value['deductions'];
+                            $totalDeduction += $value['deductionsTotal'];
+                            $totalDisabilities += $value['ccssAmount'] + $value['insAmount'];
                             $totalNet += $value['net'];
                         }
                         ?>
@@ -180,9 +192,10 @@ include_once 'presentation/public/header.php';
                         <th class="text-center"><?= '₡' . number_format($totalCCSS, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalIncome, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalDeduction, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalDisabilities, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalNet, 2, '.', ' '); ?></th>
                         <?php
-                        if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                        if ($session->validRole(Session::$_DIGITIZER)) {
                             ?>
                             <th class="text-center">-</th>
                             <?php

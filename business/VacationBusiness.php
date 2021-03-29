@@ -1,6 +1,6 @@
 <?php
 
-require_once 'business/PayrollBusiness.php';
+require_once 'business/PaymentBusiness.php';
 
 class VacationBusiness {
 
@@ -13,27 +13,26 @@ class VacationBusiness {
         $acrreud['accruedVacation'] = 0.0;
         $acrreud['workerCCSS'] = 0.0;
         $acrreud['incomeTax'] = 0.0;
-        $payrollBusiness = new PayrollBusiness();
+        $paymentBusiness = new PaymentBusiness();
         foreach ($input['fortnight'] as $key => $value) {
-            $payments = $payrollBusiness->getAllByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
+            $payments = $paymentBusiness->getAllByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
 
             $net = 0.0;
             if (count($payments) > 0) {
                 foreach ($payments as $payment) {
-                    $calcultedPaymet = $payrollBusiness->calcPayment($payment);
-                    $net += $calcultedPaymet['net'];
+                    $net += $payment['net'];
                 }
             } else {
                 $net = 0.0;
             }
 
-            array_push($acrreud['accrueding'], $net);
+            $acrreud['accrueding'][] = $net;
             $acrreud['salaryTotal'] += $net;
             $acrreud['daysTotal'] += $input['days'][$key];
             $acrreud['avgSalary'] = $acrreud['salaryTotal'] / $acrreud['daysTotal'];
             $acrreud['accruedVacation'] = $acrreud['avgSalary'] * $input['vacationDays'];
             $acrreud['workerCCSS'] = $acrreud['accruedVacation'] * 0.105;
-            $acrreud['incomeTax'] = $payrollBusiness->calcIncomeTax($acrreud['accruedVacation']);
+            $acrreud['incomeTax'] = $paymentBusiness->calcIncomeTax($acrreud['accruedVacation']);
         }
 
         $acrreud['deductionsTotal'] = 0.0;

@@ -8,5 +8,9 @@ class DuplicateCodException extends Exception implements IControlledException {
         parent::__construct('El código ya fue ingresado');
         http_response_code(409);
     }
+    
+    public function control() {
+        return $this->getMessage();
+    }
 
 }

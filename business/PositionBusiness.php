@@ -1,10 +1,6 @@
 <?php
 
 require_once 'data/PositionData.php';
-require_once 'exceptions/AttributeConflictException.php';
-require_once 'exceptions/EmptyAttributeException.php';
-require_once 'exceptions/DuplicateCodException.php';
-require_once 'exceptions/AssociatedException.php';
 
 class PositionBusiness {
 

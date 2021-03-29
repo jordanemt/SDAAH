@@ -137,7 +137,7 @@ include_once 'presentation/public/header.php';
                             <td class="text-center">
                                 <?= '₡' . number_format($value['alimony'], 2, '.', ' '); ?>
                                 <?php
-                                if (SessionController::validRole(SessionController::$_DIGITIZER)) {
+                                if ($session->validRole(Session::$_DIGITIZER)) {
                                     if (empty($value['alimonyId'])) {
                                         ?>
                                         <a href="#" onclick="insertAlimony(<?= $value['id'] ?>)"><i class="fa fa-edit"></i> Editar</a>
@@ -154,9 +154,9 @@ include_once 'presentation/public/header.php';
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
-                                <a href="?controller=bonus&action=vaucher&id=
+                                <a href="?controller=bonus&action=vaucher&idEmployee=
                                 <?=
-                                $value['id'] . '&year=' . $value['year'] .
+                                $value['idEmployee'] . '&year=' . $value['year'] .
                                 '&accruing=' . $value['accruing'] .
                                 '&grossBonus=' . $value['grossBonus'] .
                                 '&alimony=' . $value['alimony'] .

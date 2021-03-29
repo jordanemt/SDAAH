@@ -1,6 +1,5 @@
 <?php
 
-require 'SessionController.php';
 require_once 'business/EmployeeBusiness.php';
 require_once 'business/DeductionBusiness.php';
 require_once 'business/PayrollBusiness.php';
@@ -9,22 +8,22 @@ require_once 'business/VacationBusiness.php';
 class VacationController {
 
     private $business;
-    private $sessionController;
+    private $session;
 
     public function __construct() {
         $this->view = new View();
         $this->business = new VacationBusiness();
         $this->controllerName = 'Vacation/';
 
-        $this->sessionController = new SessionController;
-        $this->sessionController->isNotLoggedThenRedirect();
+        $this->session = Session::singleton();
+        $this->session->isNotLoggedThenRedirect();
 
         $_SESSION['fortnight'] = Util::getFortnight();
     }
 
     public function index() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
             $vars['employees'] = $employeeBusiness->getAll();
 
@@ -40,7 +39,7 @@ class VacationController {
 
     public function detail() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $cutoff = filter_input(INPUT_GET, 'cutoff');
 
             $employeeBusiness = new EmployeeBusiness();
@@ -54,7 +53,7 @@ class VacationController {
     }
 
     public function calcVacationAccrued() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'vacationDays' => Filters::getInt(),
@@ -71,7 +70,7 @@ class VacationController {
 
     public function vaucher() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $filter = array(
                 'card' => Filters::getInt(),
                 'completeName' => Filters::getString(),

@@ -1,28 +1,27 @@
 <?php
 
-require 'SessionController.php';
 require_once 'business/EmployeeBusiness.php';
 require_once 'business/DeductionBusiness.php';
-require_once 'business/PayrollBusiness.php';
+require_once 'business/PaymentBusiness.php';
 require_once 'business/VacationBusiness.php';
 require_once 'business/BonusBusiness.php';
 
 class LiquidationController {
 
     private $business;
-    private $sessionController;
+    private $session;
 
     public function __construct() {
         $this->view = new View();
         $this->controllerName = 'Liquidation/';
 
-        $this->sessionController = new SessionController;
-        $this->sessionController->isNotLoggedThenRedirect();
+        $this->session = Session::singleton();
+        $this->session->isNotLoggedThenRedirect();
     }
 
     public function index() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
             $vars['employees'] = $employeeBusiness->getAll();
 
@@ -37,7 +36,7 @@ class LiquidationController {
     }
 
     public function calcLiquidation() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'vacations' => Filters::getInt(),
@@ -80,21 +79,21 @@ class LiquidationController {
         $acrreud['avgSalary'] = 0.0;
         $acrreud['totalPre'] = 0.0;
         $acrreud['totalCen'] = 0.0;
-        $payrollBusiness = new PayrollBusiness();
+        $paymentBusiness = new PaymentBusiness();
+        
         foreach ($input['fortnight'] as $key => $value) {
-            $payments = $payrollBusiness->getAllByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
+            $payments = $paymentBusiness->getAllByIdEmployeeAndFortnightAndYear($input['idEmployee'], $value, $input['year'][$key]);
 
             $net = 0.0;
             if (count($payments) > 0) {
                 foreach ($payments as $payment) {
-                    $calcultedPaymet = $payrollBusiness->calcPayment($payment);
-                    $net += $calcultedPaymet['net'];
+                    $net += $payment['net'];
                 }
             } else {
                 $net = 0.0;
             }
 
-            array_push($acrreud['accrueding'], $net);
+            $acrreud['accrueding'][] = $net;
             $acrreud['salaryTotal'] += $net;
             $acrreud['daysTotal'] += $input['days'][$key];
             $acrreud['avgSalary'] = $acrreud['salaryTotal'] / $acrreud['daysTotal'];
@@ -109,7 +108,7 @@ class LiquidationController {
 
     public function vaucher() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $filter = array(
                 'idEmployee' => Filters::getInt(),
                 'card' => Filters::getString(),
@@ -130,7 +129,8 @@ class LiquidationController {
                 'workerCCSS' => Filters::getFloat(),
                 'incomeTax' => Filters::getFloat(),
                 'deductionsTotal' => Filters::getFloat(),
-                'netVacation' => Filters::getFloat()
+                'netVacation' => Filters::getFloat(),
+                'bonusYear' => Filters::getInt()
             );
             $input = filter_input_array(INPUT_GET, $filter);
 
@@ -141,16 +141,9 @@ class LiquidationController {
                     array_push($input['deductionsArray'], $deductionBusiness->get($deductionId));
                 }
             }
-
-            $payments = array();
-            $payrollBusines = new PayrollBusiness();
-            array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], 23, $input['bonusYear'] - 1)));
-            array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], 24, $input['bonusYear'] - 1)));
-
-            for ($i = 1; $i < 23; $i++) {
-                array_push($payments, $payrollBusines->calcPayment($payrollBusines->getByIdEmployeeAndFortnightAndYear($input['idEmployee'], $i, $input['bonusYear'])));
-            }
-            $input['bonusPayments'] = $payments;
+            
+            $bonusBusiness = new BonusBusiness();
+            $input['bonusPayments'] = $bonusBusiness->getFortnightsBonus($input['idEmployee'], $input['bonusYear']);
 
             Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CL_' . $input['card'] . '-' . date('Y', strtotime($input['departureDate'])));
         } catch (Exception $e) {

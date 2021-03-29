@@ -5,7 +5,8 @@ include_once 'presentation/public/header.php';
 
 <div class="container my-4">
     <div class="jumbotron">
-        <h1 class="display-4">Administración Asada Herediana</h1>
+        <h1 class="display-4" style="margin-bottom: 0">Asada Herediana</h1>
+        <p style="margin-top: 0">Administración</p>
         <div class="row">
             <div class="col-md-6 d-flex justify-content-md-start justify-content-center">
                 <a href="https://unac.or.cr/"><i class="fa fa-home"></i>Visitar página de la UNAC</a>

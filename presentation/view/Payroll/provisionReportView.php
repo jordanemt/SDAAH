@@ -61,12 +61,13 @@ include_once 'presentation/public/header.php';
                     <tr>
                         <th class="text-center">Localidad</th>
                         <th class="text-center">Salario Devengado</th>
-                        <th class="text-center">CCSS 26,33%</th>
-                        <th class="text-center">Aguinaldo 8,33%</th>
-                        <th class="text-center">Vacaciones 4,16%</th>
-                        <th class="text-center">Cesantía 8,33%</th>
-                        <th class="text-center">Ley PT 4,75%</th>
-                        <th class="text-center">Total 51,9%</th>
+                        <th class="text-center">CCSS <?= $vars['params']['ccss'] * 100 ?>%</th>
+                        <th class="text-center">Aguinaldo <?= $vars['params']['bonus'] * 100 ?>%</th>
+                        <th class="text-center">Vacaciones <?= $vars['params']['vacations'] * 100 ?>%</th>
+                        <th class="text-center">Pre-Aviso <?= $vars['params']['pre'] * 100 ?>%</th>
+                        <th class="text-center">Cesantía <?= $vars['params']['unemployment'] * 100 ?>%</th>
+                        <th class="text-center">Ley PT <?= $vars['params']['pt'] * 100 ?>%</th>
+                        <th class="text-center">Total <?= $vars['params']['total'] * 100 ?>%</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +76,7 @@ include_once 'presentation/public/header.php';
                     $totalCCSS = 0;
                     $totalBonus = 0;
                     $totalVacation = 0;
+                    $totalPre = 0;
                     $totalUnemployment = 0;
                     $totalPt = 0;
                     $total = 0;
@@ -95,6 +97,9 @@ include_once 'presentation/public/header.php';
                                 <?= '₡' . number_format($value['vacations'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
+                                <?= '₡' . number_format($value['pre'], 2, '.', ' '); ?>
+                            </td>
+                            <td class="text-center">
                                 <?= '₡' . number_format($value['unemployment'], 2, '.', ' '); ?>
                             </td>
                             <td class="text-center">
@@ -109,6 +114,7 @@ include_once 'presentation/public/header.php';
                         $totalCCSS += $value['ccss'];
                         $totalBonus += $value['bonus'];
                         $totalVacation += $value['vacations'];
+                        $totalPre += $value['pre'];
                         $totalUnemployment += $value['unemployment'];
                         $totalPt += $value['pt'];
                         $total += $value['total'];
@@ -120,6 +126,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center"><?= '₡' . number_format($totalCCSS, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalBonus, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalVacation, 2, '.', ' '); ?></th>
+                        <th class="text-center"><?= '₡' . number_format($totalPre, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalUnemployment, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalPt, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($total, 2, '.', ' '); ?></th>

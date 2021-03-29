@@ -1,9 +1,6 @@
 <?php
 
 require_once 'data/EmployeeData.php';
-require_once 'exceptions/AttributeConflictException.php';
-require_once 'exceptions/EmptyAttributeException.php';
-require_once 'exceptions/DuplicateCardException.php';
 
 class EmployeeBusiness {
 

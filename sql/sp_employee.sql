@@ -30,7 +30,7 @@ BEGIN
     SUM(p.`vacationsDays`) AS vacationsDays
     FROM `employee` e 
         JOIN `position` ps ON e.`idPosition` = ps.`id` 
-        JOIN `payroll` p ON p.`idEmployee` = e.`id`
+        JOIN `payment` p ON p.`idEmployee` = e.`id`
     WHERE e.`id` = id AND e.`isDeleted` = 0 AND p.`isDeleted` = 0 AND ps.`isDeleted` = 0;
 END//
 

@@ -101,7 +101,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     if (!empty($payment)) {
                         ?>
                         <tr>
-                            <td style="width: 20%; text-align: center;" class="border">Q-<?= $key < 2 ? $key + 23 : $key - 1; ?></td>
+                            <td style="width: 20%; text-align: center;" class="border">Q-<?= $payment['fortnight'] ?></td>
                             <td style="width: 20%; text-align: center;" class="border"><?= $payment['year'] ?></td>
                             <td style="width: 60%; text-align: center;" class="border">
                                 <img src="<?= $currencyPath ?>" height="12">

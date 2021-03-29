@@ -7,7 +7,7 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Actualizar en la Nómina</h2>
+            <h2>Actualizar Pago</h2>
         </div>
 
         <div class="card-body">
@@ -215,8 +215,12 @@ include_once 'presentation/public/header.php';
                     <label for="observations">Observaciones</label>
                     <textarea class="form-control" id="observations" name="observations" placeholder="Ingrese lo que se le solicita"" maxlength="500"><?= $vars['data']['observations'] ?></textarea>
                 </div>
+                
+                <div class="alert alert-warning" role="alert">
+                    El pago se actualizará con los parámetros actuales
+                </div>
 
-                <button id="submit-button" type="button" class="btn btn-primary" onclick="updatePayroll();">Actualizar</button>
+                <button id="submit-button" type="button" class="btn btn-primary" onclick="updatePayment();">Actualizar</button>
             </form>
             
             <script>

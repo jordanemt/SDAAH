@@ -56,7 +56,15 @@ CREATE TABLE `alimonyOnBonus` (
     FOREIGN KEY (`idEmployee`) REFERENCES `employee`(`id`)
 );
 
-CREATE TABLE `payroll` (
+CREATE TABLE `deduction` (
+    `id` INT AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `isDeleted` BOOL NOT NULL DEFAULT 0,
+
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `payment` (
     `id` INT AUTO_INCREMENT,
     `idEmployee` INT NOT NULL,
     `position` VARCHAR(29) NOT NULL,
@@ -81,26 +89,46 @@ CREATE TABLE `payroll` (
     `maternityDays` INT NULL DEFAULT 0,
     `maternityAmount` DECIMAL(11,2) NULL DEFAULT 0,
     `observations` VARCHAR(500) NULL,
+
+    `ordinary` DECIMAL(11,2) NOT NULL,
+    `extra` DECIMAL(11,2) NOT NULL,
+    `double` DECIMAL(11,2) NOT NULL,
+    `gross` DECIMAL(11,2) NOT NULL,
+    `workerCCSS` DECIMAL(11,2) NOT NULL,
+    `incomeTax` DECIMAL(11,2) NOT NULL,
+    `deductionsTotal` DECIMAL(11,2) NOT NULL,
+    `net` DECIMAL(11,2) NOT NULL,
+
     `isDeleted` BOOL NOT NULL DEFAULT 0,
     
     PRIMARY KEY(`id`),
     FOREIGN KEY(`idEmployee`) REFERENCES `employee`(`id`)
 );
 
-CREATE TABLE `deduction` (
+CREATE TABLE `payment_deduction` (
+    `idPayment` INT NOT NULL,
+    `idDeduction` INT NOT NULL,
+    `mount` DECIMAL(11,2) NULL DEFAULT 0,
+
+    PRIMARY KEY(`idPayment`, `idDeduction`),
+    FOREIGN KEY (`idPayment`) REFERENCES `payment`(`id`),
+    FOREIGN KEY (`idDeduction`) REFERENCES `deduction`(`id`)
+);
+
+CREATE TABLE `incometax` (
     `id` INT AUTO_INCREMENT,
-    `name` VARCHAR(100) NOT NULL,
+    `section` DECIMAL(11,2) NOT NULL,
+    `percentage` DECIMAL(11,2) NOT NULL DEFAULT 0,
     `isDeleted` BOOL NOT NULL DEFAULT 0,
 
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `payroll_deduction` (
-    `idPayroll` INT NOT NULL,
-    `idDeduction` INT NOT NULL,
-    `mount` DECIMAL(11,2) NULL DEFAULT 0,
+CREATE TABLE `param` (
+    `id` INT AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `percentage` DECIMAL(11,2) NOT NULL DEFAULT 0,
+    `isDeleted` BOOL NOT NULL DEFAULT 0,
 
-    PRIMARY KEY(`idPayroll`, `idDeduction`),
-    FOREIGN KEY (`idPayroll`) REFERENCES `payroll`(`id`),
-    FOREIGN KEY (`idDeduction`) REFERENCES `deduction`(`id`)
+    PRIMARY KEY(`id`)
 );

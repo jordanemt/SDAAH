@@ -59,7 +59,6 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Días</th>
                         <th class="text-center">Horas</th>
                         <th class="text-center">Salario</th>
-                        <th class="text-center">Observaciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,36 +72,13 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['card'] ?></td>
                             <td class="text-center"><p><?= $value['completeName'] ?></p></td>
                             <td class="text-center"><?= $value['type'] == 'Mensual' ? 'Jornada Completa' : 'Tiempo Parcial' ?></td>
-                            <td class="text-center"><?= $value['workingDays'] ? $value['workingDays'] : '---' ?></td>
-                            <td class="text-center"><?= $value['ordinaryTimeHours'] ? $value['ordinaryTimeHours'] : '---' ?></td>
+                            <td class="text-center"><?= $value['days'] ? $value['days'] : '---' ?></td>
+                            <td class="text-center"><?= $value['hours'] ? $value['hours'] : '---' ?></td>
                             <td class="text-center"><?= '₡' . number_format($value['net'], 2, '.', ' '); ?></td>
-                            <td class="text-center">
-                                <?php
-                                    if($value['observations'][0]['text'] || $value['observations'][1]['text']) {
-                                        ?>
-                                        <a href="#"><i class="fa fa-eye"></i></a>
-                                        <?php
-                                    } else {
-                                        echo '---';
-                                    }
-                                
-                                    if ($value['observations'][0]['text']) {
-                                        ?>
-                                        <a href="#" onclick="message('<?= $value['observations'][0]['text'] ?>')"><?= 'Q-' . $value['observations'][0]['fortnight'] ?></a>
-                                        <?php
-                                    } 
-                                    
-                                    if ($value['observations'][1]['text']) {
-                                        ?>
-                                        <a href="#" onclick="message('<?= $value['observations'][1]['text'] ?>')"><?= 'Q-' . $value['observations'][1]['fortnight'] ?></a>
-                                        <?php
-                                    }
-                                ?>
-                            </td>
                         </tr>
                         <?php
-                        $totalDays += $value['workingDays'];
-                        $totalHours += $value['ordinaryTimeHours'];
+                        $totalDays += $value['days'];
+                        $totalHours += $value['hours'];
                         $totalSalaries += $value['net'];
                     }
                     ?>
@@ -113,7 +89,6 @@ include_once 'presentation/public/header.php';
                         <th class="text-center"><?= $totalDays ?></th>
                         <th class="text-center"><?= $totalHours ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalSalaries, 2, '.', ' '); ?></th>
-                        <th class="text-center">---</th>
                     </tr>
                 </tbody>
             </table>

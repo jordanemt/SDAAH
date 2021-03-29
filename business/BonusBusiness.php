@@ -1,9 +1,7 @@
 <?php
 
 require_once 'business/EmployeeBusiness.php';
-require_once 'business/PayrollBusiness.php';
-require_once 'exceptions/AttributeConflictException.php';
-require_once 'exceptions/EmptyAttributeException.php';
+require_once 'business/PaymentBusiness.php';
 
 class BonusBusiness {
 
@@ -18,7 +16,7 @@ class BonusBusiness {
             $alimony = $employeeBusiness->getAlimonyOnBonusByIdEmployeeByYear($employee['id'], $year);
 
             $bonus = $this->calcBonus($employee['id'], $year);
-            $bonus['id'] = $employee['id'];
+            $bonus['idEmployee'] = $employee['id'];
             $bonus['year'] = $year;
             $bonus['card'] = $employee['card'];
             $bonus['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
@@ -33,7 +31,7 @@ class BonusBusiness {
             }
             $bonus['net'] = $bonus['grossBonus'] - $bonus['alimony'];
             $bonus['net'] = $bonus['net'] < 0 ? 0 : $bonus['net'];
-            
+
             array_push($bonuses, $bonus);
         }
 
@@ -56,7 +54,6 @@ class BonusBusiness {
             12 => 'december',
         );
 
-        $payrollBusiness = new PayrollBusiness();
         $bonus = array(
             'december' => 0.0,
             'january' => 0.0,
@@ -75,10 +72,9 @@ class BonusBusiness {
         );
 
         //getting payments on employee
-        $payments = $payrollBusiness->getAllOnBonusByYearByIdEmployee($year, $idEmployee);
-        $biweeklyPayroll = $payrollBusiness->getBiweeklyPayroll($payments);
-
-        foreach ($biweeklyPayroll as $payment) {
+        $paymentBusiness = new PaymentBusiness();
+        $payments = $paymentBusiness->getAllOnBonusByYearByIdEmployee($year, $idEmployee);
+        foreach ($payments as $payment) {
             $bonus[$months[ceil($payment['fortnight'] / 2)]] += $payment['net'];
         }
 
@@ -98,6 +94,33 @@ class BonusBusiness {
         $bonus['grossBonus'] = $bonus['accruing'] / 12;
 
         return $bonus;
+    }
+
+    public function getFortnightsBonus($idEmployee, $year) {
+        $payments = array();
+        $paymentBusiness = new PaymentBusiness();
+        
+        $payments[] = $this->getSummary($paymentBusiness->getAllByIdEmployeeAndFortnightAndYear($idEmployee, 23, $year - 1));
+        $payments[] = $this->getSummary($paymentBusiness->getAllByIdEmployeeAndFortnightAndYear($idEmployee, 24, $year - 1));
+        for ($i = 1; $i < 23; $i++) {
+            $payments[] = $this->getSummary($paymentBusiness->getAllByIdEmployeeAndFortnightAndYear($idEmployee, $i, $year));
+        }
+        
+        return $payments;
+    }
+
+    private function getSummary($payments) {
+        foreach ($payments as $key => $payment) {
+            if ($key > 0) {
+                $payments[0]['net'] += $payment['net'];
+            }
+        }
+
+        if (empty($payments[0])) {
+            return array();
+        }
+
+        return $payments[0];
     }
 
 }

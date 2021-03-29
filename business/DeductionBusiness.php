@@ -1,9 +1,6 @@
 <?php
 
 require_once 'data/DeductionData.php';
-require_once 'exceptions/AttributeConflictException.php';
-require_once 'exceptions/EmptyAttributeException.php';
-require_once 'exceptions/AssociatedException.php';
 
 class DeductionBusiness {
 
@@ -23,6 +20,10 @@ class DeductionBusiness {
 
     public function getAllByIdPayroll($id) {
         return $this->data->getAllByIdPayroll($id);
+    }
+    
+    public function getAllByIdPayment($id) {
+        return $this->data->getAllByIdPayment($id);
     }
 
     public function insert($name) {
@@ -44,13 +45,13 @@ class DeductionBusiness {
             throw new AttributeConflictException();
         }
 
-        $this->validAssociatedWithPayroll($id);
+        $this->validAssociatedWithPayment($id);
 
         $this->data->remove($id);
     }
 
-    private function validAssociatedWithPayroll($id) {
-        if ($this->data->isAssociatedWithPayroll($id)) {
+    private function validAssociatedWithPayment($id) {
+        if ($this->data->isAssociatedWithPayment($id)) {
             throw new AssociatedException();
         }
     }

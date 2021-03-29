@@ -8,11 +8,13 @@ class ExceptionsHandler {
 
     public function handle($exception) {
         if (is_a($exception, 'IControlledException')) {
-            echo $exception->getMessage();
+            echo $exception->control();
+            die();
         } else {
             http_response_code(500);
 //            echo 'Error Inesperado';
             echo $exception->getMessage();
+            die();
         }
     }
 

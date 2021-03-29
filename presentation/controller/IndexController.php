@@ -1,15 +1,16 @@
 <?php
 
-require 'SessionController.php';
 require 'business/EmployeeBusiness.php';
 
 class IndexController {
+    
+    private $session;
 
     public function __construct() {
         $this->view = new View();
         $this->controllerName = 'Index/';
         
-        $this->sessionController = new SessionController;
+        $this->session = Session::singleton();
     }
 
     public function index() {

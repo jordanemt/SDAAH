@@ -1,28 +1,25 @@
 <?php
 
-require 'SessionController.php';
 require_once 'business/EmployeeBusiness.php';
 require_once 'business/PositionBusiness.php';
-require_once 'SessionController.php';
-require_once 'common/Filters.php';
 
 class EmployeeController {
 
     private $business;
-    private $sessionController;
+    private $session;
 
     public function __construct() {
         $this->view = new View();
         $this->business = new EmployeeBusiness();
         $this->controllerName = 'Employee/';
 
-        $this->sessionController = new SessionController;
-        $this->sessionController->isNotLoggedThenRedirect();
+        $this->session = Session::singleton();
+        $this->session->isNotLoggedThenRedirect();
     }
 
     public function index() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->session->checkConsultant();
             $vars['data'] = $this->business->getAll();
 
             $positionBusiness = new PositionBusiness();
@@ -39,7 +36,7 @@ class EmployeeController {
 
     public function insertView() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $this->view->show($this->controllerName . 'insertView.php', null);
         } catch (Exception $e) {
             $errorController = new ErrorController();
@@ -49,7 +46,7 @@ class EmployeeController {
 
     public function updateView() {
         try {
-            $this->sessionController->checkDigitizer();
+            $this->session->checkDigitizer();
             $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
             $positionBusiness = new PositionBusiness();
@@ -63,7 +60,7 @@ class EmployeeController {
     }
 
     public function get() {
-        $this->sessionController->checkConsultant();
+        $this->session->checkConsultant();
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
         $data = $this->business->get($id);
@@ -74,7 +71,7 @@ class EmployeeController {
     }
 
     public function insert() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $filter = array(
             'card' => Filters::getString(),
             'firstLastName' => Filters::getString(),
@@ -98,7 +95,7 @@ class EmployeeController {
     }
 
     public function update() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $filter = array(
             'id' => Filters::getInt(),
             'firstLastName' => Filters::getString(),
@@ -123,13 +120,13 @@ class EmployeeController {
     }
 
     public function remove() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
         exit();
     }
 
     public function insertAlimonyOnBonus() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'year' => Filters::getInt(),
@@ -142,7 +139,7 @@ class EmployeeController {
     }
 
     public function updateAlimonyOnBonus() {
-        $this->sessionController->checkDigitizer();
+        $this->session->checkDigitizer();
         $filter = array(
             'id' => Filters::getInt(),
             'mount' => Filters::getFloat()
@@ -155,7 +152,7 @@ class EmployeeController {
 
     public function vaucher() {
         try {
-            $this->sessionController->checkConsultant();
+            $this->session->checkConsultant();
             $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
             $positionBusiness = new PositionBusiness();

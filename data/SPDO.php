@@ -2,7 +2,7 @@
 
 class SPDO extends PDO {
 
-    private static $instance = null;
+    private static $instance;
 
     public function __construct() {
         $config = Config::singleton();

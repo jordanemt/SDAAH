@@ -9,4 +9,8 @@ class AuthenticationFailedException extends Exception implements IControlledExce
         http_response_code(404);
     }
 
+    public function control() {
+        return $this->getMessage();
+    }
+
 }

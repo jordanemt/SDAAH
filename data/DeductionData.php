@@ -1,7 +1,5 @@
 <?php
 
-require_once 'exceptions/DataBaseException.php';
-
 class DeductionData {
 
     protected $db;
@@ -48,6 +46,19 @@ class DeductionData {
         $query->closeCursor();
         return $data;
     }
+    
+    public function getAllByIdPayment($id) {
+        $query = $this->db->prepare("CALL `sp_get_all_by_idPayment_payment_deduction` (?)");
+        $query->bindParam(1, $id);
+
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query->closeCursor();
+        return $data;
+    }
 
     public function insert($name) {
         $query = $this->db->prepare("CALL `sp_insert_deduction` (?)");
@@ -67,8 +78,8 @@ class DeductionData {
         }
     }
     
-    public function isAssociatedWithPayroll($id) {
-        $query = $this->db->prepare("CALL `sp_is_associated_with_payroll_deduction` (?)");
+    public function isAssociatedWithPayment($id) {
+        $query = $this->db->prepare("CALL `sp_is_associated_with_payment_deduction` (?)");
         $query->bindParam(1, $id);
 
         if (!$query->execute()) {

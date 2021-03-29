@@ -122,6 +122,12 @@ function setMoneyMaskOnElement(element) {
     });
 }
 
+function setPercentageMaskOnElement(element) {
+    $(element).mask('00.00', {
+        placeholder: '0%'
+    });
+}
+
 function setMask() {
     $('.numberMask').mask('#', {
         placeholder: '0'
@@ -147,6 +153,7 @@ function setMask() {
     $('.accountMask').mask('000-00-000-000000-0', {
         placeholder: '000-00-000-000000-0'
     });
+    setPercentageMaskOnElement('.percentageMask');
     setMoneyMaskOnElement('.moneyMask');
 }
 

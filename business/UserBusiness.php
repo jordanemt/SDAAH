@@ -1,11 +1,6 @@
 <?php
 
 require_once 'data/UserData.php';
-require_once 'exceptions/AttributeConflictException.php';
-require_once 'exceptions/EmptyAttributeException.php';
-require_once 'exceptions/DuplicateCardException.php';
-require_once 'exceptions/PasswordsMatchException.php';
-require_once 'exceptions/AuthenticationFailedException.php';
 
 class UserBusiness {
 
