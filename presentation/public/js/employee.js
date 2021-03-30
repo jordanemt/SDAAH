@@ -14,7 +14,7 @@ async function getEmployee(id) {
 
 function insertEmployee() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=employee&action=insert';
         $.ajax({
@@ -27,7 +27,6 @@ function insertEmployee() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Insertar');
             }
         });
     } else {
@@ -37,7 +36,7 @@ function insertEmployee() {
 
 function updateEmployee() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=employee&action=update';
         $.ajax({
@@ -50,7 +49,6 @@ function updateEmployee() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Actualizar');
             }
         });
     } else {
@@ -61,6 +59,7 @@ function updateEmployee() {
 function removeEmployee(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            loadingMessage();
             let url = '?controller=employee&action=remove';
             $.ajax({
                 url: url,
@@ -79,8 +78,9 @@ function removeEmployee(id) {
 }
 
 function updateSelectIdPosition() {
-    let type = $('#type').val();
     showLoading();
+    
+    let type = $('#type').val();
     getAllByTypePosition(type).then((result) => {
         let data = JSON.parse(result);
         if (data === null || data.length === 0) {
@@ -88,7 +88,6 @@ function updateSelectIdPosition() {
             let option = $('<option></option>').attr('disabled', true)
                     .attr('selected', true).text('No se encontraron Puestos del tipo ' + type);
             $('#idPosition').append(option);
-            hideLoading();
             return 0;
         }
 
@@ -112,8 +111,10 @@ function updateSelectIdPosition() {
 
             }
         });
-        hideLoading();
     }).catch(error => {
         errorMessage(error.responseText);
+    }).finally(function () {
+        $('#idPosition').valid();
+        hideLoading();
     });
 }

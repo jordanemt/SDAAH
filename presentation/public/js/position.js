@@ -14,7 +14,7 @@ async function getAllByTypePosition(type) {
 
 function insertPosition() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=position&action=insert';
         $.ajax({
@@ -27,7 +27,6 @@ function insertPosition() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Insertar');
             }
         });
     } else {
@@ -37,7 +36,7 @@ function insertPosition() {
 
 function updatePosition() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=position&action=update';
         $.ajax({
@@ -50,7 +49,6 @@ function updatePosition() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Actualizar');
             }
         });
     } else {
@@ -61,6 +59,8 @@ function updatePosition() {
 function removePosition(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            loadingMessage();
+            
             let url = '?controller=position&action=remove';
             $.ajax({
                 url: url,

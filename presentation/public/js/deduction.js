@@ -37,6 +37,8 @@ function insertDeduction() {
 function removeDeduction(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            loadingMessage();
+            
             let url = '?controller=deduction&action=remove';
             addHtmlLoadingSpinnerOnSubmitButton();
             $.ajax({

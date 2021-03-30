@@ -2,7 +2,7 @@
 
 function insertPayment() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=payment&action=insert';
         $.ajax({
@@ -15,7 +15,6 @@ function insertPayment() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Insertar');
             }
         });
     } else {
@@ -25,7 +24,7 @@ function insertPayment() {
 
 function updatePayment() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=payment&action=update';
         $.ajax({
@@ -38,7 +37,7 @@ function updatePayment() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Actualizar');
+                showLoading();
             }
         });
     } else {
@@ -49,6 +48,8 @@ function updatePayment() {
 function removePayment(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            loadingMessage();
+            
             let url = '?controller=payment&action=remove';
             $.ajax({
                 url: url,
@@ -90,14 +91,17 @@ function chargeEmployeeDataOnPayment() {
         $('#type').val(position.type);
         $('#salary').val('₡' + position.salary);
 
-        hideLoading();
         $('#form').valid();
     }).catch(error => {
         errorMessage(error.responseText);
+    }).finally(function() {
+        hideLoading();
     });
 }
 
 function showAccruedDetails(id) {
+    loadingMessage();
+    
     let url = '?controller=payment&action=get';
     $.ajax({
         url: url,
@@ -132,6 +136,8 @@ function showAccruedDetails(id) {
 }
 
 function showDeductionsDetails(id) {
+    loadingMessage();
+    
     let url = '?controller=payment&action=get';
     $.ajax({
         url: url,
@@ -165,6 +171,8 @@ function showDeductionsDetails(id) {
 }
 
 function showDisabilitiesDetails(id) {
+    loadingMessage();
+    
     let url = '?controller=payment&action=get';
     $.ajax({
         url: url,
@@ -191,4 +199,3 @@ function showDisabilitiesDetails(id) {
         }
     });
 }
-

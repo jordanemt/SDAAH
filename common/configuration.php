@@ -10,8 +10,9 @@ require 'exceptions/EmptyAttributeException.php';
 require 'exceptions/AssociatedException.php';
 require 'exceptions/DuplicateCardException.php';
 require 'exceptions/DuplicateCodException.php';
-require_once 'exceptions/PasswordsMatchException.php';
-require_once 'exceptions/AuthenticationFailedException.php';
+require 'exceptions/PasswordsMatchException.php';
+require 'exceptions/AuthenticationFailedException.php';
+require 'exceptions/LoadViewException.php';
 new ExceptionsHandler();
 
 //require common

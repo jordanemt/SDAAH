@@ -2,7 +2,7 @@
 
 function insertUser() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=user&action=insert';
         $.ajax({
@@ -16,7 +16,6 @@ function insertUser() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Insertar');
             }
         });
     } else {
@@ -26,7 +25,7 @@ function insertUser() {
 
 function updateUser() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=user&action=update';
         $.ajax({
@@ -39,7 +38,6 @@ function updateUser() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Actualizar');
             }
         });
     } else {
@@ -49,8 +47,8 @@ function updateUser() {
 
 function updateProfile() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
-
+        loadingMessage();
+        
         let url = '?controller=user&action=updateProfile';
         $.ajax({
             url: url,
@@ -62,7 +60,6 @@ function updateProfile() {
             },
             error: function (error) {
                 errorMessage(error.responseText);
-                addHtmlOnSubmitButton('Actualizar');
             }
         });
     } else {
@@ -73,6 +70,8 @@ function updateProfile() {
 function removeUser(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            loadingMessage();
+            
             let url = '?controller=user&action=remove';
             $.ajax({
                 url: url,
@@ -103,5 +102,5 @@ function copyPass() {
     document.execCommand('copy');
     document.body.removeChild(el);
     
-    message('Copiada: ' + pass);
+    showMessage('Copiada: ' + pass);
 }

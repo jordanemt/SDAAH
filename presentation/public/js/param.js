@@ -1,9 +1,11 @@
 /* global Swal, fetch */
 
-function updateParam(id) {
+function updateParam(id, val) {
+    val = val ? val : '';
     Swal.fire({
         title: 'Inserte el porcentaje',
         input: 'text',
+        inputValue: val,
         inputAttributes: {
             autocapitalize: 'off'
         },

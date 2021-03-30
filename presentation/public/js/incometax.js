@@ -2,7 +2,7 @@
 
 function insertIncomeTax() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         let url = '?controller=incomeTax&action=insert';
         $.ajax({
@@ -26,6 +26,8 @@ function insertIncomeTax() {
 function removeIncomeTax(id) {
     Swal.fire(confirmMessage()).then((result) => {
         if (result.isConfirmed) {
+            loadingMessage();
+            
             let url = '?controller=incomeTax&action=remove';
             addHtmlLoadingSpinnerOnSubmitButton();
             $.ajax({

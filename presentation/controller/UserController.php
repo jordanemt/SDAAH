@@ -22,8 +22,7 @@ class UserController {
             $vars['data'] = $this->business->getAll();
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
@@ -32,8 +31,7 @@ class UserController {
             $this->session->checkAdmin();
             $this->view->show($this->controllerName . 'insertView.php', null);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
@@ -43,8 +41,7 @@ class UserController {
             $vars['data'] = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
             $this->view->show($this->controllerName . 'updateView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
     
@@ -54,8 +51,7 @@ class UserController {
             $vars['data'] = $this->business->get($_SESSION['id']);
             $this->view->show($this->controllerName . 'profileView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
@@ -112,29 +108,10 @@ class UserController {
         $entity['id'] = $_SESSION['id'];
         
         //validSession
-        if (!SessionController::validRole(SessionController::$_ADMIN)) {
+        if (!$this->session->validRole(Session::$_ADMIN)) {
             $entity['role'] = $_SESSION['role'];
         }
         
-        $this->business->update($entity);
-        exit();
-    }
-    
-    public function updatePassword() {
-        $this->session->checkConsultant();
-        $filter = array(
-            'id' => Filters::getInt(),
-            'pass' => Filters::getString(),
-            'passConfirm' => Filters::getString(),
-            'firstLastName' => Filters::getString(),
-            'secondLastName' => Filters::getString(),
-            'name' => Filters::getString(),
-            'email' => Filters::getEmail(),
-            'role' => Filters::getInt(),
-            'is_changed_password' => Filters::getInt()
-        );
-        $entity = filter_input_array(INPUT_POST, $filter);
-
         $this->business->update($entity);
         exit();
     }

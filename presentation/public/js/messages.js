@@ -1,9 +1,20 @@
 /* global Swal */
 
-function message(msg) {
+function showMessage(msg) {
     Swal.fire({
+        icon: 'info',
         text: msg
     });
+}
+
+function loadingMessage() {
+    Swal.fire({
+        icon: 'info',
+        title: '!Por favor, espere!',
+        text: 'Procesando...',
+        allowOutsideClick: false
+    });
+    Swal.showLoading();
 }
 
 function successMessage(controllerName) {
@@ -29,6 +40,7 @@ function successMessageVaucher() {
 }
 
 function errorMessage(message) {
+    Swal.close();
     Swal.fire({
         icon: 'error',
         title: '¡Ha ocurrido un error!',
@@ -46,6 +58,7 @@ function confirmMessage() {
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Eliminar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true
     };
 }

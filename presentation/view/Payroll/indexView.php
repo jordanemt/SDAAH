@@ -78,6 +78,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Imp. Renta</th>
                         <th class="text-center">Tot. Deducciones</th>
                         <th class="text-center">Incapacidades</th>
+                        <th class="text-center">Observaciones</th>
                         <th class="text-center">Neto</th>
                         <?php
                         if ($session->validRole(Session::$_DIGITIZER)) {
@@ -144,6 +145,17 @@ include_once 'presentation/public/header.php';
                                 </a>
                             </td>
                             <td class="text-center">
+                                <?php 
+                                if($value['observations']) {
+                                    ?>
+                                    <a href="#" onclick="showMessage('<?= $value['observations'] ?>')"><i class="fa fa-eye"></i> Ver</a>
+                                    <?php
+                                } else {
+                                    echo '---';
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
                             <?php
@@ -193,6 +205,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center"><?= '₡' . number_format($totalIncome, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalDeduction, 2, '.', ' '); ?></th>
                         <th class="text-center"><?= '₡' . number_format($totalDisabilities, 2, '.', ' '); ?></th>
+                        <th class="text-center">---</th>
                         <th class="text-center"><?= '₡' . number_format($totalNet, 2, '.', ' '); ?></th>
                         <?php
                         if ($session->validRole(Session::$_DIGITIZER)) {

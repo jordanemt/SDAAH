@@ -76,7 +76,7 @@ class Session {
             self::$instance = new self();
         }
 
-        $this->loadSession();
+        self::$instance->loadSession();
         return self::$instance;
     }
 

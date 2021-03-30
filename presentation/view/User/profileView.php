@@ -72,7 +72,7 @@ include_once 'presentation/public/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="role">Rol</label>
-                        <select class="form-control" id="role" name="role" <?= SessionController::validRole(SessionController::$_ADMIN) ? '' : 'disabled'; ?>>
+                        <select class="form-control" id="role" name="role" <?= $session->validRole(Session::$_ADMIN) ? '' : 'disabled'; ?>>
                             <option disabled>Seleccione una opción</option>
                             <option <?php if ($vars['data']['role'] == 1) { echo 'selected'; } ?> value="1">Consultor</option>
                             <option <?php if ($vars['data']['role'] == 2) { echo 'selected'; } ?> value="2">Digitador</option>

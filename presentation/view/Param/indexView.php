@@ -18,7 +18,7 @@ include_once 'presentation/public/header.php';
                 <thead>
                     <tr>
                         <th class="text-center">Nombre</th>
-                        <th class="text-center">Porcentaje</th>
+                        <th class="text-center">Tasa</th>
                         <th class="text-center">Acción</th>
                     </tr>
                 </thead>
@@ -30,7 +30,7 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['name']; ?></td>
                             <td class="text-center"><?= $value['percentage'] . '%' ?></td>
                             <td class="text-center">
-                                <a href="#" onclick="updateParam(<?= $value['id'] ?>);"><i class="fa fa-edit"></i> Editar</a>
+                                <a href="#" onclick="updateParam(<?= $value['id'] ?>, <?= $value['percentage'] ?>);"><i class="fa fa-edit"></i> Editar</a>
                             </td>
                         </tr>
                         <?php

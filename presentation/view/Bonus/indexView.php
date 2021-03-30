@@ -140,11 +140,11 @@ include_once 'presentation/public/header.php';
                                 if ($session->validRole(Session::$_DIGITIZER)) {
                                     if (empty($value['alimonyId'])) {
                                         ?>
-                                        <a href="#" onclick="insertAlimony(<?= $value['id'] ?>)"><i class="fa fa-edit"></i> Editar</a>
+                                        <a href="#" onclick="insertAlimony(<?= $value['idEmployee'] ?>)"><i class="fa fa-edit"></i> Editar</a>
                                         <?php
                                     } else {
                                         ?>
-                                        <a href="#" onclick="updateAlimony(<?= $value['alimonyId'] ?>)"><i class="fa fa-edit"></i> Editar</a>
+                                        <a href="#" onclick="updateAlimony(<?= $value['alimonyId'] ?>, <?= $value['alimony'] ?>)"><i class="fa fa-edit"></i> Editar</a>
                                         <?php
                                     }
                                 }
