@@ -5,16 +5,14 @@ BEGIN
 	SELECT* FROM `employee` WHERE `employee`.`id` = id AND `employee`.`isDeleted` = 0  ORDER BY `location`;
 END//
 
-CREATE PROCEDURE `sp_get_employee_with_deleted`(
-	id INT
-)
-BEGIN
-	SELECT* FROM `employee` WHERE `employee`.`id` = id;
-END//
-
 CREATE PROCEDURE `sp_get_all_employee`()
 BEGIN
-	SELECT* FROM `employee` WHERE `employee`.`isDeleted` = 0;
+	SELECT* FROM `employee` WHERE `employee`.`isDeleted` = 0 ORDER BY `location` ASC, `firstLastName` ASC;
+END//
+
+CREATE PROCEDURE `sp_get_all_not_liquidated_employee`()
+BEGIN
+	SELECT* FROM `employee` WHERE `employee`.`isDeleted` = 0 AND `employee`.`isLiquidated` = 0 ORDER BY `location` ASC, `firstLastName` ASC;
 END//
 
 CREATE PROCEDURE `sp_get_employee_days_spent_on_vacation_by_id`(
@@ -44,7 +42,8 @@ CREATE PROCEDURE `sp_insert_employee`(
     idPosition INT,
     location VARCHAR(14),
     admissionDate DATE,
-    bankAccount VARCHAR(15),
+    bank VARCHAR(30),
+    bankAccount VARCHAR(30),
     email VARCHAR(100),
     cssIns VARCHAR(4),
     isAffiliated SMALLINT,
@@ -61,6 +60,7 @@ BEGIN
         `idPosition`,
         `location`,
         `admissionDate`,
+        `bank`,
         `bankAccount`,
         `email`,
         `cssIns`,
@@ -76,6 +76,7 @@ BEGIN
             idPosition,
             location,
             admissionDate,
+            bank,
             bankAccount,
             email,
             cssIns,
@@ -93,7 +94,8 @@ CREATE PROCEDURE `sp_update_employee`(
     idPosition INT,
     location VARCHAR(14),
     admissionDate DATE,
-    bankAccount VARCHAR(15),
+    bank VARCHAR(30),
+    bankAccount VARCHAR(30),
     email VARCHAR(100),
     cssIns VARCHAR(4),
     isAffiliated SMALLINT,
@@ -110,6 +112,7 @@ BEGIN
         `idPosition` = idPosition,
         `location` = location,
         `admissionDate` = admissionDate,
+        `bank` = bank,
         `bankAccount` = bankAccount,
         `email` = email,
         `cssIns` = cssIns,
@@ -132,39 +135,13 @@ CREATE PROCEDURE `sp_duplicate_card_employee`(
 	card VARCHAR(9)
 )
 BEGIN
-    SELECT* FROM `employee` WHERE `employee`.`card` = card AND `employee`.`isDeleted` = 0;
-END//
+    SELECT* FROM `employee` WHERE `employee`.`card` = card AND 
+        `employee`.`isLiquidated` = 0 AND `employee`.`isDeleted` = 0;
+END
 
-CREATE PROCEDURE `sp_get_alimonyOnBonus_by_idEmployee_and_year`(
-	idEmployee INT,
-    year INT
+CREATE PROCEDURE `sp_is_associated_with_payment_employee`(
+	id int
 )
 BEGIN
-	SELECT* FROM `alimonyOnBonus` WHERE `alimonyOnBonus`.`idEmployee` = idEmployee AND `alimonyOnBonus`.`year` = year;
-END//
-
-CREATE PROCEDURE `sp_insert_alimonyOnBonus`(
-	idEmployee INT,
-    year INT,
-    mount DECIMAL(11,2)
-)
-BEGIN
-	INSERT INTO `alimonyOnBonus` (
-        `idEmployee`,
-        `year`,
-        `mount`
-        ) VALUES (
-            idEmployee,
-            year,
-            mount);
-END//
-
-CREATE PROCEDURE `sp_update_alimonyOnBonus`(
-    id INT,
-    mount DECIMAL(11,2)
-)
-BEGIN
-	UPDATE `alimonyOnBonus`
-    SET `mount` = mount
-    WHERE `alimonyOnBonus`.`id` = id;
+    SELECT* FROM `payment` WHERE `payment`.`idEmployee` = id AND `payment`.`isDeleted` = 0;
 END//

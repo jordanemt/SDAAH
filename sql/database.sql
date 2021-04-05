@@ -34,11 +34,12 @@ CREATE TABLE `employee` (
     `idPosition` INT NOT NULL,
     `location` VARCHAR(14) NOT NULL CHECK(location IN('Administrativo', 'Operativo')),
     `admissionDate` DATE NOT NULL,
-    `bankAccount` VARCHAR(15) NOT NULL,
+    `bank` VARCHAR(30) NOT NULL,
+    `bankAccount` VARCHAR(30) NOT NULL,
     `email` VARCHAR(100) NULL,
     `cssIns` VARCHAR(4) NOT NULL,
-    `isAffiliated` SMALLINT NULL DEFAULT 0,
-    `isLiquidated` SMALLINT NULL DEFAULT 0,
+    `isAffiliated` SMALLINT NOT NULL DEFAULT 0,
+    `isLiquidated` SMALLINT NOT NULL DEFAULT 0,
     `observations` VARCHAR(500) NULL,
     `isDeleted` BOOL NOT NULL DEFAULT 0,
     
@@ -46,7 +47,7 @@ CREATE TABLE `employee` (
     FOREIGN KEY (`idPosition`) REFERENCES `position`(`id`)
 );
 
-CREATE TABLE `alimonyOnBonus` (
+CREATE TABLE `alimonybonus` (
     `id` INT AUTO_INCREMENT,
     `idEmployee` INT NOT NULL,
     `year` INT NOT NULL,
