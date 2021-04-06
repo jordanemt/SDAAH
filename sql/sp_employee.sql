@@ -137,7 +137,7 @@ CREATE PROCEDURE `sp_duplicate_card_employee`(
 BEGIN
     SELECT* FROM `employee` WHERE `employee`.`card` = card AND 
         `employee`.`isLiquidated` = 0 AND `employee`.`isDeleted` = 0;
-END
+END//
 
 CREATE PROCEDURE `sp_is_associated_with_payment_employee`(
 	id int
