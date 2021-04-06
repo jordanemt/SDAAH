@@ -27,12 +27,12 @@ class DeductionBusiness {
     }
 
     public function insert($name) {
-        //Valid empties
+        //Valid empty
         if (empty($name)) {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($name) > 25) {
             throw new AttributeConflictException();
         }
@@ -52,7 +52,7 @@ class DeductionBusiness {
 
     private function validAssociatedWithPayment($id) {
         if ($this->data->isAssociatedWithPayment($id)) {
-            throw new AssociatedException();
+            throw new AssociatedException('La deducción se ha utilizado en la nómina');
         }
     }
 

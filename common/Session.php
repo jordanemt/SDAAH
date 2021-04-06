@@ -31,6 +31,10 @@ class Session {
             $_SESSION['role'] = $user['role'];
         }
     }
+    
+    public function logout() {
+        session_destroy();
+    }
 
     public function isNotLoggedThenRedirect() {
         if (!isset($_SESSION['id'])) {

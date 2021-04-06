@@ -15,8 +15,8 @@ function updateParam(id, val) {
         showCancelButton: true,
         confirmButtonText: 'Actualizar',
         cancelButtonText: 'Cancelar',
-        showLoaderOnConfirm: true,
         preConfirm: (percentaje) => {
+            loadingMessage();
             let url = '?controller=param&action=update';
             $.ajax({
                 url: url,
@@ -33,8 +33,7 @@ function updateParam(id, val) {
                     errorMessage(error.responseText);
                 }
             });
-        },
-        allowOutsideClick: () => !Swal.isLoading()
+        }
     });
     setPercentageMaskOnElement('.sweetPercentageMask');
 }

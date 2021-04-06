@@ -16,7 +16,7 @@ function insertAlimony(idEmployee) {
         preConfirm: (mount) => {
             loadingMessage();
 
-            var url = '?controller=employee&action=insertAlimonyOnBonus';
+            var url = '?controller=alimonyBonus&action=insert';
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -57,7 +57,7 @@ function updateAlimony(id, val) {
         preConfirm: (mount) => {
             loadingMessage();
             
-            var url = '?controller=employee&action=updateAlimonyOnBonus';
+            var url = '?controller=alimonyBonus&action=update';
             $.ajax({
                 url: url,
                 type: 'POST',

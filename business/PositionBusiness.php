@@ -31,15 +31,15 @@ class PositionBusiness {
     }
 
     public function insert($entity) {
-        //Valid empties
+        //Valid empty
         if (empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                empty($entity['salary'])) {
+                isset($entity['salary'])) {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($entity['cod']) !== 4 ||
                 strlen($entity['name']) > 25 ||
                 ($entity['type'] != 'Mensual' && $entity['type'] != 'Diario')) {
@@ -52,16 +52,16 @@ class PositionBusiness {
     }
 
     public function update($entity) {
-        //Valid empties
+        //Valid empty
         if (empty($entity['id']) ||
                 empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                empty($entity['salary'])) {
+                isset($entity['salary'])) {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($entity['cod']) !== 4 ||
                 strlen($entity['name']) > 25 ||
                 ($entity['type'] != 'Mensual' && $entity['type'] != 'Diario')) {
@@ -94,7 +94,7 @@ class PositionBusiness {
     
     private function validAssociatedWithEmployee($id) {
         if ($this->data->isAssociatedWithEmployee($id)) {
-            throw new AssociatedException();
+            throw new AssociatedException('Uno o más empleados tienen este Puesto');
         }
     }
 

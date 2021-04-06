@@ -19,7 +19,7 @@ class ParamBusiness {
     }
 
     public function update($entity) {
-        //Valid empties
+        //Valid empty
         if (empty($entity['id'])) {
             throw new EmptyAttributeException();
         }

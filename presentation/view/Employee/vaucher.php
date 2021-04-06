@@ -67,7 +67,7 @@ $currencyPath = 'presentation/public/img/colon.png';
         <div class="body">
             <table>
                 <tr>
-                    <th style="width: 13%; text-align: center;" class="border">#Cédula:</th>
+                    <th style="width: 13%; text-align: center;" class="border">Cédula:</th>
                     <td style="width: 20%; text-align: center;" class="border"><?= $data['card'] ?></td>
                     <th style="width: 13%; text-align: center;" class="border">Nombre:</th>
                     <td style="width: 54%; text-align: center;" class="border"><?= $data['firstLastName'] . ' ' . $data['secondLastName'] . ' ' . $data['name'] ?></td>
@@ -103,16 +103,17 @@ $currencyPath = 'presentation/public/img/colon.png';
                 <tr>
                     <th style="width: 13%; text-align: center;" class="border">Ingreso:</th>
                     <td style="width: 20%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['admissionDate'])) ?></td>
-                    <th style="width: 13%; text-align: center;" class="border">Nacimiento:</th>
-                    <td style="width: 21%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['birthdate'])) ?></td>
-                    <td style="width: 33%;"></td>
+                    <th style="width: 13%; text-align: center;" class="border">Banco:</th>
+                    <td style="width: 21%; text-align: center;" class="border"><?= $data['bank'] ?></td>
+                    <th style="width: 13%; text-align: center;" class="border">Cuenta:</th>
+                    <td style="width: 20%; text-align: center;" class="border"><?= $data['bankAccount'] ?></td>
                 </tr>
             </table>
             
             <table>
                 <tr>
-                    <th style="width: 13%; text-align: center;" class="border">#Cuenta:</th>
-                    <td style="width: 20%; text-align: center;" class="border"><?= Util::maskAccount($data['bankAccount']); ?></td>
+                    <th style="width: 13%; text-align: center;" class="border">Nacimiento:</th>
+                    <td style="width: 20%; text-align: center;" class="border"><?= date('d-m-Y', strtotime($data['birthdate'])) ?></td>
                     <th style="width: 13%; text-align: center;" class="border">email:</th>
                     <td style="width: 54%; text-align: center;" class="border"><?= $data['email'] ?></td>
                 </tr>

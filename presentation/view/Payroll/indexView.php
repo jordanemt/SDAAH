@@ -63,7 +63,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <table class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+            <table class="table table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>

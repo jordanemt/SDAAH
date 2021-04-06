@@ -19,7 +19,7 @@ class IncomeTaxBusiness {
     }
 
     public function insert($entity) {
-        //Valid empties
+        //Valid empty
         if (empty($entity['section'])) {
             throw new EmptyAttributeException();
         }

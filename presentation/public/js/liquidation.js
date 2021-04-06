@@ -111,7 +111,11 @@ function loadLiquidation(data) {
 }
 
 function setActiveOnchangeLiquidation() {
-    $('.active-onchange-liquidation').change(function () {
+    $('select.active-onchange-liquidation').change(function () {
+        calcLiquidation();
+    });
+    
+    $('input.active-onchange-liquidation').keyup(function () {
         calcLiquidation();
     });
 }

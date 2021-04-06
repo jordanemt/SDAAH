@@ -24,8 +24,9 @@ class PayrollController {
     }
 
     public function index() {
+        $this->session->checkConsultant();
+        
         try {
-            $this->session->checkConsultant();
             $inputFilter = array(
                 'location' => Filters::getString(),
                 'fortnight' => Filters::getInt(),
@@ -36,14 +37,14 @@ class PayrollController {
             $vars['data'] = $this->business->getBiweeklyPayroll($filter);
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function monthlyView() {
+        $this->session->checkConsultant();
+        
         try {
-            $this->session->checkConsultant();
             $inputFilter = array(
                 'month' => Filters::getInt(),
                 'year' => Filters::getInt()
@@ -53,14 +54,14 @@ class PayrollController {
             $vars['data'] = $this->business->getMonthlyPayroll($filter);
             $this->view->show($this->controllerName . 'monthlyView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function provisionReportView() {
+        $this->session->checkConsultant();
+        
         try {
-            $this->session->checkConsultant();
             $inputFilter = array(
                 'month' => Filters::getInt(),
                 'year' => Filters::getInt()
@@ -73,14 +74,14 @@ class PayrollController {
             $vars['data'] = $this->business->getProvisionReport($filter);
             $this->view->show($this->controllerName . 'provisionReportView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function detailProvisionReportView() {
+        $this->session->checkConsultant();
+        
         try {
-            $this->session->checkConsultant();
             $inputFilter = array(
                 'month' => Filters::getInt(),
                 'year' => Filters::getInt()
@@ -93,14 +94,14 @@ class PayrollController {
             $vars['data'] = $this->business->getDetailProvisionReport($filter);
             $this->view->show($this->controllerName . 'detailProvisionReportView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
-    public function bncrReportView() {
+    public function bankReportView() {
+        $this->session->checkConsultant();
+        
         try {
-            $this->session->checkConsultant();
             $inputFilter = array(
                 'month' => Filters::getInt(),
                 'year' => Filters::getInt()
@@ -108,45 +109,9 @@ class PayrollController {
             $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
 
             $vars['data'] = $this->business->getMonthlyPayroll($filter);
-            $this->view->show($this->controllerName . 'bncrReportView.php', $vars);
+            $this->view->show($this->controllerName . 'bankReportView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
-        }
-    }
-
-    public function insertView() {
-        try {
-            $this->session->checkDigitizer();
-            $employeeBusiness = new EmployeeBusiness();
-            $vars['employees'] = $employeeBusiness->getAll();
-
-            $deductionBusiness = new DeductionBusiness();
-            $vars['deductions'] = $deductionBusiness->getAll();
-
-            $this->view->show($this->controllerName . 'insertView.php', $vars);
-        } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
-        }
-    }
-
-    public function updateView() {
-        try {
-            $this->session->checkDigitizer();
-            $employeeBusiness = new EmployeeBusiness();
-            $vars['employees'] = $employeeBusiness->getAll();
-
-            $deductionBusiness = new DeductionBusiness();
-            $vars['deductions'] = $deductionBusiness->getAll();
-
-            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
-            $vars['data'] = $this->business->get($id);
-            $this->view->show($this->controllerName . 'updateView.php', $vars);
-        } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 

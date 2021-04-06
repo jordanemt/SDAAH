@@ -12,19 +12,45 @@ include_once 'presentation/public/header.php';
 
         <div class="card-body">
 
-            <div class="d-flex justify-content-md-start justify-content-center">
-                <?php
-                if ($session->validRole(Session::$_DIGITIZER)) {
-                    ?>
-                    <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+            <div class="d-flex flex-md-row flex-column">
+
+                <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
                     <?php
-                }
-                ?>
+                    if ($session->validRole(Session::$_DIGITIZER)) {
+                        ?>
+                        <a class="btn btn-primary" href="?controller=employee&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Insertar</a>
+                        <?php
+                    }
+                    ?>
+                </div>
+
+                <div class="col-md-7 px-0">
+
+                    <form id="search" class="col-md-12 px-0" action="" method="get">
+
+                        <input class="d-none" type="text" name="controller" value="employee" readonly>
+
+                        <div class="d-flex flex-md-row flex-column justify-content-md-end">
+
+                            <div class="p-1 text-center">
+                                <input class="form-check-input" type="checkbox" value="1" id="isLiquidated" name="isLiquidated" 
+                                       onchange="submitSearch();" <?= $vars['isLiquidated'] ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="isLiquidated">
+                                    Liquidados
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
             </div>
 
             <hr>
 
-            <table id="data-table" class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+            <table id="data-table" class="table table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
@@ -34,6 +60,7 @@ include_once 'presentation/public/header.php';
                         <th class="text-center">Sexo</th>
                         <th class="text-center">Puesto</th>
                         <th class="text-center">Localidad</th>
+                        <th class="text-center">Banco</th>
                         <th class="text-center">N/Cuenta</th>
                         <th class="text-center">F/Nacimiento</th>
                         <th class="text-center">F/Ingreso</th>
@@ -61,7 +88,7 @@ include_once 'presentation/public/header.php';
                     <?php
                     foreach ($vars['data'] as $value) {
                         ?>
-                        <tr>
+                        <tr class="<?= $value['isLiquidated'] ? 'isLiquidated' : ''; ?>">
                             <td class="text-center"><?= $value['card'] ?></td>
                             <td class="text-center"><?= $value['firstLastName'] ?></td>
                             <td class="text-center"><?= $value['secondLastName'] ?></td>
@@ -69,7 +96,8 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['gender'] ?></td>
                             <td class="text-center"><?= $value['position']['name'] ?></td>
                             <td class="text-center"><?= $value['location'] ?></td>
-                            <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
+                            <td class="text-center"><?= $value['bank'] ?></td>
+                            <td class="text-center"><?= $value['bankAccount'] ?></td>
                             <td class="text-center"><?= date_format(date_create($value['birthdate']), 'd/m/Y'); ?></td>
                             <td class="text-center"><?= date_format(date_create($value['admissionDate']), 'd/m/Y'); ?></td>
                             <td class="text-center"><?= $value['position']['type'] ?></td>
@@ -103,13 +131,13 @@ include_once 'presentation/public/header.php';
                             <td class="text-center"><?= $value['isLiquidated'] ? 'Sí' : 'No'; ?></td>
                             <td class="text-center">
                                 <?php
-                                    if ($value['observations']) {
-                                        ?>
-                                        <a href="#" onclick="message('<?= $value['observations'] ?>')"><i class="fa fa-eye"></i> Ver</a>
-                                        <?php
-                                    } else {
-                                        echo '---';
-                                    }
+                                if ($value['observations']) {
+                                    ?>
+                                    <a href="#" onclick="message('<?= $value['observations'] ?>')"><i class="fa fa-eye"></i> Ver</a>
+                                    <?php
+                                } else {
+                                    echo '---';
+                                }
                                 ?>
                             </td>
                             <?php

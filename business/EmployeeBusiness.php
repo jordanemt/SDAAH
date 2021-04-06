@@ -30,9 +30,13 @@ class EmployeeBusiness {
         return $this->data->getAll();
     }
     
+    public function getAllNotLiquidated() {
+        return $this->data->getAllNotLiquidated();
+    }
+
     public function getAllOnMonthBirthday() {
         $employees = $this->data->getAll();
-        
+
         $month = date('m');
         $employeesOnBirthday = Array();
         foreach ($employees as $employee) {
@@ -41,12 +45,12 @@ class EmployeeBusiness {
                 array_push($employeesOnBirthday, $employee);
             }
         }
-        
+
         return $employeesOnBirthday;
     }
 
     public function getAllDaysSpentOnVacation($cutoff) {
-        $employees = $this->data->getAll();
+        $employees = $this->data->getAllNotLiquidated();
         $date1 = !empty($cutoff) ? new DateTime($cutoff) : new DateTime('now');
 
         $array = array();
@@ -80,26 +84,28 @@ class EmployeeBusiness {
                 empty($entity['idPosition']) ||
                 empty($entity['location']) ||
                 empty($entity['admissionDate']) ||
+                empty($entity['bank']) ||
                 empty($entity['bankAccount']) ||
                 empty($entity['cssIns'])) {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($entity['card']) !== 9 ||
                 strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
                 strlen($entity['name']) > 50 ||
                 ($entity['gender'] != 'Masculino' && $entity['gender'] != 'Femenino') ||
                 ($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
-                strlen($entity['bankAccount']) !== 15 ||
+                (strlen($entity['bank']) < 1 || strlen($entity['bank']) > 30) ||
+                (strlen($entity['bankAccount']) < 1 || strlen($entity['bankAccount']) > 30) ||
                 (!empty($entity['email']) && strlen($entity['email']) > 100) ||
                 strlen($entity['cssIns']) !== 4 ||
-                (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1 ||
                 (!empty($entity['observations']) && $entity['observations'] > 500)) {
             throw new AttributeConflictException();
         }
-
+        
+        $entity['isAffiliated'] = $entity['isAffiliated'] ? 1 : 0;
         $this->validDuplicateCard($entity['card']);
 
         $this->data->insert($entity);
@@ -115,25 +121,28 @@ class EmployeeBusiness {
                 empty($entity['idPosition']) ||
                 empty($entity['location']) ||
                 empty($entity['admissionDate']) ||
+                empty($entity['bank']) ||
                 empty($entity['bankAccount']) ||
                 empty($entity['cssIns'])) {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
                 strlen($entity['name']) > 50 ||
                 ($entity['gender'] != 'Masculino' && $entity['gender'] != 'Femenino') ||
                 ($entity['location'] != 'Administrativo' && $entity['location'] != 'Operativo') ||
-                strlen($entity['bankAccount']) !== 15 ||
+                (strlen($entity['bank']) < 1 || strlen($entity['bank']) > 30) ||
+                (strlen($entity['bankAccount']) < 1 || strlen($entity['bankAccount']) > 30) ||
                 (!empty($entity['email']) && strlen($entity['email']) > 100) ||
                 strlen($entity['cssIns']) !== 4 ||
-                (!empty($entity['isAffiliated'])) && $entity['isAffiliated'] != 1 ||
-                (!empty($entity['isLiquidated']) && $entity['isLiquidated'] != 1) ||
                 (!empty($entity['observations']) && $entity['observations'] > 500)) {
             throw new AttributeConflictException();
         }
+        
+        $entity['isAffiliated'] = $entity['isAffiliated'] ? 1 : 0;
+        $entity['isLiquidated'] = $entity['isLiquidated'] ? 1 : 0;
 
         $this->data->update($entity);
     }
@@ -142,6 +151,8 @@ class EmployeeBusiness {
         if (empty($id)) {
             throw new AttributeConflictException();
         }
+        
+        $this->validAssociatedWithPayment($id);
 
         $this->data->remove($id);
     }
@@ -151,34 +162,11 @@ class EmployeeBusiness {
             throw new DuplicateCardException();
         }
     }
-
-    public function getAlimonyOnBonusByIdEmployeeByYear($idEmploye, $year) {
-        if (empty($idEmploye) || empty($year)) {
-            throw new AttributeConflictException();
-        }
-
-        return $this->data->getAlimonyOnBonusByIdEmployeeByYear($idEmploye, $year);
-    }
-
-    public function insertAlimonyOnBonus($entity) {
-        //Valid empties
-        if (empty($entity['idEmployee']) ||
-                empty($entity['year']) ||
-                !isset($entity['mount'])) {
-            throw new EmptyAttributeException();
-        }
-        
-        $this->data->insertAlimonyOnBonus($entity);
-    }
     
-    public function updateAlimonyOnBonus($entity) {
-        //Valid empties
-        if (empty($entity['id']) ||
-                !isset($entity['mount'])) {
-            throw new EmptyAttributeException();
+    private function validAssociatedWithPayment($id) {
+        if ($this->data->isAssociatedWithPayment($id)) {
+            throw new AssociatedException('Empleado se encuentra en nómina');
         }
-        
-        $this->data->updateAlimonyOnBonus($entity);
     }
 
 }

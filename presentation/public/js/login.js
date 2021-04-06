@@ -2,7 +2,7 @@
 
 function login() {
     if ($('#form').valid()) {
-        addHtmlLoadingSpinnerOnSubmitButton();
+        loadingMessage();
 
         var url = '?controller=login&action=login';
         $.ajax({

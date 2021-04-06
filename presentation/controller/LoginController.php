@@ -15,6 +15,7 @@ class LoginController {
 
     public function index() {
         $this->session->isLoggedThenRedirect();
+        
         $this->view->show($this->controllerName . 'indexView.php', null);
     }
     
@@ -30,7 +31,9 @@ class LoginController {
     }
     
     public function logout() {
-        session_destroy();
+        $this->session->logout();
+        
+        exit();
     }
 
 }

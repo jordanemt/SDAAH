@@ -10,10 +10,10 @@ function insertDeduction() {
         showCancelButton: true,
         confirmButtonText: 'Insertar',
         cancelButtonText: 'Cancelar',
-        showLoaderOnConfirm: true,
         preConfirm: (name) => {
+            loadingMessage();
             let url = '?controller=deduction&action=insert';
-            addHtmlLoadingSpinnerOnSubmitButton();
+
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -29,8 +29,7 @@ function insertDeduction() {
                     addHtmlOnSubmitButton('<i class="fa fa-folder-plus"></i> Insertar');
                 }
             });
-        },
-        allowOutsideClick: () => !Swal.isLoading()
+        }
     });
 }
 
@@ -40,7 +39,6 @@ function removeDeduction(id) {
             loadingMessage();
             
             let url = '?controller=deduction&action=remove';
-            addHtmlLoadingSpinnerOnSubmitButton();
             $.ajax({
                 url: url,
                 type: 'POST',

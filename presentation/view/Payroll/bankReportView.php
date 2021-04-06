@@ -9,7 +9,7 @@ include_once 'presentation/public/header.php';
     <div class="card">
 
         <div class="card-header text-center">
-            <h2>Reporte del BNCR</h2>
+            <h2>Reporte Bancario</h2>
         </div>
 
         <div class="card-body">
@@ -17,7 +17,7 @@ include_once 'presentation/public/header.php';
             <div class="d-flex flex-md-row flex-column">
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
+                    <!--<a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>-->
                 </div>
 
                 <div class="col-md-7 px-0">
@@ -54,11 +54,12 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <table id="data-table" class="table table-striped table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+            <table id="data-table" class="table table-hover table-bordered dt-responsive nowrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
                         <th class="text-center">Nombre Completo</th>
+                        <th class="text-center">Banco</th>
                         <th class="text-center">Cta Banco</th>
                         <th class="text-center">Monto</th>
                     </tr>
@@ -71,7 +72,8 @@ include_once 'presentation/public/header.php';
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
                             <td class="text-center"><p><?= $value['completeName'] ?></p></td>
-                            <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
+                            <td class="text-center"><?= $value['bank'] ?></td>
+                            <td class="text-center"><?= $value['bankAccount'] ?></td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                             </td>
@@ -82,6 +84,7 @@ include_once 'presentation/public/header.php';
                     ?>
                     <tr>
                         <th class="text-center">Totales</th>
+                        <th class="text-center">---</th>
                         <th class="text-center">---</th>
                         <th class="text-center">---</th>
                         <th class="text-center"><?= '₡' . number_format($total, 2, '.', ' '); ?></th>

@@ -17,26 +17,27 @@ class DeductionController {
     }
 
     public function index() {
+        $this->session->checkAdmin();
+        
         try {
-            $this->session->checkAdmin();
             $vars['data'] = $this->business->getAll();
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function insert() {
         $this->session->checkAdmin();
+        
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-
         $this->business->insert($name);
         exit();
     }
 
     public function remove() {
         $this->session->checkAdmin();
+        
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
         exit();
     }

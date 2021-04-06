@@ -16,7 +16,7 @@ class UserBusiness {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($card) !== 9 ||
                 (strlen($pass) > 11 || strlen($pass) < 6)) {
             throw new AttributeConflictException();
@@ -44,7 +44,7 @@ class UserBusiness {
     }
 
     public function insert($entity) {
-        //Valid empties
+        //Valid empty
         if (empty($entity['card']) ||
                 empty($entity['firstLastName']) ||
                 empty($entity['secondLastName']) ||
@@ -56,7 +56,7 @@ class UserBusiness {
             throw new EmptyAttributeException();
         }
 
-        //Valid lentch
+        //Valid length
         if (strlen($entity['card']) !== 9 ||
                 strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
@@ -85,7 +85,7 @@ class UserBusiness {
             throw new EmptyAttributeException();
         }
 
-        //valid lentch
+        //valid length
         if (strlen($entity['firstLastName']) > 25 ||
                 strlen($entity['secondLastName']) > 25 ||
                 strlen($entity['name']) > 50 ||
@@ -101,7 +101,7 @@ class UserBusiness {
                 throw new EmptyAttributeException();
             }
 
-            //valid lentch
+            //valid length
             if ((strlen($entity['pass']) > 11 || strlen($entity['pass']) < 6) ||
                     (strlen($entity['passConfirm']) > 11 || strlen($entity['passConfirm']) < 6)) {
                 throw new AttributeConflictException();

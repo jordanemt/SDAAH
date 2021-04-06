@@ -57,7 +57,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                 <tr>
                     <td style="width: 20%;"></td>
                     <td style="width: 60%; text-align: center;">
-                        <h4><strong><u>Cálculo de Vacaciones Anuales por Empleado</u></strong></h4>
+                        <h4><strong><u>Cálculo de Vacaciones Anuales</u></strong></h4>
                     </td>
                     <td style="width: 20%;"></td>
                 </tr>

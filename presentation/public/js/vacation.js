@@ -63,7 +63,11 @@ function calcVacationAccrued() {
 }
 
 function setActiveOnchangeVacation() {
-    $('.active-onchange-vacation').change(function () {
+    $('select.active-onchange-vacation').change(function () {
+        calcVacationAccrued();
+    });
+    
+    $('input.active-onchange-vacation').keyup(function () {
         calcVacationAccrued();
     });
 }

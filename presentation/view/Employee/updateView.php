@@ -106,10 +106,17 @@ include_once 'presentation/public/header.php';
                 </div>
 
                 <h4>Banco y Contacto</h4>
-
-                <div class="form-group">
-                    <label for="bankAccount">Número de Cuenta Bancaria</label>
-                    <input type="text" class="form-control accountMask" id="bankAccount" name="bankAccount" minlength="19" maxlength="19" value="<?= $vars['data']['bankAccount'] ?>" required>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="bank">Banco</label>
+                        <input type="text" class="form-control textMask" id="bank" name="bank" minlength="1" maxlength="30" value="<?= $vars['data']['bank'] ?>" placeholder="Ingrese lo que se le solicita" required>
+                    </div>
+                    
+                    <div class="form-group col-md-6">
+                        <label for="bankAccount">Número de Cuenta Bancaria</label>
+                        <input type="text" class="form-control" id="bankAccount" name="bankAccount" minlength="1" maxlength="30" value="<?= $vars['data']['bankAccount'] ?>" placeholder="Ingrese lo que se le solicita"  required>
+                    </div>
                 </div>
 
                 <div class="form-row">

@@ -139,7 +139,7 @@ $session = Session::singleton();
                                     <a class="dropdown-item" href="?controller=payroll">Quincenal</a>
                                     <a class="dropdown-item" href="?controller=payroll&action=monthlyView">Mensual</a>
                                     <a class="dropdown-item" href="?controller=payroll&action=provisionReportView">Reporte de Provisiones de Ley</a>
-                                    <a class="dropdown-item" href="?controller=payroll&action=bncrReportView">Reporte del BNCR</a>
+                                    <a class="dropdown-item" href="?controller=payroll&action=bankReportView">Reporte Bancario</a>
                                 </div>
                             </li>
                             <?php

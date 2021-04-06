@@ -2,6 +2,7 @@
 
 require_once 'business/EmployeeBusiness.php';
 require_once 'business/PaymentBusiness.php';
+require_once 'business/AlimonyBonusBusiness.php';
 
 class BonusBusiness {
 
@@ -10,10 +11,13 @@ class BonusBusiness {
 
         //getting employees
         $employeeBusiness = new EmployeeBusiness();
-        $employees = $employeeBusiness->getAll();
+        $employees = $employeeBusiness->getAllNotLiquidated();
+        
+        $alimonyBonusBusiness = new AlimonyBonusBusiness();
 
         foreach ($employees as $employee) {
-            $alimony = $employeeBusiness->getAlimonyOnBonusByIdEmployeeByYear($employee['id'], $year);
+            
+            $alimony = $alimonyBonusBusiness->getByIdEmployeeByYear($employee['id'], $year);
 
             $bonus = $this->calcBonus($employee['id'], $year);
             $bonus['idEmployee'] = $employee['id'];

@@ -17,18 +17,19 @@ class ParamController {
     }
 
     public function index() {
+        $this->session->checkAdmin();
+        
         try {
-            $this->session->checkAdmin();
             $vars['data'] = $this->business->getAll();
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function update() {
         $this->session->checkAdmin();
+        
         $filter = array(
             'id' => Filters::getInt(),
             'percentage' => Filters::getFloat()

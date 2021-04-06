@@ -22,8 +22,9 @@ class VacationController {
     }
 
     public function index() {
+        $this->session->checkDigitizer();
+        
         try {
-            $this->session->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
             $vars['employees'] = $employeeBusiness->getAll();
 
@@ -32,28 +33,29 @@ class VacationController {
 
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function detail() {
+        $this->session->checkDigitizer();
+        
         try {
-            $this->session->checkDigitizer();
             $cutoff = filter_input(INPUT_GET, 'cutoff');
 
             $employeeBusiness = new EmployeeBusiness();
             $vars['data'] = $employeeBusiness->getAllDaysSpentOnVacation($cutoff);
             $vars['cutoff'] = !empty($cutoff) ? $cutoff : date('Y-m-d');
+
             $this->view->show($this->controllerName . 'detailView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function calcVacationAccrued() {
         $this->session->checkDigitizer();
+        
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'vacationDays' => Filters::getInt(),
@@ -64,15 +66,18 @@ class VacationController {
             'deductionsMounts' => Filters::getFloat()
         );
         $input = filter_input_array(INPUT_GET, $filter);
-
-        echo json_encode($this->business->calcVacationAccrued($input));
+        
+        $calculatedVacationAccrued = $this->business->calcVacationAccrued($input);
+        
+        echo json_encode($calculatedVacationAccrued);
     }
 
     public function vaucher() {
+        $this->session->checkDigitizer();
+        
         try {
-            $this->session->checkDigitizer();
             $filter = array(
-                'card' => Filters::getInt(),
+                'card' => Filters::getString(),
                 'completeName' => Filters::getString(),
                 'admissionDate' => Filters::getString(),
                 'position' => Filters::getString(),
@@ -96,18 +101,12 @@ class VacationController {
             );
             $input = filter_input_array(INPUT_GET, $filter);
 
-            $input['deductionsArray'] = array();
-            $deductionBusiness = new DeductionBusiness();
-            if (!empty($input['deductions'])) {
-                foreach ($input['deductions'] as $deductionId) {
-                    array_push($input['deductionsArray'], $deductionBusiness->get($deductionId));
-                }
-            }
+            Util::setDeduductionsArray($input);
 
-            Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CV_' . $input['card']);
+            Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'Vacaciones_' . $input['card']);
         } catch (Exception $e) {
             $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            $errorController->index('Error al generar la boleta', 500);
         }
     }
 

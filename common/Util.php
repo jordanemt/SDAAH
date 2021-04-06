@@ -31,6 +31,7 @@ class Util {
         return number_format($value, 10, '.', '');
     }
 
+    //get the current fortnight
     public static function getFortnight() {
         $month = date('m');
         $day = date('d');
@@ -38,10 +39,11 @@ class Util {
         return $fortnight;
     }
 
+    //calc the rest fortnights and set the new year value if need change
     public static function restToCurrentFortnight($toRest, &$year = null) {
-        $year = date('Y');
-        $number = self::getFortnight() - $toRest;
-
+        $year = date('Y');//current year
+        $number = self::getFortnight() - $toRest;//rest to current
+        
         if ($number < 0) {
             $year -= intdiv(24 - $number, 24);
             return 24 + $number;
@@ -61,6 +63,7 @@ class Util {
     const BEWEEKLY = 1;
     const MONTHLY = 2;
 
+    //sanitazefilter on list views of payroll
     public static function getSanitazeFilter($filter, $selector) {
         $filter['location'] = !empty($filter['location']) ? $filter['location'] : $_SESSION['location'];
         $filter['year'] = !empty($filter['year']) ? $filter['year'] : $_SESSION['year'];
@@ -83,6 +86,7 @@ class Util {
         return $filter;
     }
 
+    
     public static function getSelectFortnightOptions($fortnight = null) {
         if (empty($fortnight)) {
             $fortnight = $_SESSION['fortnight'];
@@ -145,10 +149,6 @@ class Util {
         return $str;
     }
 
-    public static function maskAccount($account) {
-        return preg_replace("/(\d\d\d)(\d\d)(\d\d\d)(\d\d\d\d\d\d)(\d)/", "\\1-\\2-\\3-\\4-\\5", $account);
-    }
-
     public static function generatePDF($viewName, $data, $pdfName) {
         $config = Config::singleton();
         $html2pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');
@@ -207,6 +207,27 @@ class Util {
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+    
+    //for vacations and liquidation
+    public static function sumNetPayments($payments) {
+        $net = 0.0;
+        foreach ($payments as $payment) {
+            $net += $payment['net'];
+        }
+
+        return $net;
+    }
+    
+    //for vacations and liquidation
+    public static function setDeduductionsArray(&$input) {
+        $input['deductionsArray'] = array();
+        $deductionBusiness = new DeductionBusiness();
+        if (!empty($input['deductions'])) {
+            foreach ($input['deductions'] as $deductionId) {
+                array_push($input['deductionsArray'], $deductionBusiness->get($deductionId));
+            }
+        }
     }
 
 }

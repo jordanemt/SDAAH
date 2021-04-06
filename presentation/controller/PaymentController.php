@@ -19,49 +19,53 @@ class PaymentController {
     }
 
     public function insertView() {
+        $this->session->checkDigitizer();
+        
         try {
-            $this->session->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
-            $vars['employees'] = $employeeBusiness->getAll();
+            $vars['employees'] = $employeeBusiness->getAllNotLiquidated();
 
             $deductionBusiness = new DeductionBusiness();
             $vars['deductions'] = $deductionBusiness->getAll();
-
+            
             $this->view->show($this->controllerName . 'insertView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function updateView() {
+        $this->session->checkDigitizer();
+        
         try {
-            $this->session->checkDigitizer();
             $employeeBusiness = new EmployeeBusiness();
-            $vars['employees'] = $employeeBusiness->getAll();
+            $vars['employees'] = $employeeBusiness->getAllNotLiquidated();
 
             $deductionBusiness = new DeductionBusiness();
             $vars['deductions'] = $deductionBusiness->getAll();
 
             $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
             $vars['data'] = $this->business->get($id);
+            
             $this->view->show($this->controllerName . 'updateView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function get() {
         $this->session->checkDigitizer();
-        $data = $this->business->get(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
+        
+        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+        $data = $this->business->get($id);
+        
         echo json_encode($data);
         exit();
     }
 
     public function insert() {
         $this->session->checkDigitizer();
+        
         $filter = array(
             'idEmployee' => Filters::getInt(),
             'position' => Filters::getString(),
@@ -97,6 +101,7 @@ class PaymentController {
 
     public function update() {
         $this->session->checkDigitizer();
+        
         $filter = array(
             'id' => Filters::getInt(),
             'idEmployee' => Filters::getInt(),
@@ -133,19 +138,21 @@ class PaymentController {
 
     public function remove() {
         $this->session->checkDigitizer();
+        
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
         exit();
     }
-    
+
     public function vaucher() {
+        $this->session->checkConsultant();
+        
         try {
-            $this->session->checkConsultant();
             $data = $this->business->get(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
-            Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'CP_Q-' . $data['fortnight'] . '.' . $data['year'] . '.' . $data['employee']['card']);
+            Util::generatePDF($this->controllerName . 'vaucher.php', $data, 'Pago_Q-' . $data['fortnight'] . '.' . $data['year'] . '.' . $data['employee']['card']);
         } catch (Exception $e) {
             $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            $errorController->index('Error al generar la boleta', 500);
         }
     }
 

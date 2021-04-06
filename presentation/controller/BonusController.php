@@ -19,8 +19,8 @@ class BonusController {
     }
 
     public function index() {
+        $this->session->checkConsultant();
         try {
-            $this->session->checkConsultant();
             $year = filter_input(INPUT_GET, 'year', FILTER_SANITIZE_NUMBER_INT);
             if (empty($year)) {
                 $year = date('Y');
@@ -28,16 +28,16 @@ class BonusController {
             $_SESSION['year'] = $year;
 
             $vars['data'] = $this->business->getBonuses($year);
+            
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function vaucher() {
+        $this->session->checkConsultant();
         try {
-            $this->session->checkConsultant();
             $filter = array(
                 'idEmployee' => Filters::getInt(),
                 'year' => Filters::getInt(),
@@ -55,8 +55,7 @@ class BonusController {
 
             Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CA_' . $input['employee']['card']);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 

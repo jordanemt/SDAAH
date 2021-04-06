@@ -17,28 +17,29 @@ class IncomeTaxController {
     }
 
     public function index() {
+        $this->session->checkAdmin();
+        
         try {
-            $this->session->checkAdmin();
             $vars['data'] = $this->business->getAll();
             $this->view->show($this->controllerName . 'indexView.php', $vars);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
     
     public function insertView() {
+        $this->session->checkAdmin();
+        
         try {
-            $this->session->checkAdmin();
             $this->view->show($this->controllerName . 'insertView.php', null);
         } catch (Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->index($e->getMessage());
+            throw new LoadViewException();
         }
     }
 
     public function insert() {
         $this->session->checkAdmin();
+        
         $filter = array(
             'section' => Filters::getFloat(),
             'percentage' => Filters::getFloat()
@@ -51,6 +52,7 @@ class IncomeTaxController {
 
     public function remove() {
         $this->session->checkAdmin();
+        
         $this->business->remove(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));
         exit();
     }

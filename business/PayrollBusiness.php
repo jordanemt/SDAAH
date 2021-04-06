@@ -13,7 +13,7 @@ class PayrollBusiness {
         $employeeBusiness = new EmployeeBusiness();
 
         foreach ($payments as $key => $payment) {
-            $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
+            $employee = $employeeBusiness->get($payment['idEmployee']);
             $payments[$key]['card'] = $employee['card'];
             $payments[$key]['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
             $payments[$key]['bankAccount'] = $employee['bankAccount'];
@@ -30,13 +30,14 @@ class PayrollBusiness {
         $employeeBusiness = new EmployeeBusiness();
 
         foreach ($payments as $payment) {
-            $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
+            $employee = $employeeBusiness->get($payment['idEmployee']);
             $key = $this->employeeCardExistOnPayroll($employee['card'], $monthlyPayroll);
             if ($key == -1) {
                 $monthlyPayment = array(
                     'id' => $payment['id'],
                     'card' => $employee['card'],
                     'completeName' => $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'],
+                    'bank' => $employee['bank'],
                     'bankAccount' => $employee['bankAccount'],
                     'type' => $payment['type'],
                     'days' => $payment['workingDays'],
@@ -106,7 +107,7 @@ class PayrollBusiness {
         $employeeBusiness = new EmployeeBusiness();
 
         foreach ($payments as $payment) {
-            $employee = $employeeBusiness->getWithDeleted($payment['idEmployee']);
+            $employee = $employeeBusiness->get($payment['idEmployee']);
             $key = $this->employeeCardExistOnPayroll($employee['card'], $provisionReport);
             if ($key == -1) {
                 array_push($provisionReport, array(

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'exceptions/DataBaseException.php';
-
 class EmployeeData {
 
     protected $db;
@@ -61,9 +59,21 @@ class EmployeeData {
         $query->closeCursor();
         return $data;
     }
+    
+    public function getAllNotLiquidated() {
+        $query = $this->db->prepare("CALL `sp_get_all_not_liquidated_employee` ()");
+
+        if (!$query->execute()) {
+            throw new DataBaseException();
+        }
+
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query->closeCursor();
+        return $data;
+    }
 
     public function insert($entity) {
-        $query = $this->db->prepare("CALL `sp_insert_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_insert_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['card']);
         $query->bindParam(2, $entity['firstLastName']);
         $query->bindParam(3, $entity['secondLastName']);
@@ -73,11 +83,12 @@ class EmployeeData {
         $query->bindParam(7, $entity['idPosition']);
         $query->bindParam(8, $entity['location']);
         $query->bindParam(9, $entity['admissionDate']);
-        $query->bindParam(10, $entity['bankAccount']);
-        $query->bindParam(11, $entity['email']);
-        $query->bindParam(12, $entity['cssIns']);
-        $query->bindParam(13, $entity['isAffiliated']);
-        $query->bindParam(14, $entity['observations']);
+        $query->bindParam(10, $entity['bank']);
+        $query->bindParam(11, $entity['bankAccount']);
+        $query->bindParam(12, $entity['email']);
+        $query->bindParam(13, $entity['cssIns']);
+        $query->bindParam(14, $entity['isAffiliated']);
+        $query->bindParam(15, $entity['observations']);
 
         if (!$query->execute()) {
             throw new DataBaseException();
@@ -87,7 +98,7 @@ class EmployeeData {
     public function update($entity) {
         $this->db->beginTransaction();
 
-        $query = $this->db->prepare("CALL `sp_update_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("CALL `sp_update_employee` (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $query->bindParam(1, $entity['id']);
         $query->bindParam(2, $entity['firstLastName']);
         $query->bindParam(3, $entity['secondLastName']);
@@ -97,12 +108,13 @@ class EmployeeData {
         $query->bindParam(7, $entity['idPosition']);
         $query->bindParam(8, $entity['location']);
         $query->bindParam(9, $entity['admissionDate']);
-        $query->bindParam(10, $entity['bankAccount']);
-        $query->bindParam(11, $entity['email']);
-        $query->bindParam(12, $entity['cssIns']);
-        $query->bindParam(13, $entity['isAffiliated']);
-        $query->bindParam(14, $entity['isLiquidated']);
-        $query->bindParam(15, $entity['observations']);
+        $query->bindParam(10, $entity['bank']);
+        $query->bindParam(11, $entity['bankAccount']);
+        $query->bindParam(12, $entity['email']);
+        $query->bindParam(13, $entity['cssIns']);
+        $query->bindParam(14, $entity['isAffiliated']);
+        $query->bindParam(15, $entity['isLiquidated']);
+        $query->bindParam(16, $entity['observations']);
 
         if (!$query->execute()) {
             $this->db->rollback();
@@ -136,40 +148,21 @@ class EmployeeData {
         $query->closeCursor();
         return false;
     }
-
-    public function getAlimonyOnBonusByIdEmployeeByYear($idEmploye, $year) {
-        $query = $this->db->prepare("CALL `sp_get_alimonyOnBonus_by_idEmployee_and_year` (?,?)");
-        $query->bindParam(1, $idEmploye);
-        $query->bindParam(2, $year);
-
+    
+    public function isAssociatedWithPayment($id) {
+        $query = $this->db->prepare("CALL `sp_is_associated_with_payment_employee` (?)");
+        $query->bindParam(1, $id);
         if (!$query->execute()) {
             throw new DataBaseException();
         }
 
-        $data = $query->fetch(PDO::FETCH_ASSOC);
+        if (count($query->fetchAll()) > 0) {
+            $query->closeCursor();
+            return true;
+        }
+
         $query->closeCursor();
-        return $data;
-    }
-    
-    public function insertAlimonyOnBonus($entity) {
-        $query = $this->db->prepare("CALL `sp_insert_alimonyOnBonus` (?,?,?)");
-        $query->bindParam(1, $entity['idEmployee']);
-        $query->bindParam(2, $entity['year']);
-        $query->bindParam(3, $entity['mount']);
-
-        if (!$query->execute()) {
-            throw new DataBaseException();
-        }
-    }
-    
-    public function updateAlimonyOnBonus($entity) {
-        $query = $this->db->prepare("CALL `sp_update_alimonyOnBonus` (?,?)");
-        $query->bindParam(1, $entity['id']);
-        $query->bindParam(2, $entity['mount']);
-
-        if (!$query->execute()) {
-            throw new DataBaseException();
-        }
+        return false;
     }
 
 }

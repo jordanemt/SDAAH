@@ -12,7 +12,7 @@ class ErrorController {
         $this->session->isNotLoggedThenRedirect();
     }
     
-    public function index($msg = 'Error Inesperado', $cod = '500') {
+    public function index($msg = 'Error Inesperado', $cod = 500) {
         $vars['msg'] = $msg;
         $vars['cod'] = $cod;
         $this->view->show($this->controllerName . 'indexView.php', $vars);

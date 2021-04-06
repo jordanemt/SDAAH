@@ -10,7 +10,7 @@ function showMessage(msg) {
 function loadingMessage() {
     Swal.fire({
         icon: 'info',
-        title: '!Por favor, espere!',
+        title: 'Por favor, espere',
         text: 'Procesando...',
         allowOutsideClick: false
     });
@@ -34,8 +34,7 @@ function successMessageVaucher() {
         icon: 'success',
         title: 'Exitoso',
         text: 'La descarga se realizará automáticamente',
-        showConfirmButton: false,
-        timer: 1500
+        showConfirmButton: true
     });
 }
 
@@ -58,7 +57,6 @@ function confirmMessage() {
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Eliminar',
-        cancelButtonText: 'Cancelar',
-        showLoaderOnConfirm: true
+        cancelButtonText: 'Cancelar'
     };
 }

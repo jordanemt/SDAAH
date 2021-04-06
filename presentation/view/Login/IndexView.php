@@ -9,7 +9,7 @@ include_once 'presentation/public/header.php';
             <h5 class="card-title text-center">Iniciar Sesión</h5>
         </div>
         <div class="card-body text-dark">
-            <p class="text-center m-0"><i class="fa fa-user" style="font-size: 45px; color: lightgray"></i></p>
+            <p class="text-center m-0"><i class="fa fa-user" style="font-size: 45px; color: #03A9F4"></i></p>
             <form id="form">
                 <div class="form-group">
                     <label for="card">Cédula</label>

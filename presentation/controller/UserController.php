@@ -58,7 +58,7 @@ class UserController {
     public function insert() {
         $this->session->checkAdmin();
         $filter = array(
-            'card' => Filters::getInt(),
+            'card' => Filters::getString(),
             'pass' => Filters::getString(),
             'passConfirm' => Filters::getString(),
             'firstLastName' => Filters::getString(),

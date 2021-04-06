@@ -4,8 +4,8 @@ require_once 'exceptions/IControlledException.php';
 
 class AssociatedException extends Exception implements IControlledException {
 
-    public function __construct() {
-        parent::__construct('Existe una relación con otra entidad');
+    public function __construct($msg = 'Existe una relación con otra entidad') {
+        parent::__construct($msg);
         http_response_code(409);
     }
     

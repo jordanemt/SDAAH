@@ -18,6 +18,14 @@ tr p {
     margin: 0;
 }
 
+.isLiquidated {
+    background-color: #ffffe0 !important;
+}
+
+.isLiquidated:hover {
+    background-color: #ededce !important;
+}
+
 @media (min-width: 768px) {
     .label-hide {
         display: none;
