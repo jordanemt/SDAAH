@@ -35,7 +35,7 @@ class PositionBusiness {
         if (empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                isset($entity['salary'])) {
+                !isset($entity['salary'])) {
             throw new EmptyAttributeException();
         }
 
@@ -57,7 +57,8 @@ class PositionBusiness {
                 empty($entity['cod']) ||
                 empty($entity['name']) ||
                 empty($entity['type']) ||
-                isset($entity['salary'])) {
+                !isset($entity['salary'])) {
+            print_r($entity);
             throw new EmptyAttributeException();
         }
 

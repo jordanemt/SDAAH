@@ -50,7 +50,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <table id="data-table" class="table table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+            <table id="data-table" class="table table-hover table-bordered dt-responsive" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
@@ -125,7 +125,7 @@ include_once 'presentation/public/header.php';
                                                 $value['position']['type']), 2, ',', ' ');
                                 ?>
                             </td>
-                            <td class="text-center"><?= $value['email'] ? $value['email'] : '---' ?></td>
+                            <td class="text-center"><p><?= $value['email'] ? $value['email'] : '---' ?></p></td>
                             <td class="text-center"><?= $value['isAffiliated'] ? 'Sí' : 'No'; ?></td>
                             <td class="text-center"><?= $value['cssIns'] ?></td>
                             <td class="text-center"><?= $value['isLiquidated'] ? 'Sí' : 'No'; ?></td>
@@ -133,7 +133,7 @@ include_once 'presentation/public/header.php';
                                 <?php
                                 if ($value['observations']) {
                                     ?>
-                                    <a href="#" onclick="message('<?= $value['observations'] ?>')"><i class="fa fa-eye"></i> Ver</a>
+                                    <a href="#" onclick="showMessage('<?= $value['observations'] ?>')"><i class="fa fa-eye"></i> Ver</a>
                                     <?php
                                 } else {
                                     echo '---';

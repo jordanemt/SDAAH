@@ -1,4 +1,4 @@
-<?php 
+<?php
 $session = Session::singleton();
 ?>
 
@@ -18,7 +18,7 @@ $session = Session::singleton();
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/b-1.6.5/r-2.2.6/sc-2.0.3/sl-1.3.1/datatables.min.css"/>
-        
+
         <link href="presentation/public/css/site.css" rel="stylesheet" type="text/css"/>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -48,13 +48,13 @@ $session = Session::singleton();
 
     <body class="d-none">
         <div class="body-content">
-            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #03A9F4">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #03A9F4">
                 <a class="navbar-brand" href="?controller=index">
                     <!--<img alt="Administración" src="/presentation/public/img/logo.png" height="75"/>-->
                     Administración
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <i class="fa fa-bars" style="color: white"></i>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -76,7 +76,7 @@ $session = Session::singleton();
                             <?php
                             if ($session->validRole(Session::$_ADMIN)) {
                                 ?>
-                                
+
                                 <li class="nav-item <?php
                                 if (strcasecmp($vars['viewName'], 'user') === 0) {
                                     echo "active";
@@ -84,11 +84,11 @@ $session = Session::singleton();
                                 ?>">
                                     <a class="nav-link" href="?controller=user">Usuarios</a>
                                 </li>
-                            
+
                                 <?php
                             }
                             ?>
-                                
+
                             <li class="nav-item <?php
                             if (strcasecmp($vars['viewName'], 'employee') === 0) {
                                 echo "active";
@@ -103,11 +103,11 @@ $session = Session::singleton();
                             ?>">
                                 <a class="nav-link" href="?controller=position">Puestos</a>
                             </li>
-                                
+
                             <?php
                             if ($session->validRole(Session::$_ADMIN)) {
                                 ?>
-                                
+
                                 <li class="nav-item dropdown <?php
                                 if (strcasecmp($vars['viewName'], 'parameters') === 0) {
                                     echo "active";
@@ -122,11 +122,11 @@ $session = Session::singleton();
                                         <a class="dropdown-item" href="?controller=deduction">Catálogo de Deducciones</a>
                                     </div>
                                 </li>
-                            
+
                                 <?php
                             }
                             ?>
-                                
+
                             <li class="nav-item dropdown <?php
                             if (strcasecmp($vars['viewName'], 'payroll') === 0) {
                                 echo "active";
@@ -145,7 +145,7 @@ $session = Session::singleton();
                             <?php
                             if ($session->validRole(Session::$_DIGITIZER)) {
                                 ?>
-                                
+
                                 <li class="nav-item dropdown <?php
                                 if (strcasecmp($vars['viewName'], 'vacation') === 0) {
                                     echo "active";
@@ -159,14 +159,14 @@ $session = Session::singleton();
                                         <a class="dropdown-item" href="?controller=vacation&action=detail">Detalle</a>
                                     </div>
                                 </li>
-                            
+
                                 <?php
                             }
                             ?>
                             <?php
                             if ($session->validRole(Session::$_DIGITIZER)) {
                                 ?>
-                                
+
                                 <li class="nav-item <?php
                                 if (strcasecmp($vars['viewName'], 'liquidation') === 0) {
                                     echo "active";
@@ -174,7 +174,7 @@ $session = Session::singleton();
                                 ?>">
                                     <a class="nav-link" href="?controller=liquidation">Liquidaciones</a>
                                 </li>
-                            
+
                                 <?php
                             }
                             ?>
@@ -188,13 +188,13 @@ $session = Session::singleton();
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
                             <ul class="navbar-nav mr-auto">
-                                <li class="nav-item dropdown <?php
-                            if (strcasecmp($vars['viewName'], 'profile') === 0) {
-                                echo "active";
-                            }
-                            ?>">
-                                <a class="nav-link" href="?controller=user&action=profileView"><i class="fa fa-user-circle"></i> Perfil</a>
-                            </li>
+                                <li class="<?php
+                                if (strcasecmp($vars['viewName'], 'profile') === 0) {
+                                    echo "active";
+                                }
+                                ?>">
+                                    <a class="nav-link" href="?controller=user&action=profileView"><i class="fa fa-user-circle"></i> Perfil</a>
+                                </li>
                             </ul>
                             <a class="btn btn-outline-light my-2 my-sm-0" href="#" onclick="logout();" type="submit">Salir</a>
                         </form>

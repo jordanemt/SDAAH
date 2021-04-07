@@ -19,7 +19,7 @@ include_once 'presentation/public/header.php';
             <div class="d-flex flex-md-row flex-column">
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
+                    <!--<a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>-->
                 </div>
 
                 <div class="col-md-7 px-0">
@@ -56,7 +56,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <table id="data-table" class="table table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+            <table id="data-table" class="table table-hover table-bordered dt-responsive" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>

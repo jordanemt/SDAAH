@@ -26,6 +26,9 @@ $currencyPath = 'presentation/public/img/colon.png';
             }
 
             td, th{
+                -webkit-hyphens: auto;
+                -ms-hyphens: auto ;
+                hyphens: auto !important;
                 margin: 0px;
                 padding: 1px;
             }
@@ -109,7 +112,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 20%; text-align: center;" class="border"><?= $data['bankAccount'] ?></td>
                 </tr>
             </table>
-            
+
             <table>
                 <tr>
                     <th style="width: 13%; text-align: center;" class="border">Nacimiento:</th>
@@ -118,7 +121,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 54%; text-align: center;" class="border"><?= $data['email'] ?></td>
                 </tr>
             </table>
-            
+
             <table>
                 <tr>
                     <th style="width: 13%; text-align: center;" class="border">Ingresado:</th>
@@ -128,7 +131,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 22%; text-align: center;" class="border"><?= date('d-m-Y') ?></td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>
@@ -139,7 +142,7 @@ $currencyPath = 'presentation/public/img/colon.png';
                     <td style="width: 22%;"></td>
                 </tr>
             </table>
-            
+
             <br>
             <table>
                 <tr>

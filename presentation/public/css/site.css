@@ -14,6 +14,15 @@ label.error {
     margin-top: 5px;
 }
 
+.nav-item:hover {
+    background-color: #2980B9;
+    text-decoration: underline white;  
+}
+
+.nav-item a:hover {
+    color: white !important;
+}
+
 tr p {
     margin: 0;
 }
@@ -29,6 +38,10 @@ tr p {
 @media (min-width: 768px) {
     .label-hide {
         display: none;
+    }
+
+    .table {
+        white-space: nowrap;
     }
 }
 
