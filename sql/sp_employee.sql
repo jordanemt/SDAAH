@@ -29,7 +29,7 @@ BEGIN
     FROM `employee` e 
         JOIN `position` ps ON e.`idPosition` = ps.`id` 
         JOIN `payment` p ON p.`idEmployee` = e.`id`
-    WHERE e.`id` = id AND e.`isDeleted` = 0 AND p.`isDeleted` = 0 AND ps.`isDeleted` = 0;
+    WHERE e.`id` = id AND e.`isDeleted` = 0 AND ps.`isDeleted` = 0 AND (p.`isDeleted` IS NULL || p.`isDeleted` = 0);
 END//
 
 CREATE PROCEDURE `sp_insert_employee`(

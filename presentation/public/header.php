@@ -178,7 +178,7 @@ $session = Session::singleton();
                                 <?php
                             }
                             ?>
-                            <li class="nav-item dropdown <?php
+                            <li class="nav-item <?php
                             if (strcasecmp($vars['viewName'], 'bonus') === 0) {
                                 echo "active";
                             }

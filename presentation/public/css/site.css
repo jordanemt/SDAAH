@@ -19,10 +19,6 @@ label.error {
     text-decoration: underline white;  
 }
 
-.nav-item a:hover {
-    color: white !important;
-}
-
 tr p {
     margin: 0;
 }
