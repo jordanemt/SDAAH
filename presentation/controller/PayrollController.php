@@ -114,5 +114,26 @@ class PayrollController {
             throw new LoadViewException();
         }
     }
+    
+    public function getFortnightReport() {
+        $this->session->checkConsultant();
+        
+        try {
+            $inputFilter = array(
+                'location' => Filters::getString(),
+                'fortnight' => Filters::getInt(),
+                'year' => Filters::getInt()
+            );
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
+            
+            $data = $this->business->getBiweeklyPayroll($filter);
+            $data[0]['location'] = ($filter['location'] == 'Administrativo|Operativo') ? 'Todos' : $filter['location'];
+            
+            Util::generatePDF($this->controllerName . 'fortnightReport.php', $data, 'Reporte_Quincenal_' . $data[0]['fortnight'] . '_' . $data[0]['year'] . '_' . $data[0]['location'], true);
+        } catch (Exception $ex) {
+            $errorController = new ErrorController();
+            $errorController->index('Error al descargar boleta', 500);
+        }
+    }
 
 }

@@ -14,16 +14,26 @@ include_once 'presentation/public/header.php';
 
             <div class="d-flex flex-md-row flex-column">
 
-                <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
+                <div class="col-md-1 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
                     <?php
                     if ($session->validRole(Session::$_DIGITIZER)) {
                         ?>
-                        <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payment&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
+                        <a class="btn btn-primary mb-1-md" href="?controller=payment&action=insertView" role="button"><i class="fa fa-folder-plus"></i> Pagar</a>
                         <?php
                     }
                     ?>
                 </div>
-
+                
+                <div class="col-md-4 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
+                    <?php
+                    if ($session->validRole(Session::$_DIGITIZER)) {
+                        ?>
+                        <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payroll&action=getFortnightReport" role="button"><i class="fa fa-download"></i> Descargar</a>
+                        <?php
+                    }
+                    ?>
+                </div>
+                           
                 <div class="col-md-7 px-0">
 
                     <form id="search" class="col-md-12 px-0" action="" method="get">
