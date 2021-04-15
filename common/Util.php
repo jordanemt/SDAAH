@@ -149,9 +149,11 @@ class Util {
         return $str;
     }
 
-    public static function generatePDF($viewName, $data, $pdfName) {
+    public static function generatePDF($viewName, $data, $pdfName, $isHorizonal = false) {
         $config = Config::singleton();
-        $html2pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');
+        
+        $orientation = $isHorizonal ? 'L' : 'P';
+        $html2pdf = new HTML2PDF($orientation, 'A4', 'es', 'true', 'UTF-8');
 
         try {
             ob_start();

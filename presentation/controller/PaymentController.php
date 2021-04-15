@@ -155,5 +155,4 @@ class PaymentController {
             $errorController->index('Error al generar la boleta', 500);
         }
     }
-
 }
