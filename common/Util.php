@@ -160,7 +160,7 @@ class Util {
             require_once $config->get('viewFolder') . $viewName;
             $html = ob_get_clean();
 
-            $html2pdf->setDefaultFont('Arial');
+            //$html2pdf->setDefaultFont('Arial');
             $html2pdf->writeHTML($html);
             $html2pdf->output($pdfName . '.pdf');
         } catch (Exception $e) {
