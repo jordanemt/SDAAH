@@ -15,6 +15,7 @@ $currencyPath = 'presentation/public/img/colon.png';
         }
 
         table {
+            table-layout: fixed;
             width: 100%;
             border-collapse: collapse;
             font-family: 'freeserif';
@@ -31,9 +32,15 @@ $currencyPath = 'presentation/public/img/colon.png';
             padding: 5px;
         }
 
+        table td, table th {
+            overflow-wrap: anywhere;
+        }
+
+
         .border {
             border: 1px solid #8c8c8c;
         }
+
     </style>
 </head>
 <body>
@@ -67,22 +74,22 @@ $currencyPath = 'presentation/public/img/colon.png';
 </div>
 
 
-<div class="body">
-    <div style="width: 250px;">
+<div>
+    <div style="width: 200px;">
         <table>
             <tr>
-                <th class="border" style="width: 55%">Quincena</th>
-                <td style="text-align: center; width: 45%;" class="border"><?= $data[0]['fortnight'] ?></td>
+                <th class="border" style="width: 40%">Quincena</th>
+                <td style="text-align: center; width: 60%;" class="border"><?= $data['data'][0]['fortnight'] ?></td>
             </tr>
 
             <tr>
-                <th class="border" style="width: 55%">Año</th>
-                <td style="text-align: center; width: 45%;" class="border"><?= $data[0]['year'] ?></td>
+                <th class="border" style="width: 40%">Año</th>
+                <td style="text-align: center; width: 60%;" class="border"><?= $data['data'][0]['year'] ?></td>
             </tr>
 
             <tr>
-                <th class="border" style="width: 55%">Localidad</th>
-                <td style="text-align: center; width: 45%;" class="border"><?= $data[0]['location'] ?></td>
+                <th class="border" style="width: 40%">Localidad</th>
+                <td style="text-align: center; width: 60%;" class="border"><?= $data['location'] ?></td>
             </tr>
         </table>
     </div>
@@ -91,18 +98,22 @@ $currencyPath = 'presentation/public/img/colon.png';
 
     <div>
         <table>
+            <colgroup>
+                <col style="width: 138px;">
+                <col span="10" style="width: 62px;">
+            </colgroup>
             <tr>
-                <th class="border small-p" style="width: 20%">Nombre del Empleado</th>
-                <th class="border small-p">Ordinario</th>
-                <th class="border small-p">Vacación</th>
-                <th class="border small-p">Extra</th>
-                <th class="border small-p">Doble</th>
-                <th class="border small-p">Recargo</th>
-                <th class="border small-p">Tot. Devengado</th>
-                <th class="border small-p">Seguro Social</th>
-                <th class="border small-p">Imp. Renta</th>
-                <th class="border small-p">Total Deducciones</th>
-                <th class="border small-p">Neto por Pagar</th>
+                <th class="border" style="text-align: center;">Nombre del Empleado</th>
+                <th class="border" style="text-align: center;">Ordinario</th>
+                <th class="border" style="text-align: center;">Vacación</th>
+                <th class="border" style="text-align: center;">Extra</th>
+                <th class="border" style="text-align: center;">Doble</th>
+                <th class="border" style="text-align: center;">Recargo</th>
+                <th class="border" style="text-align: center;">Tot. Devengado</th>
+                <th class="border" style="text-align: center;">Seguro Social</th>
+                <th class="border" style="text-align: center;">Imp. Renta</th>
+                <th class="border" style="text-align: center;">Total Deducciones</th>
+                <th class="border" style="text-align: center;">Neto por Pagar</th>
             </tr>
 
             <?php
@@ -118,40 +129,39 @@ $currencyPath = 'presentation/public/img/colon.png';
             $totalDisabilities = 0;
             $totalNet = 0;
 
-            foreach ($data as $value) {
+            foreach ($data['data'] as $value) {
                 ?>
-
                 <tr>
-                    <td class="border small-p"><?= $value['completeName'] ?></td>
+                    <td class="border" style="text-align: center;"><?= $value['completeName'] ?></td>
 
-                    <td class="border small-p" >
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['ordinary'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['vacationAmount'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['extra'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['double'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['surcharges'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['gross'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['workerCCSS'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['incomeTax'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['deductionsTotal'], 2, '.', ' '); ?>
                     </td>
-                    <td class="border small-p">
+                    <td class="border" style="text-align: center;">
                         <?= '₡' . number_format($value['net'], 2, '.', ' '); ?>
                     </td>
                 </tr>
@@ -172,35 +182,35 @@ $currencyPath = 'presentation/public/img/colon.png';
             ?>
 
             <tr>
-                <th class="border small-p">Total general</th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">Total general</th>
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalOrdinary, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalVacation, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalExtra, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalDouble, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalSurcharges, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalAccrued, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalCCSS, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalIncome, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalDeduction, 2, '.', ' '); ?>
                 </th>
-                <th class="border small-p">
+                <th class="border" style="text-align: center;">
                     <?= '₡'. number_format($totalNet, 2, '.', ' '); ?>
                 </th>
             </tr>
@@ -208,4 +218,6 @@ $currencyPath = 'presentation/public/img/colon.png';
     </div>
 </div>
 </body>
+
 </html>
+

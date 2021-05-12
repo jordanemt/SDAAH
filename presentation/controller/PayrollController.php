@@ -126,10 +126,55 @@ class PayrollController {
             );
             $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
             
-            $data = $this->business->getBiweeklyPayroll($filter);
-            $data[0]['location'] = ($filter['location'] == 'Administrativo|Operativo') ? 'Todos' : $filter['location'];
+            $data['data'] = $this->business->getBiweeklyPayroll($filter);
+            $data['location'] = ($filter['location'] == 'Administrativo|Operativo') ? 'Todos' : $filter['location'];
             
-            Util::generatePDF($this->controllerName . 'fortnightReport.php', $data, 'Reporte_Quincenal_' . $data[0]['fortnight'] . '_' . $data[0]['year'] . '_' . $data[0]['location'], true);
+            Util::generatePDF($this->controllerName . 'fortnightReport.php', $data, 'Reporte_Quincenal_' . $data['data'][0]['fortnight'] . '_' . $data['data'][0]['year'] . '_' . $data['location'], true);
+        } catch (Exception $ex) {
+            $errorController = new ErrorController();
+            $errorController->index('Error al descargar boleta', 500);
+        }
+    }
+
+    public function getMonthlyReport()
+    {
+        $this->session->checkConsultant();
+
+        try {
+
+            $filter['month'] = $_SESSION['month'];
+            $filter['year'] = $_SESSION['year'];
+
+            $data['data'] = $this->business->getMonthlyPayroll($filter);
+            $data['month'] = Util::getMonthByNumber($filter['month']);
+            $data['year'] = $filter['year'];
+
+            Util::generatePDF($this->controllerName . 'monthlyReport.php', $data, 'Reporte_Mensual_' . $filter['month'] . '_' . $filter['year']);
+
+        } catch (Exception $ex) {
+            $errorController = new ErrorController();
+            $errorController->index('Error al descargar boleta', 500);
+        }
+    }
+
+    public function getProvisionReport()
+    {
+        $this->session->checkConsultant();
+
+        try {
+
+            $filter['month'] = $_SESSION['month'];
+            $filter['year'] = $_SESSION['year'];
+
+            $data['data'] = $this->business->getProvisionReport($filter);
+            $data['month'] = Util::getMonthByNumber($filter['month']);
+            $data['year'] = $filter['year'];
+
+            $businessParam = new ParamBusiness();
+            $data['params'] = $businessParam->getProvisionReportParams();
+
+            Util::generatePDF($this->controllerName . 'provisionReport.php', $data, 'Reporte_De_Provisiones_' . $filter['month'] . '_' . $filter['year'], true);
+
         } catch (Exception $ex) {
             $errorController = new ErrorController();
             $errorController->index('Error al descargar boleta', 500);

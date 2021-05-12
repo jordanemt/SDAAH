@@ -7,6 +7,12 @@ use Luecano\NumeroALetras\NumeroALetras;
 
 class Util {
 
+    public static function getMonthByNumber($monthNumber)
+    {
+        $months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        return $months[$monthNumber - 1];
+    }
+
     public static function existOnSomeKey($array, $evaluate, $key) {
         foreach ($array as $keyArray => $value) {
             if ($value[$key] == $evaluate[$key]) {
