@@ -134,11 +134,11 @@ class PaymentBusiness {
 
     private function setOrdinary(&$payment) {
         $type = $payment['type'];
-        $hourSalary = ($type == 'Mensual') ? ($payment['salary'] / 30) : $payment['salary'];
-        $extraTime = ($type == 'Mensual') ? ($hourSalary / 8) * 1.5 : $hourSalary * 1.5;
-        $doubleTime = ($type == 'Mensual') ? ($hourSalary / 8) * 2 : $hourSalary * 2;
+        $salary = ($type == 'Mensual') ? ($payment['salary'] / 30) : $payment['salary'];
+        $extraTime = ($type == 'Mensual') ? ($salary / 8) * 1.5 : $salary * 1.5;
+        $doubleTime = ($type == 'Mensual') ? ($salary / 8) * 2 : $salary * 2;
 
-        $ordinary = ($payment['type'] == 'Mensual') ? $hourSalary * $payment['workingDays'] : $hourSalary * $payment['ordinaryTimeHours'];
+        $ordinary = ($type == 'Mensual') ? $salary * $payment['workingDays'] : $salary * $payment['ordinaryTimeHours'];
         $extra = ($extraTime * $payment['extraTimeHours']);
         $double = ($doubleTime * $payment['doubleTimeHours']);
 

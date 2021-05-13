@@ -43,7 +43,7 @@ include_once 'presentation/public/header.php';
 
             <hr>
 
-            <table id="bonus-table" class="table table-hover table-bordered dt-responsive nowrap" style="width: 100%">
+            <table id="bonus-table" class="table table-hover table-bordered dt-responsive" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">Cédula</th>
@@ -91,7 +91,7 @@ include_once 'presentation/public/header.php';
                         <tr>
                             <td class="text-center"><?= $value['card'] ?></td>
                             <td class="text-center"><p><?= $value['completeName'] ?></p></td>
-                            <td class="text-center"><?= Util::maskAccount($value['bankAccount']); ?></td>
+                            <td class="text-center"><?= $value['bankAccount']; ?></td>
                             <td class="text-center">
                                 <?= '₡' . number_format($value['december'], 2, '.', ' '); ?>
                             </td>

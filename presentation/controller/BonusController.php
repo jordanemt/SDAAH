@@ -53,7 +53,7 @@ class BonusController {
             
             $input['payments'] = $this->business->getFortnightsBonus($input['idEmployee'], $input['year']);
 
-            Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'CA_' . $input['employee']['card']);
+            Util::generatePDF($this->controllerName . 'vaucher.php', $input, 'Aguinaldo_' . $input['employee']['card']);
         } catch (Exception $e) {
             throw new LoadViewException();
         }

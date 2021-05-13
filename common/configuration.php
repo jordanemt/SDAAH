@@ -35,5 +35,9 @@ $config->set('dbname', 'sdaah');
 $config->set('dbuser', 'root');
 $config->set('dbpass', '');
 
+//produccion
+//$config->set('dbuser', 'sdaah_db');
+//$config->set('dbpass', '&bT%4F6wpBYs');
+
 //set default timezone
 date_default_timezone_set('America/Costa_Rica');

@@ -26,7 +26,7 @@ class LiquidationController {
         
         try {
             $employeeBusiness = new EmployeeBusiness();
-            $vars['employees'] = $employeeBusiness->getAll();
+            $vars['employees'] = $employeeBusiness->getAllNotLiquidated();
 
             $deductionBusiness = new DeductionBusiness();
             $vars['deductions'] = $deductionBusiness->getAll();
