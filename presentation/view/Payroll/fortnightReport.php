@@ -1,7 +1,3 @@
-<?php
-$currencyPath = 'presentation/public/img/colon.png';
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -99,8 +95,8 @@ $currencyPath = 'presentation/public/img/colon.png';
     <div>
         <table>
             <colgroup>
-                <col style="width: 138px;">
-                <col span="10" style="width: 62px;">
+                <col style="width: 140px;">
+                <col span="10" style="width: 61px;">
             </colgroup>
             <tr>
                 <th class="border" style="text-align: center;">Nombre del Empleado</th>

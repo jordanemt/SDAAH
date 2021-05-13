@@ -103,12 +103,13 @@ class PayrollController {
         
         try {
             $inputFilter = array(
-                'month' => Filters::getInt(),
+                'fortnight' => Filters::getInt(),
                 'year' => Filters::getInt()
             );
-            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::MONTHLY);
+            $filter = Util::getSanitazeFilter(filter_input_array(INPUT_GET, $inputFilter), Util::BEWEEKLY);
 
-            $vars['data'] = $this->business->getMonthlyPayroll($filter);
+            //$vars['data'] = $this->business->getMonthlyPayroll($filter);
+            $vars['data'] = $this->business->getBiweeklyPayroll($filter);
             $this->view->show($this->controllerName . 'bankReportView.php', $vars);
         } catch (Exception $e) {
             throw new LoadViewException();
@@ -174,6 +175,24 @@ class PayrollController {
             $data['params'] = $businessParam->getProvisionReportParams();
 
             Util::generatePDF($this->controllerName . 'provisionReport.php', $data, 'Reporte_De_Provisiones_' . $filter['month'] . '_' . $filter['year'], true);
+
+        } catch (Exception $ex) {
+            $errorController = new ErrorController();
+            $errorController->index('Error al descargar boleta', 500);
+        }
+    }
+
+    public function getBankReport()
+    {
+        try {
+            $filter['fortnight'] = $_SESSION['fortnight'];
+            $filter['year'] = $_SESSION['year'];
+            $filter['location'] = $_SESSION['location'];
+
+            $data['year'] = $filter['year'];
+            $data['data'] = $this->business->getBiweeklyPayroll($filter);
+
+            Util::generatePDF($this->controllerName . 'bankReport.php', $data, 'Reporte_Bancario_' . $filter['fortnight'] . '_' . $filter['year'], true);
 
         } catch (Exception $ex) {
             $errorController = new ErrorController();

@@ -78,6 +78,9 @@
 
     <div>
         <table>
+            <colgroup>
+                <col span="5" style="width: 100px;">
+            </colgroup>
             <tr>
                 <th class="border" style="text-align: center;">Localidad</th>
                 <th class="border" style="text-align: center;">Salario Devengado</th>

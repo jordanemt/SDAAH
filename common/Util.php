@@ -155,11 +155,13 @@ class Util {
         return $str;
     }
 
-    public static function generatePDF($viewName, $data, $pdfName, $isHorizonal = false) {
+    public static function generatePDF($viewName, $data, $pdfName, $isLandscape = false) {
         $config = Config::singleton();
         
-        $orientation = $isHorizonal ? 'L' : 'P';
-        $html2pdf = new HTML2PDF($orientation, 'A4', 'es', 'true', 'UTF-8');
+        $orientation = $isLandscape ? 'L' : 'P';
+
+        // 216mm x 279mm letter page size US standard
+        $html2pdf = new HTML2PDF($orientation, array(216, 279), 'es', 'true', 'UTF-8');
 
         try {
             ob_start();
