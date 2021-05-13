@@ -16,8 +16,20 @@ include_once 'presentation/public/header.php';
 
             <div class="d-flex flex-md-row flex-column">
 
+                <!--
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <!--<a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>-->
+                    <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
+                </div>
+                -->
+
+                <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
+                    <?php
+                    if ($session->validRole(Session::$_DIGITIZER)) {
+                        ?>
+                        <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payroll&action=getBankReport" role="button"><i class="fa fa-download"></i> Descargar</a>
+                        <?php
+                    }
+                    ?>
                 </div>
 
                 <div class="col-md-7 px-0">
@@ -26,14 +38,14 @@ include_once 'presentation/public/header.php';
 
                         <input class="d-none" type="text" name="controller" value="payroll" readonly>
 
-                        <input class="d-none" type="text" name="action" value="bncrReportView" readonly>
+                        <input class="d-none" type="text" name="action" value="bankReportView" readonly>
 
                         <div class="d-flex flex-md-row flex-column justify-content-md-end">
 
                             <div class="d-flex flex-row p-1">
-                                <label for="month">Mes:&nbsp</label>
-                                <select class="form-control form-control-sm selectpicker" data-size="5" id="month" name="month" onchange="submitSearch();">
-                                    <?= Util::getSelectMonthOptions(); ?>
+                                <label for="fortnight">Quincena:&nbsp</label>
+                                <select class="form-control form-control-sm selectpicker" data-size="5" id="fortnight" name="fortnight" onchange="submitSearch();">
+                                    <?= Util::getSelectFortnightOptions() ?>
                                 </select>
                             </div>
 

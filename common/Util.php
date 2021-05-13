@@ -7,6 +7,12 @@ use Luecano\NumeroALetras\NumeroALetras;
 
 class Util {
 
+    public static function getMonthByNumber($monthNumber)
+    {
+        $months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        return $months[$monthNumber - 1];
+    }
+
     public static function existOnSomeKey($array, $evaluate, $key) {
         foreach ($array as $keyArray => $value) {
             if ($value[$key] == $evaluate[$key]) {
@@ -149,18 +155,20 @@ class Util {
         return $str;
     }
 
-    public static function generatePDF($viewName, $data, $pdfName, $isHorizonal = false) {
+    public static function generatePDF($viewName, $data, $pdfName, $isLandscape = false) {
         $config = Config::singleton();
         
-        $orientation = $isHorizonal ? 'L' : 'P';
-        $html2pdf = new HTML2PDF($orientation, 'A4', 'es', 'true', 'UTF-8');
+        $orientation = $isLandscape ? 'L' : 'P';
+
+        // 216mm x 279mm letter page size US standard
+        $html2pdf = new HTML2PDF($orientation, array(216, 279), 'es', 'true', 'UTF-8');
 
         try {
             ob_start();
             require_once $config->get('viewFolder') . $viewName;
             $html = ob_get_clean();
 
-            $html2pdf->setDefaultFont('Arial');
+            //$html2pdf->setDefaultFont('Arial');
             $html2pdf->writeHTML($html);
             $html2pdf->output($pdfName . '.pdf');
         } catch (Exception $e) {

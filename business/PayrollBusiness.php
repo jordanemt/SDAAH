@@ -17,6 +17,7 @@ class PayrollBusiness {
             $payments[$key]['card'] = $employee['card'];
             $payments[$key]['completeName'] = $employee['firstLastName'] . ' ' . $employee['secondLastName'] . ' ' . $employee['name'];
             $payments[$key]['bankAccount'] = $employee['bankAccount'];
+            $payments[$key]['bank'] = $employee['bank'];
         }
 
         return $payments;
