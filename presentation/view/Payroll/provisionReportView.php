@@ -17,8 +17,7 @@ include_once 'presentation/public/header.php';
             <a href="?controller=payroll&action=detailProvisionReportView">Detalle por Empleado <i class="fa fa-angle-double-right"></i></a>
 
             <div class="d-flex flex-md-row flex-column">
-
-
+                
                 <div class="col-md-2 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
                     <a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>
                 </div>
