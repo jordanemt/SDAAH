@@ -19,7 +19,13 @@ include_once 'presentation/public/header.php';
             <div class="d-flex flex-md-row flex-column">
 
                 <div class="col-md-5 d-flex flex-md-row flex-column justify-content-md-start justify-content-center px-0 py-1">
-                    <!--<a class="btn btn-info mx-1" href="#" role="button"><i class="fa fa-upload"></i> Enviar Reporte</a>-->
+                    <?php
+                    if ($session->validRole(Session::$_DIGITIZER)) {
+                        ?>
+                        <a class="btn btn-primary mx-1 mb-1-md" href="?controller=payroll&action=getDetailProvisionReport" role="button"><i class="fa fa-download"></i> Descargar</a>
+                        <?php
+                    }
+                    ?>
                 </div>
 
                 <div class="col-md-7 px-0">

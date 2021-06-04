@@ -200,4 +200,26 @@ class PayrollController {
         }
     }
 
+
+    public function getDetailProvisionReport() {
+        try {
+
+            $filter['month'] = $_SESSION['month'];
+            $filter['year'] = $_SESSION['year'];
+
+            $data['month'] = Util::getMonthByNumber($filter['month']);
+            $data['year'] = $filter['year'];
+
+            $businessParam = new ParamBusiness();
+            $data['params'] = $businessParam->getProvisionReportParams();
+            $data['data'] = $this->business->getDetailProvisionReport($filter);
+
+            Util::generatePDF($this->controllerName . 'detailProvisionReport.php', $data, 'Reporte_Detallado_Provisiones_' . $filter['month'] . '_' . $filter['year'], true);
+
+        } catch (Exception $ex) {
+            $errorController = new ErrorController();
+            $errorController->index('Error al descargar boleta', 500);
+        }
+    }
+
 }
