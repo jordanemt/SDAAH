@@ -86,13 +86,14 @@
     <div>
         <table>
             <colgroup>
-                <col span="1" style="width: 140px; background-color: beige">
-                <col span="2" style="width: 70px; background-color: cadetblue">
-                <col span="6" style="width: 61px; background-color: cornflowerblue">
-                <col span="1" style="width: 70px; background-color: yellow">
+                <col span="1" style="width: 50px;">
+                <col span="1" style="width: 135px;">
+                <col span="2" style="width: 70px;">
+                <col span="6" style="width: 61px;">
+                <col span="1" style="width: 70px;">
             </colgroup>
             <tr>
-<!--                <th class="border" style="text-align: center;">Cédula</th>-->
+                <th class="border" style="text-align: center;">Cédula</th>
                 <th class="border" style="text-align: center;">Nombre Completo</th>
                 <th class="border" style="text-align: center;">Localidad</th>
                 <th class="border" style="text-align: center;">Salario Devengado</th>
@@ -117,6 +118,7 @@
             foreach ($data['data'] as $value) {
             ?>
                 <tr>
+                    <td class="border"><?= $value['card'] ?></td>
                     <td class="border" style="text-align: center;"><?= $value['completeName'] ?></td>
                     <td class="border" style="text-align: center;"><?= $value['location'] ?></td>
                     <td class="border" style="text-align: center;">
@@ -158,6 +160,7 @@
 
             <tr>
                 <th class="border" style="text-align: center;">Totales</th>
+                <th class="border" style="text-align: center;">---</th>
                 <th class="border" style="text-align: center;">---</th>
                 <th class="border" style="text-align: center;"><?= '₡' . number_format($totalAccrued, 2, '.', ' '); ?></th>
                 <th class="border" style="text-align: center;"><?= '₡' . number_format($totalCCSS, 2, '.', ' '); ?></th>

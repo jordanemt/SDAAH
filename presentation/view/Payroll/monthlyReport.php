@@ -111,15 +111,10 @@
             ?>
                 <tr>
                     <td class="border" style="text-align: center;"><?= $value['card'] ?></td>
-
-                    <td class="border" style="text-align: center;"><?= $value['completeName'] ?></td>
-
-                    <td class="border" style="text-align: center;"><?= $value['type'] ?></td>
-
-                    <td class="border" style="text-align: center;"><?= $value['type'] === 'Mensual' ? $value['days'] : '--' ?></td>
-
-                    <td class="border" style="text-align: center;"><?= $value['type'] === 'Mensual' ? '--' : $value['hours'] ?></td>
-
+                    <td class="border" style="text-align: center;"><p><?= $value['completeName'] ?></p></td>
+                    <td class="border" style="text-align: center;"><?= $value['type'] == 'Mensual' ? 'Jornada Completa' : 'Tiempo Parcial' ?></td>
+                    <td class="border" style="text-align: center;"><?= $value['days'] ? $value['days'] : '---' ?></td>
+                    <td class="border" style="text-align: center;"><?= $value['hours'] ? $value['hours'] : '---' ?></td>
                     <td class="border" style="text-align: center;"><?= '₡' . number_format($value['net'], 2, '.', ' '); ?></td>
                 </tr>
                 <?php
